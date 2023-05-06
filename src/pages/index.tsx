@@ -3,8 +3,8 @@ import Head from "next/head";
 import { checkSquareApi } from "~/utils/zustand/test";
 
 const Home: NextPage = () => {
-  const test = async () => {
-    await checkSquareApi();
+  const test = () => {
+    checkSquareApi();
   };
 
   return (
