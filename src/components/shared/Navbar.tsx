@@ -9,16 +9,11 @@ import {
   useUser,
 } from "@clerk/nextjs";
 import React, { useEffect } from "react";
-import { checkSquareApi } from "~/utils/zustand/test";
 
 const Navbar = () => {
   const { isLoaded, userId, sessionId, getToken, isSignedIn } = useAuth();
 
   const { user } = useUser();
-
-  useEffect(() => {
-    checkSquareApi();
-  }, []);
 
   return (
     <nav className="container mx-auto flex w-full items-center rounded-2xl p-2.5 px-8 shadow-primary-sm">
