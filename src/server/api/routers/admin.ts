@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { client } from "~/utils/square";
+import { client } from "~/server/square";
 
 const { locationsApi } = client;
 
