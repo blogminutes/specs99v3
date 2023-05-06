@@ -1,12 +1,8 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import { useEffect } from "react";
-import { api } from "~/utils/api";
 import { checkSquareApi } from "~/utils/zustand/test";
 
 const Home: NextPage = () => {
-  const hello = api.useContext();
-
   const test = async () => {
     await checkSquareApi();
   };

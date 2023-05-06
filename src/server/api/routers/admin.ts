@@ -1,5 +1,4 @@
 import { z } from "zod";
-
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { client } from "~/utils/square";
 
@@ -13,7 +12,7 @@ export const adminRouter = createTRPCRouter({
         greeting: `Hello ${input.text}`,
       };
     }),
-  getAll: publicProcedure.query(async ({ ctx }) => {
+  getAll: publicProcedure.query(async () => {
     return await locationsApi.listLocations();
   }),
 });

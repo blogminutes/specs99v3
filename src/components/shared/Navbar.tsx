@@ -1,14 +1,6 @@
 import Image from "next/image";
-import {
-  SignIn,
-  SignInButton,
-  SignUp,
-  SignOutButton,
-  useAuth,
-  UserProfile,
-  useUser,
-} from "@clerk/nextjs";
-import React, { useEffect } from "react";
+import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
+import React from "react";
 
 const Navbar = () => {
   const { isLoaded, userId, sessionId, getToken, isSignedIn } = useAuth();
