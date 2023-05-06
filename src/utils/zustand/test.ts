@@ -4,7 +4,7 @@ const { locationsApi } = client;
 
 export const checkSquareApi = async () => {
   try {
-    let listLocationsResponse = await locationsApi.listLocations();
+    const listLocationsResponse = await locationsApi.listLocations();
 
     console.log(listLocationsResponse);
   } catch (error) {
