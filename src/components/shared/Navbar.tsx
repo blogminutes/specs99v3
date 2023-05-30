@@ -1,14 +1,10 @@
 import Image from "next/image";
-import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
 import React from "react";
+import Link from "next/link";
 
 const Navbar = () => {
-  const { isLoaded, userId, sessionId, getToken, isSignedIn } = useAuth();
-
-  const { user } = useUser();
-
   return (
-    <nav className="container mx-auto flex w-full items-center rounded-2xl p-2.5 px-8 shadow-primary-sm">
+    <nav className="mx-auto mb-8 flex w-full items-center rounded-xl p-2.5 px-8 shadow-primary-sm">
       <div>
         <Image
           src={"/specs99-logo.png"}
@@ -18,19 +14,16 @@ const Navbar = () => {
           className="h-8 w-36"
         />
       </div>
-      <div className="ml-auto">{!isSignedIn && <SignInButton />}</div>
-      <div className="flex items-center gap-3">
-        <span>{user?.firstName}</span>
-        {user?.profileImageUrl && (
-          <Image
-            src={user?.profileImageUrl}
-            alt="Asas"
-            width={42}
-            height={42}
-            className="h-10 w-10 rounded-full"
-          />
-        )}
-      </div>
+      <Link className="ml-auto" href={"/admin/products/create/product"}>
+        Add Product
+      </Link>
+      <Link className="ml-auto" href={"/sign-up"}>
+        Sign-up
+      </Link>
+      <Link className="ml-auto" href={"/sign-in"}>
+        Sign-in
+      </Link>
+      <div className="flex items-center gap-3"></div>
     </nav>
   );
 };

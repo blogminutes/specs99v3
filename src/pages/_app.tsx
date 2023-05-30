@@ -1,41 +1,40 @@
 import { type AppType } from "next/app";
-import { ClerkProvider } from "@clerk/nextjs";
-import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import Navbar from "~/components/shared/Navbar";
+import { Roboto } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
+import { getUser, useAuthStore } from "~/utils/zustand/authStore/useAuthStore";
 
-const publicPages = ["/", "/sign-in/[[...index]]", "/sign-up/[[...index]]"];
+const roboto = Roboto({
+  weight: ["400", "500", "300", "700"],
+  style: ["normal"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const authPages = ["/", "/sign-in/[[...index]]", "/sign-up/[[...index]]"];
 
 const MyApp: AppType = ({ Component, pageProps }) => {
-  const { pathname } = useRouter();
+  const authStore = useAuthStore((s) => s);
 
-  const isPublicPage = publicPages.includes(pathname);
+  useEffect(() => {
+    getUser(authStore);
+  }, []);
 
   return (
-    <ClerkProvider
-      {...pageProps}
-      appearance={{
-        elements: {},
-      }}
+    <main
+      className={`min-h-[100vh] bg-primary pt-8 text-[#343a40] ${roboto.className}`}
     >
-      <main className="bg-primary pt-8">
+      <div className="container mx-auto">
+        <ToastContainer position="bottom-left" />
         <Navbar />
-        {isPublicPage ? (
-          <Component {...pageProps} />
-        ) : (
-          <>
-            <SignedIn>
-              <Component {...pageProps} />
-            </SignedIn>
-            <SignedOut>
-              <RedirectToSignIn redirectUrl={"/"} />
-            </SignedOut>
-          </>
-        )}
-      </main>
-    </ClerkProvider>
+        <Component {...pageProps} />
+      </div>
+    </main>
   );
 };
 

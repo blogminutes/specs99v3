@@ -1,8 +1,5 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { client } from "~/server/square";
-
-const { locationsApi } = client;
 
 export const adminRouter = createTRPCRouter({
   hello: publicProcedure
@@ -13,6 +10,6 @@ export const adminRouter = createTRPCRouter({
       };
     }),
   getAll: publicProcedure.query(async () => {
-    return await locationsApi.listLocations();
+    // return await locationsApi.listLocations();
   }),
 });
