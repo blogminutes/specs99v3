@@ -9,17 +9,17 @@ const sidebarLinks = [
     childrens: [
       {
         name: "Add Product",
-        href: "/admin/products/create/product",
+        href: "/admin/products/create",
         icon: <PlusIcon width={14} height={14} />,
       },
       {
         name: "Edit Products",
-        href: "/admin/products/create/category",
+        href: "/admin/products/category/create",
         icon: <Pencil2Icon width={14} height={14} />,
       },
       {
         name: "Add Category",
-        href: "/admin/products/create/category",
+        href: "/admin/products/category/create",
         icon: <PlusIcon width={14} height={14} />,
       },
     ],
@@ -33,7 +33,7 @@ const sidebarLinks = [
         icon: <PlusIcon width={14} height={14} />,
       },
       {
-        name: "Edit Products",
+        name: "asa Products",
         href: "/admin/products/create",
         icon: <Pencil2Icon width={14} height={14} />,
       },
@@ -82,9 +82,9 @@ interface ISidebarLink {
 
 const AdminSidebar = () => {
   return (
-    <div className="flex w-[20%] flex-col gap-4 border-r border-r-[#dee2e6] p-4">
+    <div className="flex w-[20%] flex-col gap-4 border-r border-r-[#dee2e6] p-4 py-8">
       {sidebarLinks.map((link) => (
-        <LinkTree category={link} />
+        <LinkTree category={link} key={link.category} />
       ))}
     </div>
   );
@@ -128,6 +128,7 @@ const LinkTree: React.FC<{ category: ISidebarLink }> = (props) => {
             <Link
               href={link.href}
               className="flex items-center gap-1.5 text-sm"
+              key={link.href + category}
             >
               {link.icon}
               {link.name}

@@ -7,7 +7,7 @@ const ButtonPrimary: React.FC<{
 }> = (props) => {
   return (
     <motion.button
-      className={`w-fir ml-auto mt-6 rounded-lg px-8 py-1 text-lg font-medium text-grey-medium shadow-primary-xsm ${props.className}`}
+      className={`ml-auto mt-6 w-fit rounded-lg px-8 py-1 text-lg font-medium text-grey-medium shadow-primary-xsm ${props.className}`}
       type="submit"
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.97 }}

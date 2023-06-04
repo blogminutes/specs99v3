@@ -14,7 +14,7 @@ export type IUser = {
   passwordUpdate: string;
   phone: string;
   phoneVerification: boolean;
-  prefs: any;
+  prefs?: { role?: string };
   registration: string;
   status: boolean;
 };

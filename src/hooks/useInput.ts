@@ -1,19 +1,34 @@
-import { useState } from "react";
+import { type } from "os";
+import React, { useState } from "react";
 
-const useInput = (
-  validationFunction: (val: string) => boolean,
-  initialValue: string
-) => {
-  const [value, setValue] = useState(initialValue ? initialValue : "");
+interface ReturnObject<T> {
+  value: T;
+  isTouched: boolean;
+  onBlur: () => void;
+  onFocus: () => void;
+  onChange: (val: T) => void;
+  resetInput: () => void;
+  hasError: boolean;
+  error: boolean;
+  isFocused: boolean;
+  showError: boolean;
+  showErrorHandler: () => void;
+}
+
+const useInput = <T>(
+  validationFunction: (value: T) => boolean,
+  initialValue: T
+): ReturnObject<T> => {
+  const [value, setValue] = useState<T>(initialValue);
   const [isFocused, setIsFocused] = useState(false);
   const [isTouched, setIsTouched] = useState(false);
-  let valueIsValid = validationFunction(value);
-  const error = !valueIsValid;
+  let valueIsValid = typeof value === "string" && validationFunction(value);
+  const error = typeof value === "string" && !valueIsValid;
   const [showError, setShowError] = useState(false);
   const hasError = showError && error;
 
-  const onChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setValue(e.currentTarget.value);
+  const onChange = (val: T) => {
+    setValue(val);
   };
 
   const onBlur = () => {
@@ -30,7 +45,7 @@ const useInput = (
   };
 
   const resetInput = () => {
-    setValue("");
+    setValue(initialValue);
     setShowError(false);
   };
 

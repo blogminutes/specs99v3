@@ -3,15 +3,15 @@ import * as faIcons from "react-icons/fa";
 
 type Props = {
   hasError: boolean;
-  onChange: (e: React.FormEvent<HTMLInputElement>) => void;
+  onChange: (val: string) => void;
   onBlur: () => void;
   type: React.HTMLInputTypeAttribute;
   lable: string;
-  value: string;
+  value: string | null;
   errorMessage: string;
   onFocus: () => void;
-  labelColor: string;
   error: boolean;
+  labelColor?: string;
 };
 
 const FormInput: React.FC<Props> = (props) => {
@@ -28,7 +28,7 @@ const FormInput: React.FC<Props> = (props) => {
     error,
   } = props;
 
-  const labelModifier = labelColor ? labelColor : "white";
+  const labelModifier = labelColor ? labelColor : "currentColor";
   const [inititalType, setInitialType] = useState(type);
 
   const toggleTypeToText = () => {
@@ -36,7 +36,7 @@ const FormInput: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="z-0 flex flex-col gap-2">
       <div className={`flex items-center`}>
         <label
           className="text-grey-light"
@@ -52,7 +52,7 @@ const FormInput: React.FC<Props> = (props) => {
       </div>
       <div className="form-input relative">
         <input
-          className={`w-full min-w-[18rem] rounded-lg bg-primary px-3 py-1.5 shadow-form-input-primary outline-0 ${
+          className={`w-full min-w-[18rem] rounded-lg bg-primary px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2 focus:!outline-blue-700 ${
             hasError
               ? "outline !outline-1 outline-red-500"
               : !error
@@ -63,8 +63,8 @@ const FormInput: React.FC<Props> = (props) => {
           type={inititalType}
           id={`form-${lable?.toLowerCase().split(" ").join("-")}`}
           onBlur={onBlur}
-          onChange={onChange}
-          value={value}
+          onChange={(e) => onChange(e.currentTarget.value)}
+          value={value || ""}
           hidden={false}
         />
         {type === "password" && (

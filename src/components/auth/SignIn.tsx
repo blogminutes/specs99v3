@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React, { use, useEffect } from "react";
 import Link from "next/link";
 import useInput from "~/hooks/useInput";
 import * as validators from "~/utils/form-validation/form-validations";
 import FormInput from "../ui/form/FormInput";
 import ButtonPrimary from "../ui/buttons/ButtonPrimary";
-import { api } from "~/utils/api";
 import {
   loginUser,
   useAuthStore,
@@ -12,8 +11,8 @@ import {
 import { useRouter } from "next/router";
 
 const SignIn = () => {
-  const emailInput = useInput(validators.emailValidator, "");
-  const passwordInput = useInput(validators.passwordValidator, "");
+  const emailInput = useInput<string>(validators.emailValidator, "");
+  const passwordInput = useInput<string>(validators.passwordValidator, "");
 
   const router = useRouter();
 
@@ -22,7 +21,12 @@ const SignIn = () => {
 
   const onSubmit: React.FormEventHandler = async (e) => {
     e.preventDefault();
-    if (emailInput.error || passwordInput.error) {
+    if (
+      emailInput.error ||
+      passwordInput.error ||
+      !emailInput.value ||
+      !passwordInput.value
+    ) {
       emailInput.onBlur();
       passwordInput.onBlur();
       return;
@@ -31,7 +35,9 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    if (loggedIn) router.push("/");
+    if (loggedIn) {
+      router.push("/");
+    }
   }, [loggedIn]);
 
   return (
@@ -46,14 +52,12 @@ const SignIn = () => {
             type="email"
             lable="Email"
             errorMessage="Please provide a valid email."
-            labelColor="easd"
           />
           <FormInput
             {...passwordInput}
             type="password"
             lable="Password"
             errorMessage="Password must contain 8 characters."
-            labelColor="easd"
           />
 
           <ButtonPrimary text="Submit" className="w-fit" />

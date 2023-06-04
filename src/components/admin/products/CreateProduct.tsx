@@ -1,46 +1,246 @@
-import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  FormEventHandler,
+  useState,
+} from "react";
+import * as validators from "~/utils/form-validation/form-validations";
+import ButtonPrimary from "~/components/ui/buttons/ButtonPrimary";
+import useInput from "~/hooks/useInput";
+import FormInput from "~/components/ui/form/FormInput";
+import FormInputList from "~/components/ui/form/FormInputList";
+import { useForm } from "react-hook-form";
+
+import {
+  categories,
+  frameBodyTypes,
+  frameColors,
+  lensColors,
+  lensTypes,
+  sizes,
+} from "~/components/admin/products/productHelpers";
+import Image from "next/image";
+import { api } from "~/utils/api";
 
 const CreateProduct = () => {
-  type Inputs = {
-    example: string;
-    exampleRequired: string;
+  const apiContext = api.useContext();
+
+  const brandInput = useInput<string>(validators.wordLengthValidator(2), "");
+  const modleInput = useInput<string>(validators.wordLengthValidator(5), "");
+  const descriptionInput = useInput<string>(
+    validators.wordLengthValidator(20),
+    ""
+  );
+
+  const mrpInput = useInput<string>(validators.numberValidator(1), "");
+  const priceInput = useInput<string>(
+    validators.minMaxValidator(0, Number(mrpInput.value)),
+    "0"
+  );
+  const sizeInput = useInput<string>(
+    validators.wordLengthValidator(2),
+    sizes[0]?.name || "Size"
+  );
+  const lensInput = useInput(validators.multipleValueValidator, [
+    lensTypes[0]?.name || "Lens",
+  ]);
+  const lensColorInput = useInput(
+    validators.wordLengthValidator(3),
+    lensColors[0]?.name || "Lens Color"
+  );
+  const categoriesInput = useInput(validators.multipleValueValidator, [
+    categories[0]?.name || "Category",
+  ]);
+  const frameBodyInput = useInput(
+    validators.wordLengthValidator(3),
+    frameBodyTypes[0]?.name || "Frame Body"
+  );
+  const frameColorInput = useInput(
+    validators.wordLengthValidator(3),
+    frameColors[0]?.name || "Frame Color"
+  );
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setSelectedFile(file);
+
+    // Create a FileReader to read the image file
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") setPreviewUrl(reader.result);
+    };
+    reader.readAsDataURL(file);
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, touchedFields },
-  } = useForm<Inputs>();
+  // Images
 
-  const onSubmit: SubmitHandler<Inputs> = (data) =>
-    console.log(data, touchedFields);
+  const [selectedImages, setSelectedImages] = useState<File[] | null>(null);
+  const [imagesPreviewUrls, setImagesPreviewUrls] = useState<string[] | null>(
+    null
+  );
+
+  const handleImagesChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files) return;
+    const selectedFiles = Array.from(files);
+    setSelectedImages(selectedFiles);
+    if (files && files.length > 0) {
+      const previews = selectedFiles.map((file) => URL.createObjectURL(file));
+      setImagesPreviewUrls(previews);
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (selectedFile) {
+      const formData: any = new FormData();
+      formData.append("image", selectedFile);
+      const re = apiContext.admin.createProduct.fetch({ image: "formData" });
+    }
+  };
 
   return (
-    <div className="p-4 px-8">
+    <div className="p-4 px-8 py-8">
       <h3 className="mb-8 text-2xl font-medium text-[#495057]">
         Create Product
       </h3>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap gap-20">
-        <div className="flex flex-col gap-2">
-          <label htmlFor="name">Name</label>
+      <form className="flex flex-wrap gap-20 gap-y-10" onSubmit={handleSubmit}>
+        <FormInput
+          lable="Brand"
+          {...brandInput}
+          errorMessage="Minimum 2 characters are required."
+          type="text"
+        />
+        <FormInput
+          lable="Model"
+          {...modleInput}
+          errorMessage="Minimum 5 characters are required."
+          type="text"
+        />
+        <FormInput
+          lable="Description"
+          {...descriptionInput}
+          errorMessage="Minimum 20 characters are required."
+          type="text"
+        />
+        <FormInput
+          lable="MRP"
+          {...mrpInput}
+          errorMessage="MRP must be greater than 0."
+          type="number"
+        />
+        <FormInput
+          lable="Price"
+          {...priceInput}
+          errorMessage="Must be greater than 0 and <= MRP."
+          type="number"
+        />
+        <FormInputList
+          {...categoriesInput}
+          lable="Category"
+          errorMessage="Please select lens type."
+          options={categories}
+          multiple={true}
+        />
+        <FormInputList
+          {...sizeInput}
+          lable="Size"
+          errorMessage="Please select size."
+          options={sizes}
+          multiple={false}
+        />
+        <FormInputList
+          {...lensInput}
+          lable="Lens"
+          errorMessage="Please select lens type."
+          options={lensTypes}
+          multiple={true}
+        />
+        <FormInputList
+          {...lensColorInput}
+          lable="Lens Color"
+          errorMessage="Please select lens color."
+          options={lensColors}
+          multiple={false}
+        />
+        <FormInputList
+          {...frameBodyInput}
+          lable="Frame Body"
+          errorMessage="Please select frame boduy."
+          options={frameBodyTypes}
+          multiple={false}
+        />
+        <FormInputList
+          {...frameColorInput}
+          lable="Lens Color"
+          errorMessage="Please select frame color."
+          options={frameColors}
+          multiple={false}
+        />
+        <div className="flex min-w-[18rem] flex-col gap-0">
+          <label htmlFor="coverImage">Cover Image</label>
           <input
-            className="min-w-[18rem] rounded-lg bg-primary px-3 py-1.5 shadow-form-input-primary focus:outline-none"
-            id="name"
-            defaultValue="test"
-            {...register("example")}
+            id="coverImage"
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="pointer-events-none h-0 w-0 opacity-0"
+          />
+          <label htmlFor="coverImage" className="w-full  bg-primary  ">
+            {previewUrl ? (
+              <Image
+                className="h-14 w-14 overflow-hidden rounded-full object-scale-down shadow-md"
+                width={52}
+                height={52}
+                src={previewUrl}
+                alt="Selected Image"
+              />
+            ) : (
+              <span className="mt-2 block w-full min-w-[18rem] rounded-lg px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2">
+                Select Image
+              </span>
+            )}
+          </label>
+        </div>
+        <div className="flex min-w-[18rem] flex-col gap-0">
+          <label htmlFor="images">Images</label>
+          <input
+            id="images"
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handleImagesChange}
+            className="pointer-events-none h-0 w-0 opacity-0  focus:!outline-blue-700"
+          />
+          <label htmlFor="images" className="flex  w-full  gap-2 bg-primary">
+            {imagesPreviewUrls ? (
+              imagesPreviewUrls.map((url) => (
+                <Image
+                  className="h-14 w-14 overflow-hidden rounded-full object-scale-down shadow-md"
+                  width={52}
+                  height={52}
+                  src={url}
+                  alt="Selected Image"
+                />
+              ))
+            ) : (
+              <span className="mt-2 block w-full min-w-[18rem] rounded-lg px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2">
+                Select Images
+              </span>
+            )}
+          </label>
+        </div>
+        <div className="w-full">
+          <ButtonPrimary
+            text="Submit"
+            className="mx-auto block w-fit flex-[0,0,fit-content]"
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="name">Name</label>
-          <input
-            className="min-w-[18rem] rounded-lg bg-primary px-3 py-1.5 shadow-form-input-primary focus:outline-none"
-            {...register("exampleRequired", { required: true })}
-          />
-        </div>
-        <button className="w-[100%]" type="submit">
-          Submit
-        </button>
       </form>
     </div>
   );

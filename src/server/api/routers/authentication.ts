@@ -1,12 +1,12 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import sdk, { ID, Account } from "node-appwrite";
+import { ID, Account, Client, Users } from "node-appwrite";
 // Init SDK
-const client = new sdk.Client();
+export const client = new Client();
 
-const users = new sdk.Users(client);
+const users = new Users(client);
 
-const account = new sdk.Account(client);
+const account = new Account(client);
 
 client
   .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint

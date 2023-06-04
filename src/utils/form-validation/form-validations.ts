@@ -11,3 +11,26 @@ export const passwordValidator = (val: string) => {
 export const nameValidator = (val: string) => {
   return val.length >= 3;
 };
+
+export const wordLengthValidator = (count: number) => {
+  return (val: string) => {
+    return val.length >= count;
+  };
+};
+
+export const numberValidator = (count: number, lessThan?: boolean) => {
+  const check = lessThan ? "<=" : ">=";
+  return (val: string) => {
+    return eval(Number(val) + check + count);
+  };
+};
+
+export const minMaxValidator = (min: number, max: number) => {
+  return (val: string) => {
+    return min <= Number(val) && Number(val) <= max;
+  };
+};
+
+export const multipleValueValidator = (vals: string[]) => {
+  return vals.length > 0;
+};

@@ -1,29 +1,48 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import useInput from "~/hooks/useInput";
 import * as validators from "~/utils/form-validation/form-validations";
 import FormInput from "../ui/form/FormInput";
 import ButtonPrimary from "../ui/buttons/ButtonPrimary";
 import { api } from "~/utils/api";
+import { signUp, useAuthStore } from "~/utils/zustand/authStore/useAuthStore";
+import { useRouter } from "next/router";
 
 const SignUp = () => {
-  const emailInput = useInput(validators.emailValidator, "");
-  const passwordInput = useInput(validators.passwordValidator, "");
-  const nameInput = useInput(validators.passwordValidator, "");
+  const emailInput = useInput<string>(validators.emailValidator, "");
+  const passwordInput = useInput<string>(validators.passwordValidator, "");
+  const nameInput = useInput<string>(validators.passwordValidator, "");
+
+  const router = useRouter();
   const apiContext = api.useContext();
+
+  const authStore = useAuthStore((s) => s);
+  const { loggedIn, user } = authStore;
 
   const onSubmit: React.FormEventHandler = async (e) => {
     e.preventDefault();
-    if (emailInput.error || passwordInput.error) {
+    if (
+      emailInput.error ||
+      passwordInput.error ||
+      nameInput.error ||
+      !nameInput.value ||
+      !emailInput.value ||
+      !passwordInput.value
+    ) {
       emailInput.onBlur();
       passwordInput.onBlur();
+      nameInput.onBlur();
       return;
     }
-    const res = await apiContext.authentication["sign-up"].fetch({
-      email: emailInput.value,
-      password: passwordInput.value,
-    });
+
+    signUp(nameInput.value, emailInput.value, passwordInput.value, authStore);
   };
+
+  useEffect(() => {
+    if (loggedIn) {
+      router.push("/");
+    }
+  }, [loggedIn]);
 
   return (
     <div className="mt-[20vh] flex items-center">

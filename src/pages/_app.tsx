@@ -16,8 +16,6 @@ const roboto = Roboto({
   display: "swap",
 });
 
-const authPages = ["/", "/sign-in/[[...index]]", "/sign-up/[[...index]]"];
-
 const MyApp: AppType = ({ Component, pageProps }) => {
   const authStore = useAuthStore((s) => s);
 
@@ -27,9 +25,9 @@ const MyApp: AppType = ({ Component, pageProps }) => {
 
   return (
     <main
-      className={`min-h-[100vh] bg-primary pt-8 text-[#343a40] ${roboto.className}`}
+      className={`min-h-[100vh] bg-primary px-8 pt-8  text-[#343a40] ${roboto.className}`}
     >
-      <div className="container mx-auto">
+      <div className="mx-auto flex flex-col rounded-2xl  shadow-primary-sm">
         <ToastContainer position="bottom-left" />
         <Navbar />
         <Component {...pageProps} />

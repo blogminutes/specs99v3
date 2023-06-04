@@ -1,11 +1,11 @@
 import React from "react";
-import CreateCategory from "~/components/admin/products/CreateCategory";
+import CreateProduct from "~/components/admin/products/CreateProduct";
 import AdminLayout from "~/components/admin/shared/AdminLayout";
 
 const CreateCategoryPage = () => {
   return (
     <AdminLayout>
-      <CreateCategory />
+      <CreateProduct />
     </AdminLayout>
   );
 };
