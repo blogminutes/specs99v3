@@ -1,15 +1,9 @@
-import React, {
-  ChangeEvent,
-  FormEvent,
-  FormEventHandler,
-  useState,
-} from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import * as validators from "~/utils/form-validation/form-validations";
 import ButtonPrimary from "~/components/ui/buttons/ButtonPrimary";
 import useInput from "~/hooks/useInput";
 import FormInput from "~/components/ui/form/FormInput";
 import FormInputList from "~/components/ui/form/FormInputList";
-import { useForm } from "react-hook-form";
 
 import {
   categories,
@@ -21,9 +15,12 @@ import {
 } from "~/components/admin/products/productHelpers";
 import Image from "next/image";
 import { api } from "~/utils/api";
+import { createProductSchema } from "~/server/api/routers/admin";
 
 const CreateProduct = () => {
   const apiContext = api.useContext();
+
+  const re = api.admin.createProduct.useMutation();
 
   const brandInput = useInput<string>(validators.wordLengthValidator(2), "");
   const modleInput = useInput<string>(validators.wordLengthValidator(5), "");
@@ -41,9 +38,10 @@ const CreateProduct = () => {
     validators.wordLengthValidator(2),
     sizes[0]?.name || "Size"
   );
-  const lensInput = useInput(validators.multipleValueValidator, [
-    lensTypes[0]?.name || "Lens",
-  ]);
+  const lensInput = useInput<string>(
+    validators.wordLengthValidator(3),
+    lensTypes[0]?.name || "Lens"
+  );
   const lensColorInput = useInput(
     validators.wordLengthValidator(3),
     lensColors[0]?.name || "Lens Color"
@@ -97,10 +95,25 @@ const CreateProduct = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (selectedFile) {
-      const formData: any = new FormData();
-      formData.append("image", selectedFile);
-      const re = apiContext.admin.createProduct.fetch({ image: "formData" });
+    if (previewUrl && selectedFile) {
+      // const formData = new FormData();
+      // formData.append("image", selectedFile);
+      const encodedData = encodeURIComponent(previewUrl);
+      console.log(encodedData, decodeURIComponent(encodedData));
+      // re.mutateAsync({
+      //   coverImage: "",
+      //   brand: brandInput.value,
+      //   category: categoriesInput.value,
+      //   description: descriptionInput.value,
+      //   frameBody: frameBodyInput.value,
+      //   frameColor: frameColorInput.value,
+      //   lens: lensInput.value,
+      //   lensColor: lensColorInput.value,
+      //   model: modleInput.value,
+      //   mrp: mrpInput.value,
+      //   price: priceInput.value,
+      //   size: sizeInput.value,
+      // });
     }
   };
 
@@ -159,7 +172,7 @@ const CreateProduct = () => {
           lable="Lens"
           errorMessage="Please select lens type."
           options={lensTypes}
-          multiple={true}
+          multiple={false}
         />
         <FormInputList
           {...lensColorInput}
