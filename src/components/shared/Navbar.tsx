@@ -11,7 +11,7 @@ const Navbar = () => {
   const { loggedIn } = authStore;
 
   return (
-    <nav className="flex w-full items-center rounded-t-xl p-3.5 px-8 shadow-primary-sm">
+    <nav className="sticky top-0 flex w-full items-center rounded-t-xl p-3.5 px-8 shadow-primary-sm">
       <div>
         <Link href={"/"}>
           <Image
@@ -31,8 +31,8 @@ const Navbar = () => {
           <Link className="ml-4" href={"/sign-up"}>
             Sign-up
           </Link>
-          <Link className="ml-4" href={"/sign-in"}>
-            Sign-in
+          <Link className="ml-4" href={"/login"}>
+            Login
           </Link>
         </>
       ) : (

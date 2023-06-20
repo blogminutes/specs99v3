@@ -27,7 +27,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     <main
       className={`min-h-[100vh] bg-primary px-8 pt-8  text-[#343a40] ${roboto.className}`}
     >
-      <div className="mx-auto flex flex-col rounded-2xl  shadow-primary-sm">
+      <div className="relative mx-auto flex h-[calc(100vh-4rem)] flex-col overflow-auto rounded-2xl  shadow-primary-sm">
         <ToastContainer position="bottom-left" />
         <Navbar />
         <Component {...pageProps} />

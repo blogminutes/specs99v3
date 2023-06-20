@@ -14,6 +14,7 @@ type Props<T> = {
   error: boolean;
   options: { name: string }[];
   multiple: boolean;
+  highlight?: boolean;
   labelColor?: string;
 };
 
@@ -30,6 +31,7 @@ const FormInputList = <T,>(props: Props<T>) => {
     error,
     options,
     multiple,
+    highlight = true,
   } = props;
 
   const labelModifier = labelColor ? labelColor : "currentColor";
@@ -57,7 +59,7 @@ const FormInputList = <T,>(props: Props<T>) => {
           className={`relative z-50 flex w-full min-w-[18rem] max-w-[18rem] items-center rounded-lg bg-primary px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2 focus:!outline-blue-700 ${
             hasError
               ? "outline !outline-1 outline-red-500"
-              : !error
+              : !error && highlight
               ? "outline !outline-1 outline-secondary"
               : ""
           }`}

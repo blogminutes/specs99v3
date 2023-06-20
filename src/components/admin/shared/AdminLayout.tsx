@@ -15,4 +15,4 @@ const AdminLayout: React.FC<LayoutProps> = (props) => {
   );
 };
 
-export default withAuth(AdminLayout);
+export default AdminLayout;
