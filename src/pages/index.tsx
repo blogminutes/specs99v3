@@ -12,11 +12,24 @@ import Carousel from "~/components/ui/carousel/Carousel";
 import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Autoplay, FreeMode, Pagination } from "swiper";
+import SwiperCore, {
+  Autoplay,
+  FreeMode,
+  Pagination,
+  Grid,
+  Navigation,
+} from "swiper";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import "swiper/css/grid";
+import {
+  CaretLeftIcon,
+  CaretRightIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@radix-ui/react-icons";
 
 const heroCarouselData = [
   {
@@ -232,18 +245,35 @@ export default Home;
 const TrendsSection = () => {
   const swiperRef = useRef<SwiperCore | null>(null);
 
+  // const [hasPrev,setHasPrev]=useS
+
   const breakpoints = {
-    300: {
-      slidesPerView: 4,
+    250: {
+      slidesPerView: 2,
+      grid: {
+        rows: 2,
+        fill: "row" as "row",
+      },
+    },
+    350: {
+      slidesPerView: 3,
+      grid: {
+        rows: 2,
+        fill: "row" as "row",
+      },
     },
     780: {
       slidesPerView: 6,
+      grid: {
+        rows: 1,
+        fill: "row" as "row",
+      },
     },
   };
 
   const handleSkipSlides = () => {
     if (!swiperRef.current) return;
-    const numSlidesToSkip = 3; // Number of slides to skip
+    const numSlidesToSkip = 2; // Number of slides to skip
     const currentSlideIndex = swiperRef?.current?.activeIndex || 0;
     const targetSlideIndex = currentSlideIndex + numSlidesToSkip;
 
@@ -252,33 +282,31 @@ const TrendsSection = () => {
 
   const handlePrevSlides = () => {
     if (!swiperRef.current) return;
-    const numSlidesToSkip = -3; // Number of slides to skip
+    const numSlidesToSkip = -2; // Number of slides to skip
     const currentSlideIndex = swiperRef?.current?.activeIndex || 0;
     const targetSlideIndex = currentSlideIndex + numSlidesToSkip;
+
+    console.log(swiperRef?.current?.activeIndex);
 
     swiperRef?.current.slideTo(targetSlideIndex, 500); // 500ms for transition duration
   };
 
   return (
-    <div className="flex w-full flex-col gap-[min(3vh,3vw)]">
+    <div className="relative flex w-full flex-col gap-[min(3vh,3vw)]">
       <h3 className="text-3xl font-medium">Trends</h3>
       <div className="h-fit w-full">
         <Swiper
           breakpoints={breakpoints}
-          spaceBetween={"10vw"}
+          spaceBetween={"12vw"}
           onSwiper={(swiper) => (swiperRef.current = swiper)}
-          freeMode={true}
-          // pagination={{
-          //   clickable: true,
-          // }}
-          modules={[FreeMode, Pagination, Autoplay]}
+          modules={[Grid, Pagination, Navigation]}
           className="w-full"
           direction={"horizontal"}
           speed={2000}
-          // wrapperClass="gap-[min(4vh,4vw)]"
+          loop={true}
         >
           {trends.map((trend, i) => (
-            <SwiperSlide key={i} className="py-6">
+            <SwiperSlide key={i} className="py-2">
               <Link
                 href={trend.link}
                 className="flex w-full flex-col overflow-hidden rounded-lg shadow-primary-sm"
@@ -286,7 +314,7 @@ const TrendsSection = () => {
                 <Image
                   src={trend.image}
                   alt={trend.name}
-                  className="h-[max(6vh,6vw)] w-full object-cover"
+                  className="h-[max(7vh,6vw)] w-full object-cover"
                   width={400}
                   height={400}
                 />
@@ -298,9 +326,19 @@ const TrendsSection = () => {
           ))}
         </Swiper>
 
-        <div>
-          <span onClick={handlePrevSlides}>prev</span>
-          <span onClick={handleSkipSlides}>next</span>
+        <div className="absolute right-3 top-3 flex gap-4">
+          <span
+            onClick={handlePrevSlides}
+            className="h-6 w-6 cursor-pointer rounded-full bg-secondary shadow-sm"
+          >
+            <CaretLeftIcon height={24} width={24} fill="#fff" color="white" />
+          </span>
+          <span
+            onClick={handleSkipSlides}
+            className="h-6 w-6 cursor-pointer rounded-full bg-secondary shadow-sm"
+          >
+            <CaretRightIcon height={24} width={24} fill="#fff" color="white" />
+          </span>
         </div>
       </div>
     </div>

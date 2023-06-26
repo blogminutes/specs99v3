@@ -15,6 +15,7 @@ import {
 } from "~/utils/productHelpers";
 import Image from "next/image";
 import AdminLayout from "~/components/admin/shared/AdminLayout";
+import { supabaseClient } from "~/utils/supabase/supabase";
 
 const CreateProductPage = () => {
   const brandInput = useInput<string>(validators.wordLengthValidator(2), "");
@@ -53,13 +54,15 @@ const CreateProductPage = () => {
     frameColors[0]?.name || "Frame Color"
   );
 
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedCoverImage, setSelectedCoverImage] = useState<File | null>(
+    null
+  );
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-    setSelectedFile(file);
+    setSelectedCoverImage(file);
 
     // Create a FileReader to read the image file
     const reader = new FileReader();
@@ -71,7 +74,7 @@ const CreateProductPage = () => {
 
   // Images
 
-  const [_, setSelectedImages] = useState<File[] | null>(null);
+  const [selectedImages, setSelectedImages] = useState<File[] | null>(null);
   const [imagesPreviewUrls, setImagesPreviewUrls] = useState<string[] | null>(
     null
   );
@@ -87,28 +90,14 @@ const CreateProductPage = () => {
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (previewUrl && selectedFile) {
-      // const formData = new FormData();
-      // formData.append("image", selectedFile);
-      const encodedData = encodeURIComponent(previewUrl);
-      console.log(encodedData, decodeURIComponent(encodedData));
-      // re.mutateAsync({
-      //   coverImage: "",
-      //   brand: brandInput.value,
-      //   category: categoriesInput.value,
-      //   description: descriptionInput.value,
-      //   frameBody: frameBodyInput.value,
-      //   frameColor: frameColorInput.value,
-      //   lens: lensInput.value,
-      //   lensColor: lensColorInput.value,
-      //   model: modleInput.value,
-      //   mrp: mrpInput.value,
-      //   price: priceInput.value,
-      //   size: sizeInput.value,
-      // });
+    if (selectedCoverImage) {
+      const res = await supabaseClient.storage
+        .from("specs-99-bucket")
+        .upload(selectedCoverImage.name, selectedCoverImage);
+      console.log(res);
     }
   };
 
@@ -194,7 +183,7 @@ const CreateProductPage = () => {
           />
           <FormInputList
             {...frameColorInput}
-            lable="Lens Color"
+            lable="Frame Color"
             errorMessage="Please select frame color."
             options={frameColors}
             multiple={false}

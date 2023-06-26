@@ -23,9 +23,9 @@ const Navbar = () => {
           />
         </Link>
       </div>
-      {/* <Link className="ml-auto" href={"/admin/products/create"}>
+      <Link className="ml-auto" href={"/admin/products/create"}>
         Add Product
-      </Link> */}
+      </Link>
       {status !== "authenticated" ? (
         <>
           <Link className="ml-auto" href={"/sign-up"}>
