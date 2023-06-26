@@ -12,7 +12,7 @@ import {
   lensColors,
   lensTypes,
   sizes,
-} from "~/pages/admin/products/create/productHelpers";
+} from "~/utils/productHelpers";
 import Image from "next/image";
 import AdminLayout from "~/components/admin/shared/AdminLayout";
 

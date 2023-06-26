@@ -11,7 +11,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 flex w-full items-center rounded-t-xl bg-bg-primary p-3.5 px-8 shadow-primary-sm">
+    <nav className="sticky top-0 z-50 flex w-full items-center rounded-t-xl bg-bg-primary p-3.5 px-[min(3vh,3vw)] shadow-primary-sm">
       <div>
         <Link href={"/"}>
           <Image
@@ -19,16 +19,16 @@ const Navbar = () => {
             alt="specs99 brand logo"
             width={144}
             height={32}
-            className="h-8 w-36"
+            className=" max-[600px]:h-[min(6vh,6vw)] max-[600px]:w-[min(24vh,24vw)]"
           />
         </Link>
       </div>
-      <Link className="ml-auto" href={"/admin/products/create"}>
+      {/* <Link className="ml-auto" href={"/admin/products/create"}>
         Add Product
-      </Link>
+      </Link> */}
       {status !== "authenticated" ? (
         <>
-          <Link className="ml-4" href={"/sign-up"}>
+          <Link className="ml-auto" href={"/sign-up"}>
             Sign-up
           </Link>
           <Link className="ml-4" href={"/login"}>
