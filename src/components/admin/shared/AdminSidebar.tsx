@@ -93,8 +93,6 @@ const AdminSidebar = () => {
 export default AdminSidebar;
 
 const LinkTree: React.FC<{ category: ISidebarLink }> = (props) => {
-  const [show, setShow] = useState(false);
-
   const parent = useRef(null);
 
   useEffect(() => {

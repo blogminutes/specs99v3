@@ -1,7 +1,6 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@radix-ui/react-icons";
-import { object, string } from "square/dist/types/schema";
 
 type Props<T> = {
   hasError: boolean;
@@ -25,7 +24,6 @@ const FormInputList = <T,>(props: Props<T>) => {
     onBlur,
     lable,
     value,
-    errorMessage,
     onFocus,
     labelColor,
     error,

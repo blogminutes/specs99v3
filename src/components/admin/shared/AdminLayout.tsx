@@ -1,6 +1,5 @@
 import React from "react";
 import AdminSidebar from "./AdminSidebar";
-import { withAuth } from "~/components/auth/withAuth";
 
 export interface LayoutProps {
   children: React.ReactNode;

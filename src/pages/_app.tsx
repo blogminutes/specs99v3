@@ -1,13 +1,12 @@
 import { type AppType } from "next/app";
-import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import Navbar from "~/components/shared/Navbar";
 import { Roboto } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { SessionProvider, useSession } from "next-auth/react";
-import { AppProps } from "next/app";
+import { SessionProvider } from "next-auth/react";
+import { type AppProps } from "next/app";
 
 const roboto = Roboto({
   weight: ["400", "500", "300", "700"],

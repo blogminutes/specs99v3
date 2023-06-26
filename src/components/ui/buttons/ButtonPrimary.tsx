@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from "react";
+import React, { type HTMLAttributes } from "react";
 import { motion } from "framer-motion";
 import { ThreeDots } from "react-loader-spinner";
 
@@ -9,7 +9,9 @@ const ButtonPrimary: React.FC<{
 }> = (props) => {
   return (
     <motion.button
-      className={`relative ml-auto mt-6 w-fit overflow-hidden rounded-lg px-8 py-1 text-lg font-medium text-grey-medium shadow-primary-xsm ${props.className}`}
+      className={`relative ml-auto mt-6 w-fit overflow-hidden rounded-lg px-8 py-1 text-lg font-medium text-grey-medium shadow-primary-xsm ${
+        props.className || ""
+      }`}
       type="submit"
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.97 }}

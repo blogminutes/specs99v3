@@ -24,11 +24,9 @@ const FormInput: React.FC<Props> = (props) => {
     value,
     errorMessage,
     onFocus,
-    labelColor,
     error,
   } = props;
 
-  const labelModifier = labelColor ? labelColor : "currentColor";
   const [inititalType, setInitialType] = useState(type);
 
   const toggleTypeToText = () => {

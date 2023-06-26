@@ -1,4 +1,4 @@
-import Image, { StaticImageData } from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import React, { useState } from "react";
 
 type ComponentProps = {
@@ -18,6 +18,7 @@ const Carousel: React.FC<ComponentProps> = (props) => {
     >
       {props.data.map((slide, i) => (
         <div
+          key={i}
           className="absolute h-full w-full min-w-full shadow-sm transition-[all,2s]"
           style={{ transform: `translateX(${(i - currentSlide) * 100}%)` }}
         >
@@ -33,8 +34,9 @@ const Carousel: React.FC<ComponentProps> = (props) => {
       <div className="absolute bottom-[3%] left-1/2 flex -translate-x-1/2 gap-2 rounded-md bg-white bg-opacity-70 px-4 py-1 shadow-lg">
         {props.data.map((slide, i) => (
           <span
-            className={`bg- h-2 w-2 cursor-pointer rounded-full bg-gray-500 ${
-              currentSlide === i && "!bg-black"
+            key={i}
+            className={`bg- h-2 w-2 cursor-pointer rounded-full ${
+              currentSlide === i ? "!bg-black" : " bg-gray-500"
             }`}
             onClick={() => {
               setCurrentSlide(i);

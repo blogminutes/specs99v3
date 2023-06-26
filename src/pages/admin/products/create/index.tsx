@@ -14,14 +14,9 @@ import {
   sizes,
 } from "~/pages/admin/products/create/productHelpers";
 import Image from "next/image";
-import { api } from "~/utils/api";
 import AdminLayout from "~/components/admin/shared/AdminLayout";
 
 const CreateProductPage = () => {
-  const apiContext = api.useContext();
-
-  const re = api.admin.createProduct.useMutation();
-
   const brandInput = useInput<string>(validators.wordLengthValidator(2), "");
   const modleInput = useInput<string>(validators.wordLengthValidator(5), "");
   const descriptionInput = useInput<string>(
@@ -76,7 +71,7 @@ const CreateProductPage = () => {
 
   // Images
 
-  const [selectedImages, setSelectedImages] = useState<File[] | null>(null);
+  const [_, setSelectedImages] = useState<File[] | null>(null);
   const [imagesPreviewUrls, setImagesPreviewUrls] = useState<string[] | null>(
     null
   );

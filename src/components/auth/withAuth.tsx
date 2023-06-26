@@ -1,18 +1,18 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import React, { ComponentType, useEffect } from "react";
+import React, { type ComponentType, useEffect } from "react";
 
 type WithAuthProps = {
   // Define any specific props your HOC needs
 };
-const publicPaths = ["/", "/sign-in*", "/sign-up*"];
+// const publicPaths = ["/", "/sign-in*", "/sign-up*"];
 const adminPaths = ["/admin*"];
 
-const isPublic = (path: string) => {
-  return publicPaths.find((x) =>
-    path.match(new RegExp(`^${x}$`.replace("*$", "($|/)")))
-  );
-};
+// const isPublic = (path: string) => {
+//   return publicPaths.find((x) =>
+//     path.match(new RegExp(`^${x}$`.replace("*$", "($|/)")))
+//   );
+// };
 
 const isAdmin = (path: string) => {
   return adminPaths.find((x) =>
@@ -24,7 +24,7 @@ export const withAuth = <P extends WithAuthProps>(
   WrappedComponent: ComponentType<P>
 ) => {
   const AuthComponent: ComponentType<P> = (props) => {
-    const { status, data } = useSession();
+    const { status } = useSession();
     const router = useRouter();
 
     useEffect(() => {

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
-  const { data, status, update } = useSession();
+  const { status } = useSession();
 
   return (
     <nav className="sticky top-0 z-50 flex w-full items-center rounded-t-xl bg-bg-primary p-3.5 px-8 shadow-primary-sm">
