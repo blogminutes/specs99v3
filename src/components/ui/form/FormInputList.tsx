@@ -56,7 +56,7 @@ const FormInputList = <T,>(props: Props<T>) => {
         <Listbox.Button
           onFocus={onFocus}
           onBlur={onBlur}
-          className={`relative z-50 flex w-full min-w-[18rem] max-w-[18rem] items-center rounded-lg bg-primary px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2 focus:!outline-blue-700 ${
+          className={`relative z-50 flex w-full min-w-[18rem] max-w-[18rem] items-center rounded-lg bg-bg-primary px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2 focus:!outline-blue-700 ${
             hasError
               ? "outline !outline-1 outline-red-500"
               : !error && highlight
@@ -82,7 +82,7 @@ const FormInputList = <T,>(props: Props<T>) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Listbox.Options className="absolute top-[4.5rem] z-[200] mt-1 max-h-60 w-full overflow-auto rounded-md bg-primary text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          <Listbox.Options className="absolute top-[4.5rem] z-[200] mt-1 max-h-60 w-full overflow-auto rounded-md bg-bg-primary text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {options.map((option, optionIdx) => (
               <Listbox.Option
                 key={optionIdx}

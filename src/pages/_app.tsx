@@ -6,8 +6,8 @@ import Navbar from "~/components/shared/Navbar";
 import { Roboto } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect } from "react";
-import { getUser, useAuthStore } from "~/utils/zustand/authStore/useAuthStore";
+import { SessionProvider, useSession } from "next-auth/react";
+import { AppProps } from "next/app";
 
 const roboto = Roboto({
   weight: ["400", "500", "300", "700"],
@@ -16,23 +16,22 @@ const roboto = Roboto({
   display: "swap",
 });
 
-const MyApp: AppType = ({ Component, pageProps }) => {
-  const authStore = useAuthStore((s) => s);
-
-  useEffect(() => {
-    getUser(authStore);
-  }, []);
-
+const MyApp: AppType = ({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) => {
   return (
-    <main
-      className={`min-h-[100vh] bg-primary px-8 pt-8  text-[#343a40] ${roboto.className}`}
-    >
-      <div className="relative mx-auto flex h-[calc(100vh-4rem)] flex-col overflow-auto rounded-2xl  shadow-primary-sm">
-        <ToastContainer position="bottom-left" />
-        <Navbar />
-        <Component {...pageProps} />
-      </div>
-    </main>
+    <SessionProvider session={pageProps?.session}>
+      <main
+        className={`min-h-[100vh] bg-bg-primary p-8 text-[#343a40]   max-[1200px]:p-0 ${roboto.className}`}
+      >
+        <div className="relative mx-auto flex h-[calc(100vh-4rem)]  flex-col overflow-auto rounded-2xl shadow-primary-sm max-[1200px]:min-h-[100vh]">
+          <ToastContainer position="bottom-left" />
+          <Navbar />
+          <Component {...pageProps} />
+        </div>
+      </main>
+    </SessionProvider>
   );
 };
 

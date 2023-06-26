@@ -8,7 +8,7 @@ export interface LayoutProps {
 
 const AdminLayout: React.FC<LayoutProps> = (props) => {
   return (
-    <div className="mx-auto flex min-h-[50rem] shadow-primary-sm ">
+    <div className="mx-auto flex h-full min-h-[50rem]">
       <AdminSidebar />
       <div className="w-[80%]">{props.children}</div>
     </div>

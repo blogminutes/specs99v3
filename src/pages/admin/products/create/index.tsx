@@ -215,7 +215,7 @@ const CreateProductPage = () => {
               onChange={handleFileChange}
               className="pointer-events-none h-0 w-0 opacity-0"
             />
-            <label htmlFor="coverImage" className="w-full  bg-primary  ">
+            <label htmlFor="coverImage" className="w-full  bg-bg-primary  ">
               {previewUrl ? (
                 <Image
                   className="h-14 w-14 overflow-hidden rounded-full object-scale-down shadow-md"
@@ -241,7 +241,10 @@ const CreateProductPage = () => {
               onChange={handleImagesChange}
               className="pointer-events-none h-0 w-0 opacity-0  focus:!outline-blue-700"
             />
-            <label htmlFor="images" className="flex  w-full  gap-2 bg-primary">
+            <label
+              htmlFor="images"
+              className="flex  w-full  gap-2 bg-bg-primary"
+            >
               {imagesPreviewUrls ? (
                 imagesPreviewUrls.map((url) => (
                   <Image

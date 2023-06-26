@@ -1,15 +1,12 @@
-import React, { use, useEffect } from "react";
+import React, { use, useEffect, useState } from "react";
 import Link from "next/link";
 import useInput from "~/hooks/useInput";
 import * as validators from "~/utils/form-validation/form-validations";
-
-import {
-  loginUser,
-  useAuthStore,
-} from "~/utils/zustand/authStore/useAuthStore";
+import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import FormInput from "~/components/ui/form/FormInput";
 import ButtonPrimary from "~/components/ui/buttons/ButtonPrimary";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const emailInput = useInput<string>(validators.emailValidator, "");
@@ -17,8 +14,9 @@ const LoginPage = () => {
 
   const router = useRouter();
 
-  const authStore = useAuthStore((s) => s);
-  const { loggedIn, user } = authStore;
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { status } = useSession();
 
   const onSubmit: React.FormEventHandler = async (e) => {
     e.preventDefault();
@@ -32,18 +30,33 @@ const LoginPage = () => {
       passwordInput.onBlur();
       return;
     }
-    loginUser(emailInput.value, passwordInput.value, authStore);
+    setIsLoading(true);
+    const res = await signIn("credentials", {
+      redirect: false,
+      email: emailInput.value,
+      password: passwordInput.value,
+    });
+    if (res?.error) {
+      toast.error(res.error);
+    }
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    if (loggedIn) {
+    if (status === "authenticated") {
       router.push("/");
     }
-  }, [loggedIn]);
+  }, [status]);
+
+  const usersession = useSession();
+
+  useEffect(() => {
+    console.log(usersession);
+  }, [usersession]);
 
   return (
     <div className="mt-[20vh] flex items-center">
-      <div className="mx-auto w-fit min-w-[40vh] rounded-xl bg-primary px-8 py-8 shadow-primary-sm">
+      <div className="mx-auto w-fit min-w-[40vh] rounded-xl bg-bg-primary px-8 py-8 shadow-primary-sm">
         <h2 className="mx-auto mb-8 bg-gradient-to-b from-primary to-secondary bg-clip-text text-center text-3xl font-medium text-transparent">
           Login
         </h2>
@@ -61,7 +74,11 @@ const LoginPage = () => {
             errorMessage="Password must contain 8 characters."
           />
 
-          <ButtonPrimary text="Submit" className="w-fit" />
+          <ButtonPrimary
+            isLoading={isLoading}
+            text="Submit"
+            className="w-fit"
+          />
           <p className="ml-auto mt-2 text-center text-sm">
             Not a member?{" "}
             <Link href={"/sign-up"} className="text-secondary">

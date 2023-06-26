@@ -1,17 +1,13 @@
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import {
-  logoutUser,
-  useAuthStore,
-} from "~/utils/zustand/authStore/useAuthStore";
+import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
-  const authStore = useAuthStore((s) => s);
-  const { loggedIn } = authStore;
+  const { data, status, update } = useSession();
 
   return (
-    <nav className="sticky top-0 flex w-full items-center rounded-t-xl p-3.5 px-8 shadow-primary-sm">
+    <nav className="sticky top-0 z-50 flex w-full items-center rounded-t-xl bg-bg-primary p-3.5 px-8 shadow-primary-sm">
       <div>
         <Link href={"/"}>
           <Image
@@ -26,7 +22,7 @@ const Navbar = () => {
       <Link className="ml-auto" href={"/admin/products/create"}>
         Add Product
       </Link>
-      {!loggedIn ? (
+      {status !== "authenticated" ? (
         <>
           <Link className="ml-4" href={"/sign-up"}>
             Sign-up
@@ -36,10 +32,7 @@ const Navbar = () => {
           </Link>
         </>
       ) : (
-        <button
-          className="ml-4 cursor-pointer"
-          onClick={() => logoutUser(authStore)}
-        >
+        <button className="ml-4 cursor-pointer" onClick={() => signOut()}>
           {" "}
           Logout
         </button>

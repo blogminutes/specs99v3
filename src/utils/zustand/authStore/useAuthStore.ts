@@ -1,67 +1,34 @@
-import { create } from "zustand";
 import { toast } from "react-toastify";
-import { IAuthStore, IUser } from "./authTypes";
+import { signIn } from "next-auth/react";
+import { api } from "~/utils/api";
+import { Dispatch, SetStateAction } from "react";
 
-export const useAuthStore = create<IAuthStore>((set) => ({
-  loggedIn: false,
-  user: null,
-  setUser: (loggedIn, user) => {
-    set({ loggedIn, user });
-  },
-}));
-
-export const getUser = async (authStore: IAuthStore) => {
-  try {
-    // const userDetails = await account.get();
-    // authStore.setUser(true, userDetails);
-    // console.log(userDetails);
-  } catch (error: any) {
-    authStore.setUser(false, null);
-  }
-};
+export type ApiContextType = ReturnType<typeof api.useContext>;
 
 export const signUp = async (
+  apiContext: ApiContextType,
   name: string,
   email: string,
   password: string,
-  authStore: IAuthStore
+  setIsLoading: Dispatch<SetStateAction<boolean>>
 ) => {
   try {
-    // const userDetails = await account.create(
-    //   ID.unique(),
-    //   email,
-    //   password,
-    //   name
-    // );
-    // authStore.setUser(true, userDetails);
-    // toast.success("Account created successfully");
-  } catch (error: any) {
-    console.log(error);
-    toast.error(error?.message || "Something Went Wrong!");
-  }
-};
+    setIsLoading(true);
+    const res = await apiContext.authentication["sign-up"].fetch({
+      name,
+      email,
+      password,
+    });
 
-export const loginUser = async (
-  email: string,
-  password: string,
-  authStore: IAuthStore
-) => {
-  try {
-    // await account.createEmailSession(email, password);
-    // const userDetails = await account.get();
-    // authStore.setUser(true, userDetails);
+    await signIn("credentials", {
+      redirect: false,
+      email: email,
+      password: password,
+    });
+    setIsLoading(false);
   } catch (error: any) {
     console.log(error);
     toast.error(error?.message || "Something Went Wrong!");
-  }
-};
-
-export const logoutUser = async (authStore: IAuthStore) => {
-  try {
-    // console.log(await account.deleteSessions());
-    authStore.setUser(false, null);
-  } catch (error: any) {
-    console.log(error);
-    toast.error(error?.message || "Something Went Wrong!");
+    setIsLoading(false);
   }
 };

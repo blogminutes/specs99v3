@@ -4,14 +4,36 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
-  provider = "mysql"
-  url = env("DATABASE_URL")
-  relationMode = "prisma"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // relationMode = "prisma"
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("user") 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id               Int      @id @default(autoincrement())
+  brand            String
+  model            String  
+  description      String
+  mrp              Int  
+  price            String  
+  category         String[]
+  updatedAt        DateTime @updatedAt
 }

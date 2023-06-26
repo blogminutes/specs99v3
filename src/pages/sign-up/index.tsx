@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import useInput from "~/hooks/useInput";
 import * as validators from "~/utils/form-validation/form-validations";
 import { api } from "~/utils/api";
-import { signUp, useAuthStore } from "~/utils/zustand/authStore/useAuthStore";
+import { signUp } from "~/utils/zustand/authStore/useAuthStore";
 import { useRouter } from "next/router";
 import FormInput from "~/components/ui/form/FormInput";
 import ButtonPrimary from "~/components/ui/buttons/ButtonPrimary";
+import { useSession } from "next-auth/react";
 
-const SignUp = () => {
+const SignUpPage = () => {
   const emailInput = useInput<string>(validators.emailValidator, "");
   const passwordInput = useInput<string>(validators.passwordValidator, "");
   const nameInput = useInput<string>(validators.passwordValidator, "");
@@ -16,8 +17,9 @@ const SignUp = () => {
   const router = useRouter();
   const apiContext = api.useContext();
 
-  const authStore = useAuthStore((s) => s);
-  const { loggedIn, user } = authStore;
+  const { status, update } = useSession();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit: React.FormEventHandler = async (e) => {
     e.preventDefault();
@@ -35,18 +37,24 @@ const SignUp = () => {
       return;
     }
 
-    signUp(nameInput.value, emailInput.value, passwordInput.value, authStore);
+    signUp(
+      apiContext,
+      nameInput.value,
+      emailInput.value,
+      passwordInput.value,
+      setIsLoading
+    );
   };
 
   useEffect(() => {
-    if (loggedIn) {
+    if (status === "authenticated") {
       router.push("/");
     }
-  }, [loggedIn]);
+  }, [status]);
 
   return (
     <div className="mt-[20vh] flex items-center">
-      <div className="mx-auto w-fit min-w-[40vh] rounded-xl bg-primary px-10 py-12 shadow-primary-sm">
+      <div className="mx-auto w-fit min-w-[40vh] rounded-xl bg-bg-primary px-10 py-12 shadow-primary-sm">
         <h2 className="mx-auto mb-8 bg-gradient-to-b from-primary to-secondary bg-clip-text text-center text-3xl font-medium text-transparent">
           Sign-Up
         </h2>
@@ -73,7 +81,11 @@ const SignUp = () => {
             labelColor="easd"
           />
 
-          <ButtonPrimary text="Submit" className="w-fit" />
+          <ButtonPrimary
+            isLoading={isLoading}
+            text="Submit"
+            className="w-fit"
+          />
           <p className="ml-auto mt-2 text-center text-sm">
             Already a member?{" "}
             <Link href={"/sign-in"} className="text-secondary">
@@ -86,4 +98,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUpPage;

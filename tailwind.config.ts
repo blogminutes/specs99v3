@@ -13,7 +13,7 @@ export default {
         "grey-light": "#868e96",
       },
       backgroundColor: {
-        primary: "#EFF5F5",
+        "bg-primary": "#EFF5F5",
       },
       boxShadow: {
         "primary-sm": "5px 5px 8px #dce1e1,-5px -5px 8px #ffffff",
