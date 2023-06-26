@@ -125,7 +125,7 @@ const CreateProductPage = () => {
           Create Product
         </h3>
         <form
-          className="flex flex-wrap gap-20 gap-y-10"
+          className="grid grid-cols-3 gap-[min(10vh,10vw)] gap-y-10"
           onSubmit={handleSubmit}
         >
           <FormInput
@@ -206,7 +206,7 @@ const CreateProductPage = () => {
             multiple={false}
             highlight={false}
           />
-          <div className="flex min-w-[18rem] flex-col gap-0">
+          <div className="flex flex-col gap-0">
             <label htmlFor="coverImage">Cover Image</label>
             <input
               id="coverImage"
@@ -225,13 +225,13 @@ const CreateProductPage = () => {
                   alt="Selected Image"
                 />
               ) : (
-                <span className="mt-2 block w-full min-w-[18rem] rounded-lg px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2">
+                <span className="mt-2 block w-full rounded-lg px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2">
                   Select Image
                 </span>
               )}
             </label>
           </div>
-          <div className="flex min-w-[18rem] flex-col gap-0">
+          <div className="flex flex-col gap-0">
             <label htmlFor="images">Images</label>
             <input
               id="images"
@@ -256,7 +256,7 @@ const CreateProductPage = () => {
                   />
                 ))
               ) : (
-                <span className="mt-2 block w-full min-w-[18rem] rounded-lg px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2">
+                <span className="mt-2 block w-full rounded-lg px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2">
                   Select Images
                 </span>
               )}

@@ -1,5 +1,5 @@
 export const emailValidator = (val: string) => {
-  var validRegex =
+  const validRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   return val.match(validRegex) ? true : false;
 };
@@ -21,7 +21,7 @@ export const wordLengthValidator = (count: number) => {
 export const numberValidator = (count: number, lessThan?: boolean) => {
   const check = lessThan ? "<=" : ">=";
   return (val: string) => {
-    return eval(Number(val) + check + count);
+    return eval(Number(val) + check + count) as string;
   };
 };
 

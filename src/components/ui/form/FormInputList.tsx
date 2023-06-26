@@ -45,7 +45,7 @@ const FormInputList = <T,>(props: Props<T>) => {
       }}
       multiple={multiple}
     >
-      <div className="relative flex flex-col gap-2">
+      <div className="relative flex w-full flex-col gap-2">
         <label
           className="text-grey-light"
           htmlFor={`form-${lable.toLowerCase().split(" ").join("-")}`}
@@ -56,7 +56,7 @@ const FormInputList = <T,>(props: Props<T>) => {
         <Listbox.Button
           onFocus={onFocus}
           onBlur={onBlur}
-          className={`relative z-50 flex w-full min-w-[18rem] max-w-[18rem] items-center rounded-lg bg-bg-primary px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2 focus:!outline-blue-700 ${
+          className={`relative z-50 flex w-full items-center rounded-lg bg-bg-primary px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2 focus:!outline-blue-700 ${
             hasError
               ? "outline !outline-1 outline-red-500"
               : !error && highlight
