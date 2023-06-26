@@ -53,8 +53,8 @@ const SignUpPage = () => {
   }, [status]);
 
   return (
-    <div className="mt-[20vh] flex items-center">
-      <div className="mx-auto w-fit min-w-[40vh] rounded-xl bg-bg-primary px-10 py-12 shadow-primary-sm">
+    <div className="my-auto flex items-center">
+      <div className=" mx-auto w-[min(45vh,90vw)] rounded-xl bg-bg-primary px-[min(4vh,4vw)] py-[min(4vh,4vw)] shadow-primary-sm">
         <h2 className="mx-auto mb-8 bg-gradient-to-b from-primary to-secondary bg-clip-text text-center text-3xl font-medium text-transparent">
           Sign-Up
         </h2>
@@ -64,21 +64,18 @@ const SignUpPage = () => {
             type="text"
             lable="Name"
             errorMessage="Password must contain 3 characters."
-            labelColor="easd"
           />
           <FormInput
             {...emailInput}
             type="email"
             lable="Email"
             errorMessage="Please provide a valid email."
-            labelColor="easd"
           />
           <FormInput
             {...passwordInput}
             type="password"
             lable="Password"
             errorMessage="Password must contain 8 characters."
-            labelColor="easd"
           />
 
           <ButtonPrimary

@@ -55,8 +55,8 @@ const LoginPage = () => {
   }, [usersession]);
 
   return (
-    <div className="mt-[20vh] flex items-center">
-      <div className="mx-auto w-fit min-w-[40vh] rounded-xl bg-bg-primary px-8 py-8 shadow-primary-sm">
+    <div className="my-auto flex items-center">
+      <div className="mx-auto w-[min(45vh,90vw)] rounded-xl bg-bg-primary px-[min(4vh,4vw)] py-[min(4vh,4vw)] shadow-primary-sm">
         <h2 className="mx-auto mb-8 bg-gradient-to-b from-primary to-secondary bg-clip-text text-center text-3xl font-medium text-transparent">
           Login
         </h2>

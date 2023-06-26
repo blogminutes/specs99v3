@@ -41,7 +41,7 @@ const FormInput: React.FC<Props> = (props) => {
         <label
           className="text-grey-light"
           htmlFor={`form-${lable.toLowerCase().split(" ").join("-")}`}
-          style={{ color: labelModifier }}
+          // style={{ color: labelModifier }}
         >
           {lable}
         </label>
@@ -52,7 +52,7 @@ const FormInput: React.FC<Props> = (props) => {
       </div>
       <div className="form-input relative">
         <input
-          className={`w-full min-w-[18rem] rounded-lg bg-bg-primary px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2 focus:!outline-blue-700 ${
+          className={`w-full rounded-lg bg-bg-primary px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2 focus:!outline-blue-700 ${
             hasError
               ? "outline !outline-1 outline-red-500"
               : !error
