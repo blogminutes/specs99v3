@@ -6,6 +6,10 @@ import { useSession, signOut } from "next-auth/react";
 const Navbar = () => {
   const { status } = useSession();
 
+  const handleLogout = () => {
+    signOut();
+  };
+
   return (
     <nav className="sticky top-0 z-50 flex w-full items-center rounded-t-xl bg-bg-primary p-3.5 px-8 shadow-primary-sm">
       <div>
@@ -32,12 +36,7 @@ const Navbar = () => {
           </Link>
         </>
       ) : (
-        <button
-          className="ml-4 cursor-pointer"
-          onClick={async () => {
-            await signOut();
-          }}
-        >
+        <button className="ml-4 cursor-pointer" onClick={handleLogout}>
           {" "}
           Logout
         </button>
