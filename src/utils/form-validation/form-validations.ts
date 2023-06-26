@@ -19,9 +19,8 @@ export const wordLengthValidator = (count: number) => {
 };
 
 export const numberValidator = (count: number, lessThan?: boolean) => {
-  const check = lessThan ? "<=" : ">=";
   return (val: string) => {
-    return eval(Number(val) + check + count) as boolean;
+    return lessThan ? Number(val) <= count : Number(val) >= count;
   };
 };
 
