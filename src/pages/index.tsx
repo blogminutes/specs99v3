@@ -252,21 +252,21 @@ const TrendsSection = () => {
       slidesPerView: 2,
       grid: {
         rows: 2,
-        fill: "row" as "row",
+        fill: "row" as "row" | "column" | undefined,
       },
     },
     350: {
       slidesPerView: 3,
       grid: {
         rows: 2,
-        fill: "row" as "row",
+        fill: "row" as "row" | "column" | undefined,
       },
     },
     780: {
       slidesPerView: 6,
       grid: {
         rows: 1,
-        fill: "row" as "row",
+        fill: "row" as "row" | "column" | undefined,
       },
     },
   };
