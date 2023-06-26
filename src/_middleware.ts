@@ -1,6 +1,6 @@
+import { useSession } from "next-auth/react";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { useAuthStore } from "./utils/zustand/authStore/useAuthStore";
 
 // Set the paths that don't require the user to be signed in
 const publicPaths = ["/", "/sign-in*", "/sign-up*"];
@@ -18,7 +18,7 @@ const isAdmin = (path: string) => {
   );
 };
 
-const { loggedIn, user } = useAuthStore();
+const { status } = useSession();
 
 export function middleware(request: NextRequest) {
   if (
@@ -29,15 +29,15 @@ export function middleware(request: NextRequest) {
   }
   // if the user is not signed in redirect them to the sign in page.
 
-  if (!loggedIn) {
+  if (status !== "authenticated") {
     // redirect the users to /pages/sign-in/[[...index]].ts
     const signInUrl = new URL("/sign-in", request.url);
     signInUrl.searchParams.set("redirect_url", request.url);
     return NextResponse.redirect(signInUrl);
   }
   if (
-    loggedIn &&
-    user?.prefs?.role === "admin" &&
+    status === "authenticated" &&
+    // user?.prefs?.role === "admin" &&
     isAdmin(request.nextUrl.pathname)
   ) {
     // redirect the users to /pages/sign-in/[[...index]].ts
