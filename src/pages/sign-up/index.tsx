@@ -17,11 +17,11 @@ const SignUpPage = () => {
   const router = useRouter();
   const apiContext = api.useContext();
 
-  const { status, update } = useSession();
+  const { status } = useSession();
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit: React.FormEventHandler = async (e) => {
+  const onSubmit: React.FormEventHandler = (e) => {
     e.preventDefault();
     if (
       emailInput.error ||

@@ -87,7 +87,7 @@ const CreateProductPage = () => {
     }
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (previewUrl && selectedFile) {
@@ -242,6 +242,7 @@ const CreateProductPage = () => {
               {imagesPreviewUrls ? (
                 imagesPreviewUrls.map((url) => (
                   <Image
+                    key={url}
                     className="h-14 w-14 overflow-hidden rounded-full object-scale-down shadow-md"
                     width={52}
                     height={52}

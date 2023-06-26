@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { InputFile, Storage } from "node-appwrite";
 
 export const createProductSchema = z.object({
   coverImage: z.string(),
@@ -20,11 +19,11 @@ export const adminRouter = createTRPCRouter({
   // PRODUCTS
   createProduct: publicProcedure
     .input(createProductSchema)
-    .mutation(async ({ input }) => {
+    .mutation(({ input }) => {
       console.log(input.coverImage);
       return "asas";
     }),
-  getAll: publicProcedure.query(async () => {
+  getAll: publicProcedure.query(() => {
     return { nest: "asas" };
   }),
 });

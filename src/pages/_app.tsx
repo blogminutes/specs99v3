@@ -15,12 +15,9 @@ const roboto = Roboto({
   display: "swap",
 });
 
-const MyApp: AppType = ({
-  Component,
-  pageProps: { session, ...pageProps },
-}: AppProps) => {
+const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
   return (
-    <SessionProvider session={pageProps?.session}>
+    <SessionProvider session={pageProps.session}>
       <main
         className={`min-h-[100vh] bg-bg-primary p-8 text-[#343a40]   max-[1200px]:p-0 ${roboto.className}`}
       >

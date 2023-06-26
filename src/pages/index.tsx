@@ -136,8 +136,11 @@ const Home: NextPage = () => {
                 waitForTransition: true,
               }}
             >
-              {heroBrandsLeft.map((image) => (
-                <SwiperSlide className="overflow-hidden rounded-lg shadow-primary-xsm">
+              {heroBrandsLeft.map((image, i) => (
+                <SwiperSlide
+                  key={i}
+                  className="overflow-hidden rounded-lg shadow-primary-xsm"
+                >
                   <Image
                     src={image}
                     alt="Brand Image"
@@ -147,8 +150,11 @@ const Home: NextPage = () => {
                   />
                 </SwiperSlide>
               ))}
-              {heroBrandsLeft.map((image) => (
-                <SwiperSlide className="overflow-hidden rounded-lg shadow-primary-xsm">
+              {heroBrandsLeft.map((image, i) => (
+                <SwiperSlide
+                  key={i}
+                  className="overflow-hidden rounded-lg shadow-primary-xsm"
+                >
                   <Image
                     src={image}
                     alt="Brand Image"
@@ -178,8 +184,11 @@ const Home: NextPage = () => {
                 waitForTransition: true,
               }}
             >
-              {heroBrandsLeft.map((image) => (
-                <SwiperSlide className="overflow-hidden rounded-lg shadow-primary-xsm">
+              {heroBrandsLeft.map((image, i) => (
+                <SwiperSlide
+                  key={i}
+                  className="overflow-hidden rounded-lg shadow-primary-xsm"
+                >
                   <Image
                     src={image}
                     alt="Brand Image"
@@ -189,8 +198,11 @@ const Home: NextPage = () => {
                   />
                 </SwiperSlide>
               ))}
-              {heroBrandsRight.map((image) => (
-                <SwiperSlide className="overflow-hidden rounded-lg shadow-primary-xsm">
+              {heroBrandsRight.map((image, i) => (
+                <SwiperSlide
+                  key={i}
+                  className="overflow-hidden rounded-lg shadow-primary-xsm"
+                >
                   <Image
                     src={image}
                     alt="Brand Image"

@@ -22,7 +22,7 @@ const useInput = <T>(
   const [value, setValue] = useState<T>(initialValue);
   const [isFocused, setIsFocused] = useState(false);
   const [isTouched, setIsTouched] = useState(false);
-  let valueIsValid = typeof value === "string" && validationFunction(value);
+  const valueIsValid = typeof value === "string" && validationFunction(value);
   const error = typeof value === "string" && !valueIsValid;
   const [showError, setShowError] = useState(false);
   const hasError = showError && error;

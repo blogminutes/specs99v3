@@ -28,7 +28,7 @@ export const signUp = async (
     setIsLoading(false);
   } catch (error: any) {
     console.log(error);
-    toast.error(error?.message || "Something Went Wrong!");
+    toast.error((error?.message as string) || "Something Went Wrong!");
     setIsLoading(false);
   }
 };
