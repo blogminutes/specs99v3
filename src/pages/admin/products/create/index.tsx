@@ -15,7 +15,6 @@ import {
 } from "~/pages/admin/products/create/productHelpers";
 import Image from "next/image";
 import { api } from "~/utils/api";
-import { createProductSchema } from "~/server/api/routers/admin";
 import AdminLayout from "~/components/admin/shared/AdminLayout";
 
 const CreateProductPage = () => {
