@@ -34,6 +34,20 @@ const FormInputList = <T,>(props: Props<T>) => {
 
   const labelModifier = labelColor ? labelColor : "currentColor";
 
+  function isArrayofStrings(value: any) {
+    if (!Array.isArray(value)) {
+      return false; // Not an array
+    }
+
+    for (let i = 0; i < value.length; i++) {
+      if (typeof value[i] !== "string") {
+        return false; // Not all elements are strings
+      }
+    }
+
+    return true; // All elements are strings
+  }
+
   return (
     <Listbox
       value={value}
@@ -63,9 +77,10 @@ const FormInputList = <T,>(props: Props<T>) => {
           }`}
         >
           <span className="max-w-[94%] overflow-hidden text-ellipsis whitespace-nowrap">
-            {(typeof value === "string" && value) ||
-              (Array.isArray(value) &&
-                value.map((person) => person).join(", "))}
+            {typeof value === "string" && value}
+            {Array.isArray(value) &&
+              isArrayofStrings(value) &&
+              (value.map((person) => person).join(", ") as any)}
           </span>
           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
             <ChevronDownIcon

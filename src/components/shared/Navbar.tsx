@@ -32,7 +32,12 @@ const Navbar = () => {
           </Link>
         </>
       ) : (
-        <button className="ml-4 cursor-pointer" onClick={() => signOut()}>
+        <button
+          className="ml-4 cursor-pointer"
+          onClick={async () => {
+            await signOut();
+          }}
+        >
           {" "}
           Logout
         </button>

@@ -126,7 +126,7 @@ const LinkTree: React.FC<{ category: ISidebarLink }> = (props) => {
             <Link
               href={link.href}
               className="flex items-center gap-1.5 text-sm"
-              key={link.href + category}
+              key={link.href}
             >
               {link.icon}
               {link.name}
