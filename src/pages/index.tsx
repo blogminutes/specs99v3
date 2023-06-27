@@ -32,6 +32,8 @@ import {
 } from "@radix-ui/react-icons";
 import { api } from "~/utils/api";
 import ContainerPrimary from "~/components/ui/container/ContainerPrimary";
+import { Product } from "@prisma/client";
+import ProductCard from "~/components/product/ProductCard";
 
 const heroCarouselData = [
   {
@@ -352,10 +354,12 @@ const TrendsSection = () => {
 const TopSunglasses = () => {
   const apiContext = api.useContext();
 
+  const [products, setProducts] = useState<Product[] | null>(null);
+
   useEffect(() => {
     const getProducts = async () => {
       const res = await apiContext.products.getProducts.fetch({});
-      console.log(res);
+      setProducts(res.products);
     };
 
     getProducts();
@@ -363,7 +367,20 @@ const TopSunglasses = () => {
   return (
     <div className="flex h-80 w-full flex-col gap-8">
       <h3 className="text-3xl font-medium">Top Sunglasses</h3>
-      <div className="flex gap-8"></div>
+      <div className="flex flex-wrap gap-8">
+        {products &&
+          products.map((product) => (
+            <ProductCard product={product} key={product.id} />
+          ))}
+        {products &&
+          products.map((product) => (
+            <ProductCard product={product} key={product.id} />
+          ))}
+        {products &&
+          products.map((product) => (
+            <ProductCard product={product} key={product.id} />
+          ))}
+      </div>
     </div>
   );
 };

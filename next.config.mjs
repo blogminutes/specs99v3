@@ -19,7 +19,12 @@ const config = {
     defaultLocale: "en",
   },
   images: {
-    domains: ["images.clerk.dev", "www.gravatar.com", "static1.lenskart.com"],
+    domains: [
+      "images.clerk.dev",
+      "www.gravatar.com",
+      "static1.lenskart.com",
+      "nmtkykwlqhubmtdfpoab.supabase.co",
+    ],
   },
 };
 
