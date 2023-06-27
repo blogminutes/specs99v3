@@ -9,7 +9,7 @@ const ButtonPrimary: React.FC<{
 }> = (props) => {
   return (
     <motion.button
-      className={`relative ml-auto mt-6 w-fit overflow-hidden rounded-lg px-8 py-1 text-lg font-medium text-grey-medium shadow-primary-xsm ${
+      className={`relative ml-auto mt-6 w-fit overflow-hidden rounded-lg bg-gradient-to-b from-primary to-secondary bg-clip-text px-8 py-1 text-lg font-medium text-grey-medium text-transparent shadow-primary-xsm ${
         props.className || ""
       }`}
       type="submit"

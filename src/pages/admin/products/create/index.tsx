@@ -4,20 +4,30 @@ import ButtonPrimary from "~/components/ui/buttons/ButtonPrimary";
 import useInput from "~/hooks/useInput";
 import FormInput from "~/components/ui/form/FormInput";
 import FormInputList from "~/components/ui/form/FormInputList";
+import { v4 as uuidv4 } from "uuid";
 
 import {
   categories,
+  enumToArray,
   frameBodyTypes,
   frameColors,
+  Genders,
   lensColors,
   lensTypes,
+  shapes,
   sizes,
 } from "~/utils/productHelpers";
 import Image from "next/image";
 import AdminLayout from "~/components/admin/shared/AdminLayout";
 import { supabaseClient } from "~/utils/supabase/supabase";
+import { api } from "~/utils/api";
+import { toast } from "react-toastify";
 
 const CreateProductPage = () => {
+  const apiContext = api.useContext();
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const brandInput = useInput<string>(validators.wordLengthValidator(2), "");
   const modleInput = useInput<string>(validators.wordLengthValidator(5), "");
   const descriptionInput = useInput<string>(
@@ -33,6 +43,15 @@ const CreateProductPage = () => {
   const sizeInput = useInput<string>(
     validators.wordLengthValidator(2),
     sizes[0]?.name || "Size"
+  );
+  const genderInput = useInput<string>(
+    validators.wordLengthValidator(2),
+    enumToArray(Genders)[0]?.name || "Gender"
+  );
+
+  const shapeInput = useInput<string>(
+    validators.wordLengthValidator(2),
+    shapes[0]?.name || "Shape"
   );
   const lensInput = useInput<string>(
     validators.wordLengthValidator(3),
@@ -57,12 +76,15 @@ const CreateProductPage = () => {
   const [selectedCoverImage, setSelectedCoverImage] = useState<File | null>(
     null
   );
+
+  const [showCoverImageError, setShowCoverImageError] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
     setSelectedCoverImage(file);
+    setShowCoverImageError(false);
 
     // Create a FileReader to read the image file
     const reader = new FileReader();
@@ -93,11 +115,95 @@ const CreateProductPage = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (selectedCoverImage) {
-      const res = await supabaseClient.storage
-        .from("specs-99-bucket")
-        .upload(selectedCoverImage.name, selectedCoverImage);
-      console.log(res);
+    if (
+      brandInput.error ||
+      modleInput.error ||
+      descriptionInput.error ||
+      mrpInput.error ||
+      priceInput.error ||
+      !selectedCoverImage
+    ) {
+      brandInput.showErrorHandler();
+      modleInput.showErrorHandler();
+      descriptionInput.showErrorHandler();
+      mrpInput.showErrorHandler();
+      priceInput.showErrorHandler();
+      !selectedCoverImage && setShowCoverImageError(true);
+      return;
+    }
+
+    console.log(categoriesInput.value);
+
+    try {
+      setIsLoading(true);
+      const uniqueId = uuidv4();
+      const coverImageName = selectedCoverImage.name + "-" + uniqueId;
+
+      const images: string[] = [];
+
+      const imagesPromises: (() => Promise<void>)[] = [];
+
+      if (selectedImages && selectedImages.length > 0) {
+        for (const file of selectedImages) {
+          const imagePromise = async () => {
+            const fileName = file.name + "-" + uuidv4();
+            const { data, error } = await supabaseClient.storage
+              .from("specs-99-bucket")
+              .upload(fileName, file);
+
+            const imageURL =
+              process.env.NEXT_PUBLIC_SUPABASE_URL +
+              "storage/v1/object/public/specs-99-bucket/" +
+              fileName;
+
+            images.push(imageURL);
+
+            if (error) {
+              console.error("Error uploading file:", error);
+            } else {
+              console.log("File uploaded successfully:", data);
+            }
+          };
+          imagesPromises.push(imagePromise);
+        }
+      }
+
+      await Promise.all([
+        supabaseClient.storage
+          .from("specs-99-bucket")
+          .upload(coverImageName, selectedCoverImage),
+        ...imagesPromises.map((f) => f()),
+      ]);
+
+      const coverImageUrl =
+        process.env.NEXT_PUBLIC_SUPABASE_URL +
+        "storage/v1/object/public/specs-99-bucket/" +
+        coverImageName;
+
+      await apiContext.admin.createProduct.fetch({
+        brand: brandInput.value,
+        categories: categoriesInput.value,
+        coverImage: coverImageUrl,
+        description: descriptionInput.value,
+        frameBody: frameBodyInput.value,
+        frameColor: frameColorInput.value,
+        lens: lensInput.value,
+        lensColor: lensColorInput.value,
+        model: modleInput.value,
+        mrp: Number(mrpInput.value),
+        price: Number(priceInput.value),
+        size: sizeInput.value,
+        gender: genderInput.value as Genders,
+        shape: shapeInput.value,
+        images,
+      });
+
+      toast.success("Product Created!");
+      setIsLoading(false);
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.message || "Something Went Wrong!");
+      setIsLoading(false);
     }
   };
 
@@ -158,6 +264,23 @@ const CreateProductPage = () => {
             highlight={false}
           />
           <FormInputList
+            {...shapeInput}
+            lable="Shape"
+            errorMessage="Please select shape."
+            options={shapes}
+            multiple={false}
+            highlight={false}
+          />
+          <FormInputList
+            {...genderInput}
+            lable="Gender"
+            errorMessage="Please select gender."
+            options={enumToArray(Genders)}
+            multiple={false}
+            highlight={false}
+          />
+
+          <FormInputList
             {...lensInput}
             lable="Lens"
             errorMessage="Please select lens type."
@@ -189,8 +312,17 @@ const CreateProductPage = () => {
             multiple={false}
             highlight={false}
           />
-          <div className="flex flex-col gap-0">
-            <label htmlFor="coverImage">Cover Image</label>
+          <div className="flex flex-col gap-0 ">
+            <div className="flex items-center">
+              <label htmlFor="coverImage" className="text-grey-light">
+                Cover Image
+              </label>
+              {showCoverImageError && (
+                <span className="ml-auto text-xs text-red-400">
+                  {"Please select cover image"}
+                </span>
+              )}
+            </div>
             <input
               id="coverImage"
               type="file"
@@ -198,7 +330,10 @@ const CreateProductPage = () => {
               onChange={handleFileChange}
               className="pointer-events-none h-0 w-0 opacity-0"
             />
-            <label htmlFor="coverImage" className="w-full  bg-bg-primary  ">
+            <label
+              htmlFor="coverImage"
+              className="mt-2 w-full bg-bg-primary text-grey-light"
+            >
               {previewUrl ? (
                 <Image
                   className="h-14 w-14 overflow-hidden rounded-full object-scale-down shadow-md"
@@ -208,14 +343,26 @@ const CreateProductPage = () => {
                   alt="Selected Image"
                 />
               ) : (
-                <span className="mt-2 block w-full rounded-lg px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2">
-                  Select Image
-                </span>
+                <>
+                  <span
+                    className={`"mt-2 block w-full rounded-lg px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2 ${
+                      showCoverImageError && !selectedCoverImage
+                        ? "outline !outline-1 outline-red-500"
+                        : selectedCoverImage
+                        ? "outline !outline-1 outline-secondary"
+                        : ""
+                    }`}
+                  >
+                    Select Image
+                  </span>
+                </>
               )}
             </label>
           </div>
           <div className="flex flex-col gap-0">
-            <label htmlFor="images">Images</label>
+            <label htmlFor="images" className="text-grey-light">
+              Images
+            </label>
             <input
               id="images"
               type="file"
@@ -226,7 +373,7 @@ const CreateProductPage = () => {
             />
             <label
               htmlFor="images"
-              className="flex  w-full  gap-2 bg-bg-primary"
+              className="flex  w-full  gap-2 bg-bg-primary text-grey-light"
             >
               {imagesPreviewUrls ? (
                 imagesPreviewUrls.map((url) => (
@@ -246,10 +393,11 @@ const CreateProductPage = () => {
               )}
             </label>
           </div>
-          <div className="w-full">
+          <div className="col-span-full w-full">
             <ButtonPrimary
               text="Submit"
               className="mx-auto block w-fit flex-[0,0,fit-content]"
+              isLoading={isLoading}
             />
           </div>
         </form>

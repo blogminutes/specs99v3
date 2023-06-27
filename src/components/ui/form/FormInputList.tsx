@@ -32,8 +32,6 @@ const FormInputList = <T,>(props: Props<T>) => {
     highlight = true,
   } = props;
 
-  const labelModifier = labelColor ? labelColor : "currentColor";
-
   function isArrayofStrings(value: any) {
     if (!Array.isArray(value)) {
       return false; // Not an array
@@ -61,7 +59,6 @@ const FormInputList = <T,>(props: Props<T>) => {
         <label
           className="text-grey-light"
           htmlFor={`form-${lable.toLowerCase().split(" ").join("-")}`}
-          style={{ color: labelModifier }}
         >
           {props.lable}
         </label>

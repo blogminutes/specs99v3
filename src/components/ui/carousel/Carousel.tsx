@@ -10,7 +10,7 @@ type ComponentProps = {
 };
 
 const Carousel: React.FC<ComponentProps> = (props) => {
-  const [currentSlide, setCurrentSlide] = useState(1);
+  const [currentSlide, setCurrentSlide] = useState(0);
   return (
     <div
       className="relative h-full w-full overflow-hidden"
