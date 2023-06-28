@@ -13,9 +13,9 @@ export const productsRouter = createTRPCRouter({
     )
     .query(async ({ input }) => {
       const products = await prisma.product.findMany({
-        where: {
-          categories: { has: "Sunglasses" },
-        },
+        // where: {
+        //   categories: { has: "Sunglasses" },
+        // },
       });
       return { products };
     }),
