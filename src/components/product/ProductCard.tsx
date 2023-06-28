@@ -16,7 +16,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           alt={product.brand + " " + product.model}
           width={200}
           height={200}
-          className="h-[max(17vh,15vw)] w-full rounded-lg object-cover max-[1200px]:h-[max(15vh,15vw)]"
+          className="w-full rounded-lg object-cover max-[1500px]:h-[max(17vh,15vw)] max-[1200px]:h-[max(15vh,15vw)]"
         />
       </div>
       <div className="flex flex-col gap-0.5 px-[min(1vw,1vh)]">
