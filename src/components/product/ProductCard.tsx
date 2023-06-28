@@ -16,15 +16,16 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           alt={product.brand + " " + product.model}
           width={200}
           height={200}
-          className="h-[max(11vh,12vw)] w-full rounded-lg object-cover"
+          className="h-[max(17vh,15vw)] w-full rounded-lg object-cover max-[1200px]:h-[max(15vh,15vw)]"
         />
       </div>
       <div className="flex flex-col gap-0.5 px-[min(1vw,1vh)]">
         <h3 className="text-base">
-          <strong className="text-lg font-medium">{product.brand} -</strong>{" "}
+          <strong className="text-lg font-normal">{product.brand} - </strong>
           {product.model}
         </h3>
-        <span className="text-sm">
+        {/* <span className="text-sm"> {product.model}</span> */}
+        {/* <span className="text-sm">
           <strong className="font-medium">Lens:</strong> {product.lens}
         </span>
         <span className="text-sm">
@@ -32,7 +33,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
         </span>
         <span className="text-sm">
           <strong className="font-medium">For:</strong> {product.gender}
-        </span>
+        </span> */}
         <div className="my-1 flex items-center justify-center gap-2">
           <span className="bg-gradient-to-b from-primary to-secondary bg-clip-text text-xl font-normal text-transparent">
             {product.price}{" "}
