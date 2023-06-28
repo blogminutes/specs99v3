@@ -31,7 +31,7 @@ const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
       >
         <div
           ref={ref}
-          className="relative mx-auto flex max-h-[calc(100vh-4rem)] flex-col overflow-auto rounded-2xl shadow-primary-sm max-[1200px]:h-fit max-[1200px]:max-h-none"
+          className="relative mx-auto flex min-h-[calc(100vh-4rem)] flex-col overflow-auto rounded-2xl shadow-primary-sm max-[1200px]:h-fit max-[1200px]:min-h-screen"
         >
           <ToastContainer position="bottom-left" />
           <Navbar />

@@ -61,6 +61,11 @@ const heroBrandsRight = [
   LeiaLogo,
 ];
 
+type ProductFilters = {
+  categories?: string[];
+  limit?: 12;
+};
+
 const trends = [
   {
     image: "https://static1.lenskart.com/media/desktop/img/Sep21/image179.png",
@@ -258,10 +263,16 @@ const Home: NextPage = () => {
         {/* TRENDING SUNGLASSES SECTION*/}
 
         <ContainerPrimary>
-          <TopProducts />
+          <TopProducts
+            heading="Trending Sunglasses"
+            filters={{ categories: ["Sunglasses"], limit: 12 }}
+          />
         </ContainerPrimary>
         <ContainerPrimary>
-          <TopProducts />
+          <TopProducts
+            heading="Trending Eyeglasses"
+            filters={{ categories: ["Eyeglasses"], limit: 12 }}
+          />
         </ContainerPrimary>
       </div>
     </>
@@ -373,7 +384,10 @@ const TrendsSection = () => {
   );
 };
 
-const TopProducts = () => {
+const TopProducts: React.FC<{
+  heading: string;
+  filters?: ProductFilters;
+}> = ({ heading, filters }) => {
   const apiContext = api.useContext();
 
   const swiperRef = useRef<SwiperCore | null>(null);
@@ -382,7 +396,9 @@ const TopProducts = () => {
 
   useEffect(() => {
     const getProducts = async () => {
-      const res = await apiContext.products.getProducts.fetch({});
+      const res = await apiContext.products.getProducts.fetch({
+        filters: filters,
+      });
       setProducts(res.products);
     };
 
@@ -427,7 +443,7 @@ const TopProducts = () => {
   };
   return (
     <div className="relative flex w-full flex-col gap-[min(5vh,5vw)]">
-      <h3 className="text-3xl font-medium">Top Sunglasses</h3>
+      <h3 className="text-3xl font-medium">{heading}</h3>
       <div className="">
         <Swiper
           breakpoints={breakpoints}

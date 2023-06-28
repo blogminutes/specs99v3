@@ -10,7 +10,7 @@ export const productsRouter = createTRPCRouter({
       z.object({
         filters: z
           .object({
-            category: z.string().optional(),
+            categories: z.array(z.string()).optional(),
             limit: z.number().optional(),
           })
           .optional(),
@@ -19,7 +19,7 @@ export const productsRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const products = await prisma.product.findMany({
         where: {
-          categories: { hasSome: ["Sunglasses", "Eyeglasses"] },
+          categories: { hasSome: input.filters?.categories || [] },
         },
         take: input.filters?.limit || 12,
       });
