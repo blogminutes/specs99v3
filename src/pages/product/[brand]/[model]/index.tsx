@@ -81,11 +81,10 @@ const ProductInfoPage = () => {
             >
               {product &&
                 [product.coverImage, ...product.images].map((img, i) => (
-                  <SwiperSlide className="!100%">
+                  <SwiperSlide className="!100%" key={i}>
                     <Image
                       src={img}
                       alt="Product Image"
-                      key={i}
                       width={1200}
                       height={1200}
                       className="max-h-[max(35vh,30vw)] w-full object-cover"
