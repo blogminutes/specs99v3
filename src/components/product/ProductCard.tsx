@@ -8,7 +8,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   return (
     <Link
       href={"/"}
-      className="flex h-full w-full cursor-pointer flex-col justify-between gap-2 overflow-hidden rounded-lg px-[min(.3vw,.3vh)] pt-[min(.3vw,.3vh)] text-start shadow-primary-sm"
+      className="flex h-full w-full cursor-pointer flex-col justify-between gap-2 overflow-hidden rounded-lg px-[min(.3vw,.3vh)] pt-[min(.3vw,.3vh)] text-start shadow-primary-xsm"
     >
       <div className="rounded-lg bg-white">
         <Image
@@ -16,7 +16,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           alt={product.brand + " " + product.model}
           width={400}
           height={400}
-          className="w-full rounded-lg object-cover"
+          className="max-h-[max(19vh,19vw)] w-full rounded-lg object-cover"
         />
       </div>
       <div className="flex flex-col gap-0.5 px-[min(1vw,1vh)]">
