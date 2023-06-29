@@ -16,7 +16,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           alt={product.brand + " " + product.model}
           width={400}
           height={400}
-          className="max-h-[max(19vh,19vw)] w-full rounded-lg object-cover"
+          className="max-h-[max(14vh,10vw)] w-full rounded-lg object-cover"
         />
       </div>
       <div className="flex flex-col gap-0.5 px-[min(1vw,1vh)]">
@@ -60,7 +60,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
         </span>
       </div>
 
-      <div className="flex items-center border-t py-[min(.5vh,.5vw)] ">
+      <div className="flex items-center border-t py-[min(.8vh,.8vw)] ">
         <button className="mx-auto bg-gradient-to-b from-primary to-secondary bg-clip-text text-lg font-medium text-transparent">
           Add To Cart
         </button>

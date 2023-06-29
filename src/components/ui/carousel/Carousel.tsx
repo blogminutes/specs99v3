@@ -19,7 +19,7 @@ const Carousel: React.FC<ComponentProps> = (props) => {
       {props.data.map((slide, i) => (
         <div
           key={i}
-          className="absolute h-full w-full min-w-full shadow-sm transition-[all,2s]"
+          className="absolute h-full w-full min-w-full shadow-primary-sm transition-[all,2s]"
           style={{ transform: `translateX(${(i - currentSlide) * 100}%)` }}
         >
           <Image

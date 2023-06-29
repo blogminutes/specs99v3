@@ -20,7 +20,7 @@ export const productsRouter = createTRPCRouter({
     )
     .query(async ({ input }) => {
       const categoriesFilter =
-        input.filters?.categories && input.filters?.categories?.length > 1
+        input.filters?.categories && input.filters?.categories?.length > 0
           ? { categories: { hasSome: input.filters?.categories } }
           : {};
 

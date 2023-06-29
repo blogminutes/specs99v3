@@ -369,7 +369,7 @@ const TrendsSection = () => {
                 <Image
                   src={trend.image}
                   alt={trend.name}
-                  className="max-h-[max(10vh,10vw)] w-full object-cover"
+                  className="max-h-[max(13vh,7vw)] w-full object-cover"
                   width={400}
                   height={400}
                 />

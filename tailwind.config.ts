@@ -13,13 +13,13 @@ export default {
         "grey-light": "#868e96",
       },
       backgroundColor: {
-        "bg-primary": "#EFF5F5",
+        "bg-primary": "#fff",
       },
       boxShadow: {
-        "primary-sm": "5px 5px 8px #dce1e1,-5px -5px 8px #ffffff",
-        "primary-xsm": "1.5px 1.5px 4px #dce1e1, -1.5px -1.5px 4px #ffffff",
+        "primary-sm": "2px 2px 6px rgba(0,0,0,.1)",
+        "primary-xsm": "2px 2px 8px rgba(0,0,0,.08)",
         "form-input-primary":
-          "inset 2px 2px 3px #e0e0e9, inset -2px -2px 3px #ffffff",
+          "inset 1px 1px 2px rgba(0,0,0,.1), inset -2px -3px 3px rgba(0,0,0,.05)",
       },
     },
   },
