@@ -7,7 +7,7 @@ import ReactStars from "react-stars";
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   return (
     <Link
-      href={"/"}
+      href={`product/${product.brand}/${product.model}`}
       className="flex h-full w-full cursor-pointer flex-col justify-between gap-2 overflow-hidden rounded-lg px-[min(.3vw,.3vh)] pt-[min(.3vw,.3vh)] text-start shadow-primary-xsm"
     >
       <div className="rounded-lg bg-white">
