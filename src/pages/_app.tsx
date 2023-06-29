@@ -27,11 +27,11 @@ const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
   return (
     <SessionProvider session={pageProps.session}>
       <main
-        className={` h-fit min-h-[100vh]  bg-bg-primary p-8 text-[#343a40]   max-[1200px]:p-0 ${roboto.className}`}
+        className={` h-fit min-h-[100vh]  bg-bg-primary text-[#343a40]   max-[1200px]:p-0 ${roboto.className}`}
       >
         <div
           ref={ref}
-          className="relative mx-auto flex min-h-[calc(100vh-4rem)] flex-col overflow-auto rounded-2xl shadow-primary-sm max-[1200px]:h-fit max-[1200px]:min-h-screen"
+          className="relative mx-auto flex min-h-[calc(100vh-0rem)] flex-col overflow-auto rounded-2xl shadow-primary-sm max-[1200px]:h-fit max-[1200px]:min-h-screen"
         >
           <ToastContainer position="bottom-left" />
           <Navbar />

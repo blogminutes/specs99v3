@@ -8,21 +8,23 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   return (
     <Link
       href={"/"}
-      className="flex h-full w-full cursor-pointer flex-col justify-between gap-2 overflow-hidden rounded-lg px-[min(.3vw,.3vh)] pt-[min(.3vw,.3vh)] text-center shadow-primary-sm"
+      className="flex h-full w-full cursor-pointer flex-col justify-between gap-2 overflow-hidden rounded-lg px-[min(.3vw,.3vh)] pt-[min(.3vw,.3vh)] text-start shadow-primary-sm"
     >
       <div className="rounded-lg bg-white">
         <Image
           src={product.coverImage}
           alt={product.brand + " " + product.model}
-          width={200}
-          height={200}
+          width={400}
+          height={400}
           className="w-full rounded-lg object-cover"
         />
       </div>
       <div className="flex flex-col gap-0.5 px-[min(1vw,1vh)]">
-        <h3 className="text-base">
-          <strong className="text-lg font-normal">{product.brand} - </strong>
-          {product.model}
+        <h3 className="flex flex-col text-sm">
+          <strong className="text-sm font-medium text-grey-light">
+            {product.brand}{" "}
+          </strong>
+          <span className="text-sm">{product.model}</span>
         </h3>
         {/* <span className="text-sm"> {product.model}</span> */}
         {/* <span className="text-sm">
@@ -34,23 +36,23 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
         <span className="text-sm">
           <strong className="font-medium">For:</strong> {product.gender}
         </span> */}
-        <div className="my-1 flex items-center justify-center gap-2">
-          <span className="bg-gradient-to-b from-primary to-secondary bg-clip-text text-xl font-medium text-transparent">
+        <div className="-mt-0.5 mb-0.5 flex items-center gap-2">
+          <span className=" bg-clip-text text-lg font-medium text-grey-medium">
             {product.price}{" "}
           </span>
-          <span className="relative text-[16px]">
+          <span className="relative text-[14px]">
             {product.mrp}
             <span className="absolute left-[52%] top-1/2 h-[1.5px] w-full -translate-x-1/2 -translate-y-1/2 bg-red-500"></span>
           </span>
-          <span className="text-sm font-medium">
-            ({Math.floor(100 - (product.price / product.mrp) * 100)}%)
+          <span className="text-xs font-medium text-teal-700">
+            ({Math.floor(100 - (product.price / product.mrp) * 100)}% off)
           </span>
         </div>
-        <span className="mx-auto -mt-1 flex items-center gap-1 text-[12px]">
+        <span className=" -mt-1 flex items-center gap-1 text-[12px]">
           <ReactStars
             count={5}
             // onChange={ratingChanged}
-            size={12}
+            size={14}
             value={4.5}
             color2={"#ffd700"}
           />{" "}
@@ -58,8 +60,8 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
         </span>
       </div>
 
-      <div className="border-t py-[min(1vh,1vw)] ">
-        <button className="bg-gradient-to-b from-primary to-secondary bg-clip-text text-lg font-medium text-transparent">
+      <div className="flex items-center border-t py-[min(.5vh,.5vw)] ">
+        <button className="mx-auto bg-gradient-to-b from-primary to-secondary bg-clip-text text-lg font-medium text-transparent">
           Add To Cart
         </button>
       </div>
