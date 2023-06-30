@@ -11,7 +11,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 flex w-full items-center rounded-t-xl bg-bg-primary p-3.5 px-[min(3vh,3vw)] shadow-lg">
+    <nav className="fixed top-0 z-50 flex w-full items-center rounded-t-xl border-b bg-bg-primary p-3.5 px-[min(3vh,3vw)] shadow-primary-sm">
       <div>
         <Link href={"/"}>
           <Image

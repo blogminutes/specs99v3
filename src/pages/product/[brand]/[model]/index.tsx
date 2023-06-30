@@ -13,6 +13,8 @@ import "swiper/css/effect-cube";
 import Image from "next/image";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import ReactStars from "react-stars";
+import ProductsSwiper from "~/components/product/ProductSwiper";
+import ContainerPrimary from "~/components/ui/container/ContainerPrimary";
 const ProductInfoPage = () => {
   const [product, setProduct] = useState<null | Product>(null);
 
@@ -209,6 +211,33 @@ const ProductInfoPage = () => {
           </div>
         </div>
       )}
+      <ContainerPrimary>
+        {product && (
+          <ProductsSwiper
+            heading="Related Products"
+            filters={{
+              categories: { equals: [...product?.categories] },
+            }}
+          />
+        )}{" "}
+      </ContainerPrimary>
+
+      <ContainerPrimary>
+        {product && (
+          <ProductsSwiper
+            heading={`More From ${product.brand}`}
+            filters={{ brand: { equals: product.brand } }}
+          />
+        )}{" "}
+      </ContainerPrimary>
+      {/* <ContainerPrimary>
+        {product && (
+          <ProductsSwiper
+            heading={`Similar Shapes`}
+            // filters={{ shape: product.shape }}
+          />
+        )}{" "}
+      </ContainerPrimary> */}
     </div>
   );
 };

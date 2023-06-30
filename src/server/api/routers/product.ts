@@ -4,32 +4,39 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+const WhereFilterString = z.object({
+  contains: z.string().optional(),
+  equals: z.string().optional(),
+  not: z.string().optional(),
+  notIn: z.array(z.string()).optional(),
+});
+
+const WhereFilterArray = z.object({
+  equals: z.array(z.string()).optional(),
+});
+
 export const productsRouter = createTRPCRouter({
   getProducts: publicProcedure
     .input(
       z.object({
         filters: z
           .object({
-            categories: z.array(z.string()).optional(),
+            categories: WhereFilterArray.optional(),
             limit: z.number().optional(),
-            model: z.string().optional(),
-            brand: z.string().optional(),
+            model: WhereFilterString.optional(),
+            brand: WhereFilterString.optional(),
+            shape: WhereFilterString.optional(),
           })
           .optional(),
       })
     )
     .query(async ({ input }) => {
-      const categoriesFilter =
-        input.filters?.categories && input.filters?.categories?.length > 0
-          ? { categories: { hasSome: input.filters?.categories } }
-          : {};
-
-      const filters = {};
       const products = await prisma.product.findMany({
         where: {
-          ...categoriesFilter,
-          brand: { equals: input.filters?.brand || undefined },
-          model: { equals: input.filters?.model || undefined },
+          categories: input.filters?.categories,
+          brand: input.filters?.brand,
+          model: input.filters?.model,
+          shape: input.filters?.shape,
         },
         take: input.filters?.limit || 12,
       });

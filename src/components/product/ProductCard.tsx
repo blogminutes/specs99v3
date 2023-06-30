@@ -26,12 +26,12 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           </strong>
           <span className="text-sm">{product.model}</span>
         </h3>
+        <span className="text-sm">
+          <strong className="font-medium">Size:</strong> {product.size}
+        </span>
         {/* <span className="text-sm"> {product.model}</span> */}
         {/* <span className="text-sm">
           <strong className="font-medium">Lens:</strong> {product.lens}
-        </span>
-        <span className="text-sm">
-          <strong className="font-medium">Size:</strong> {product.size}
         </span>
         <span className="text-sm">
           <strong className="font-medium">For:</strong> {product.gender}
