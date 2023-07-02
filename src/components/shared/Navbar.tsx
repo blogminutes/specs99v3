@@ -4,14 +4,14 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
-  const { status } = useSession();
+  const { status, data } = useSession();
 
   const handleLogout = () => {
     signOut();
   };
 
   return (
-    <nav className="fixed top-0 z-50 flex w-full items-center rounded-t-xl border-b bg-bg-primary p-3.5 px-[min(3vh,3vw)] shadow-primary-sm">
+    <nav className="fixed top-0 z-50 flex h-16 w-full items-center border-b bg-bg-primary  px-[min(3vh,3vw)] shadow-primary-sm">
       <div>
         <Link href={"/"}>
           <Image
@@ -19,7 +19,8 @@ const Navbar = () => {
             alt="specs99 brand logo"
             width={144}
             height={32}
-            className=" max-[600px]:h-[min(6vh,6vw)] max-[600px]:w-[min(24vh,24vw)]"
+            // className=" max-[600px]:h-[min(6vh,6vw)] max-[600px]:w-[min(24vh,24vw)]"
+            className="w-[15vh]"
           />
         </Link>
       </div>

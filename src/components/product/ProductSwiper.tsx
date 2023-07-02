@@ -34,6 +34,7 @@ type ProductFilters = {
   limit?: 12;
   brand?: WhereFilterStrings;
   shape?: WhereFilterStrings;
+  model?: WhereFilterStrings;
 };
 
 const ProductsSwiper: React.FC<{

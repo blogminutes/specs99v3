@@ -6,7 +6,7 @@ type Props = {
 
 const ContainerPrimary: React.FC<Props> = ({ children }) => {
   return (
-    <div className="px-[min(4vh,4vw)] max-[600px]:px-[min(3vh,3vw)]">
+    <div className="px-[min(8vh,8vw)] max-[600px]:px-[min(3vh,3vw)]">
       {children}
     </div>
   );

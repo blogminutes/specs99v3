@@ -25,6 +25,7 @@ const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
       ref.current.click();
     }
   }, [ref]);
+
   return (
     <SessionProvider session={pageProps.session}>
       <main
@@ -32,7 +33,7 @@ const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
       >
         <div
           ref={ref}
-          className="relative mx-auto mt-[5rem] flex min-h-[calc(100vh-0rem)] flex-col overflow-auto rounded-2xl shadow-primary-sm max-[1200px]:h-fit max-[1200px]:min-h-screen"
+          className="relative mx-auto mt-14 flex min-h-[100vh] flex-col overflow-auto max-[1200px]:h-fit max-[1200px]:min-h-screen"
         >
           <ToastContainer position="bottom-left" />
           <Navbar />

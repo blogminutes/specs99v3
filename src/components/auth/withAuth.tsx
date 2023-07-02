@@ -1,10 +1,8 @@
-import { useSession } from "next-auth/react";
+import { NextPage } from "next";
+import { SessionContext, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { type ComponentType, useEffect } from "react";
 
-type WithAuthProps = {
-  // Define any specific props your HOC needs
-};
 // const publicPaths = ["/", "/sign-in*", "/sign-up*"];
 const adminPaths = ["/admin*"];
 
@@ -14,46 +12,46 @@ const adminPaths = ["/admin*"];
 //   );
 // };
 
-const isAdmin = (path: string) => {
+const isAdminPath = (path: string) => {
   return adminPaths.find((x) =>
     path.match(new RegExp(`^${x}$`.replace("*$", "($|/)")))
   );
 };
 
-export const withAuth = <P extends WithAuthProps>(
-  WrappedComponent: ComponentType<P>
-) => {
-  const AuthComponent: ComponentType<P> = (props) => {
-    const { status } = useSession();
+const withAuth = <P extends object>(WrappedComponent: ComponentType<P>) => {
+  const WithAuthComponent: NextPage<P> = (props) => {
     const router = useRouter();
+    const { status, data } = useSession();
+
+    console.log(data);
 
     useEffect(() => {
-      if (router) {
-        if (
-          isAdmin(router.pathname)
-          // (status==="authenticated" || data. ?.prefs?.role !== "admin")
-        ) {
-          router.push("/sign-in");
-        }
-        // Your authentication logic goes here
-        // For example, you can check if the user is authenticated and redirect if not
-        if (status === "authenticated") {
-          router.push("/sign-in");
-        }
-
-        // Render the wrapped component if authenticated, or show a loading state or error message
+      // Check if the user is authenticated
+      // Redirect if not authenticated
+      if (status === "unauthenticated") {
+        router.push("/login"); // or any other route you want to redirect to
       }
-    }, [status, router]);
+    }, []);
 
-    if (
-      status === "authenticated" &&
-      (isAdmin(router.pathname) || !isAdmin(router.pathname))
-    ) {
-      return <WrappedComponent {...props} />;
+    if (status === "loading") {
+      return <div>Loading...</div>; // or a loading/error component if desired
     }
 
-    return <div>Loading...</div>; // or an error message
+    if (status === "unauthenticated") {
+      router.push("/login"); // or any other route you want to redirect to
+    }
+
+    if (
+      isAdminPath(router.pathname) &&
+      (status !== "authenticated" || data?.user.role !== "Admin")
+    ) {
+      router.push("/");
+    }
+
+    return <WrappedComponent {...props} />;
   };
 
-  return AuthComponent;
+  return WithAuthComponent;
 };
+
+export default withAuth;

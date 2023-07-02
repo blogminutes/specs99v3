@@ -50,7 +50,7 @@ const FormInput: React.FC<Props> = (props) => {
       </div>
       <div className="form-input relative">
         <input
-          className={`w-full rounded-lg bg-bg-primary px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2 focus:!outline-blue-700 ${
+          className={`autofill:shadow-input-autofill w-full rounded-lg bg-bg-primary px-3 py-1.5 shadow-form-input-primary outline-0 outline-offset-2 focus:!outline-blue-700 ${
             hasError
               ? "outline !outline-1 outline-red-500"
               : !error

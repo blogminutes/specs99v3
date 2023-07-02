@@ -41,26 +41,29 @@ const options: NextAuthOptions = {
   ],
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async session({ session, user }) {
+      if (!session.user) {
+        return {
+          ...session,
+        };
+      }
+
+      const userData = await prisma.user.findUnique({
+        where: { email: session?.user?.email },
+      });
+
+      return {
+        ...session,
+        user: {
+          email: userData?.email,
+          id: userData?.id,
+          name: userData?.name,
+          role: userData?.role,
+        },
+      };
+    },
+  },
 };
 
 export default NextAuth(options);
-
-// class CustomAdapter extends PrismaAdapter {
-//   async getUser(credentials: Record<string, unknown>) {
-//     const user = await super.getUser(credentials);
-//     if (user) {
-//       const fullUser = await prisma.user.findUnique({
-//         where: { id: user.id },
-//         include: {
-//           // Include any required relations or fields
-//           profile: true,
-//           posts: true,
-//         },
-//       });
-//       return fullUser;
-//     }
-//     return null;
-//   }
-// }
-
-// const customAdapter = new CustomAdapter(prisma);

@@ -21,7 +21,7 @@ const SignUpPage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit: React.FormEventHandler = (e) => {
+  const onSubmit: React.FormEventHandler = async (e) => {
     e.preventDefault();
     if (
       emailInput.error ||
@@ -37,13 +37,14 @@ const SignUpPage = () => {
       return;
     }
 
-    signUp(
+    const res = await signUp(
       apiContext,
       nameInput.value,
       emailInput.value,
       passwordInput.value,
       setIsLoading
     );
+    console.log(res);
   };
 
   useEffect(() => {
@@ -53,7 +54,7 @@ const SignUpPage = () => {
   }, [status]);
 
   return (
-    <div className="my-auto flex items-center">
+    <div className="my-auto flex items-center py-[15vh]">
       <div className=" mx-auto w-[min(45vh,90vw)] rounded-xl bg-bg-primary px-[min(4vh,4vw)] py-[min(4vh,4vw)] shadow-primary-sm">
         <h2 className="mx-auto mb-8 bg-gradient-to-b from-primary to-secondary bg-clip-text text-center text-3xl font-medium text-transparent">
           Sign-Up
@@ -85,8 +86,8 @@ const SignUpPage = () => {
           />
           <p className="ml-auto mt-2 text-center text-sm">
             Already a member?{" "}
-            <Link href={"/sign-in"} className="text-secondary">
-              Sign-in
+            <Link href={"/login"} className="text-secondary">
+              Login
             </Link>
           </p>
         </form>

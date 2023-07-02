@@ -7,19 +7,19 @@ import ReactStars from "react-stars";
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   return (
     <Link
-      href={`product/${product.brand}/${product.model}`}
-      className="flex h-full w-full cursor-pointer flex-col justify-between gap-2 overflow-hidden rounded-lg px-[min(.3vw,.3vh)] pt-[min(.3vw,.3vh)] text-start shadow-primary-xsm"
+      href={`/product/${product.brand}/${product.model}`}
+      className="flex h-full w-full cursor-pointer flex-col justify-between gap-2 overflow-hidden rounded-xl px-[min(.3vw,.3vh)] pt-[min(.3vw,.3vh)] text-start shadow-primary-xsm"
     >
-      <div className="rounded-lg bg-white">
+      <div className="rounded-lg">
         <Image
           src={product.coverImage}
           alt={product.brand + " " + product.model}
-          width={400}
+          width={600}
           height={400}
           className="max-h-[max(14vh,10vw)] w-full rounded-lg object-cover"
         />
       </div>
-      <div className="flex flex-col gap-0.5 px-[min(1vw,1vh)]">
+      <div className="flex flex-col gap-0.5 px-[min(1vw,1vh)] pt-2">
         <h3 className="flex flex-col text-sm">
           <strong className="text-sm font-medium text-grey-light">
             {product.brand}{" "}

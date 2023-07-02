@@ -22,6 +22,7 @@ import AdminLayout from "~/components/admin/shared/AdminLayout";
 import { supabaseClient } from "~/utils/supabase/supabase";
 import { api } from "~/utils/api";
 import { toast } from "react-toastify";
+import withAuth from "~/components/auth/withAuth";
 
 const CreateProductPage = () => {
   const apiContext = api.useContext();
@@ -406,4 +407,4 @@ const CreateProductPage = () => {
   );
 };
 
-export default CreateProductPage;
+export default withAuth(CreateProductPage);

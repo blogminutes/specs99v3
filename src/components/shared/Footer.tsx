@@ -2,8 +2,7 @@ import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { InstagramLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
-import { FaFacebook, FaYoutube } from "react-icons/fa";
+import { FaYoutube } from "react-icons/fa";
 import {
   AiFillTwitterCircle,
   AiFillInstagram,
@@ -18,7 +17,7 @@ const Footer = () => {
   };
 
   return (
-    <nav className="z-50 flex w-full items-center justify-center rounded-t-xl border-t bg-bg-primary p-[min(6vh,6vw)] shadow-primary-sm">
+    <nav className="z-50 flex w-full items-center justify-center rounded-t-xl border-t bg-bg-primary p-[min(4vh,4vw)] shadow-primary-sm">
       <div className="flex flex-col justify-center gap-[min(4vh,4vh)]">
         <div className="flex w-fit  flex-col gap-[min(2vh,2vh)]">
           <Link href={"/"}>

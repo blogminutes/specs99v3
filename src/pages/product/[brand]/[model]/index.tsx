@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { api } from "~/utils/api";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { EffectCoverflow, EffectCube, Pagination } from "swiper";
+import SwiperCore, { EffectCube, Pagination } from "swiper";
+import { IoMdCart } from "react-icons/io";
 
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -15,6 +16,8 @@ import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import ReactStars from "react-stars";
 import ProductsSwiper from "~/components/product/ProductSwiper";
 import ContainerPrimary from "~/components/ui/container/ContainerPrimary";
+import ContainerMain from "~/components/ui/container/ContainerMain";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 const ProductInfoPage = () => {
   const [product, setProduct] = useState<null | Product>(null);
 
@@ -63,9 +66,9 @@ const ProductInfoPage = () => {
   const productImages = [product?.coverImage, ...(product?.images || [])];
 
   return (
-    <div className="mx-auto flex w-full grow flex-col gap-[min(8vh,8vw)] bg-white max-[900px]:gap-[min(12vh,12vw)]">
+    <ContainerMain className="pt-0">
       {product && (
-        <div className="flex border-b px-[min(3vh,3vw)] pb-4 max-[900px]:flex-col">
+        <div className="flex border-b px-[min(3vh,3vw)] pb-[min(6vh,6vw)] max-[900px]:flex-col">
           <div className="relative w-[60%] pb-5 max-[900px]:w-[100%]">
             <Swiper
               onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -122,10 +125,10 @@ const ProductInfoPage = () => {
                   key={i}
                   width={150}
                   height={150}
-                  className={`w-full cursor-pointer rounded-lg object-cover shadow-primary-xsm ${
+                  className={`w-full cursor-pointer rounded-lg object-cover ${
                     swiperRef.current && swiperRef.current.activeIndex === i
-                      ? "border-[2px] border-secondary"
-                      : " bg-white"
+                      ? "border-[2px] shadow-primary-sm"
+                      : "shadow-primary-xsm"
                   }`}
                   onClick={() => {
                     if (!swiperRef.current) return;
@@ -141,24 +144,25 @@ const ProductInfoPage = () => {
           <div className="my-auto flex w-full grow flex-col gap-[min(3vh,3vw)] px-[min(3vh,3vw)]">
             <div className="flex flex-col  gap-[min(.8vh,.8vw)]">
               {/* <span className="h-[1px] w-full bg-[rgb(229,231,235)]"></span> */}
-              <h1 className="flex flex-col text-lg text-grey-light">
+              <h1 className="flex flex-col text-base text-grey-light">
                 {product.brand}{" "}
-                <span className="text-xl font-normal text-grey-medium">
+                <span className="text-lg font-normal text-grey-medium">
                   {product.model}
                 </span>
               </h1>
-              <span className="font-medium">
-                <span className="text-grey-light ">Size:</span> {product.size}
+              <span className="text-sm  text-grey-medium">
+                <span className="font-medium  text-grey-primary">Size:</span>{" "}
+                {product.size}
               </span>
               <div className="-mt-0.5 mb-0.5 flex items-center gap-2">
-                <span className=" bg-clip-text text-2xl font-medium text-grey-medium">
+                <span className=" bg-clip-text text-xl font-medium text-grey-medium">
                   {product.price}{" "}
                 </span>
-                <span className="relative text-lg">
+                <span className="relative text-base">
                   {product.mrp}
                   <span className="absolute left-[52%] top-1/2 h-[1.5px] w-full -translate-x-1/2 -translate-y-1/2 bg-red-500"></span>
                 </span>
-                <span className="text-base font-medium text-green-600">
+                <span className="text-sm font-medium text-green-600">
                   ({Math.floor(100 - (product.price / product.mrp) * 100)}% off)
                 </span>
               </div>
@@ -174,39 +178,53 @@ const ProductInfoPage = () => {
               </span>
             </div>
             <span className="h-[1px] w-full bg-[rgb(229,231,235)]"></span>
-            <div className="grid grid-cols-2 gap-1 text-base">
-              <span className="">
-                <span className="text-grey-light ">For:</span> {product.gender}
+            <div className="grid grid-cols-2 gap-1 text-sm">
+              <span className="text-grey-medium">
+                <span className="font-medium  text-grey-primary">For:</span>{" "}
+                {product.gender}
               </span>
-              <span className="">
-                <span className="text-grey-light ">Lens:</span> {product.lens}
+              <span className="text-grey-medium">
+                <span className="font-medium  text-grey-primary">Lens:</span>{" "}
+                {product.lens}
               </span>
-              <span className="">
-                <span className="text-grey-light ">Lens Color:</span>{" "}
+              <span className="text-grey-medium">
+                <span className="font-medium  text-grey-primary">
+                  Lens Color:
+                </span>{" "}
                 {product.lensColor}
               </span>
-              <span className="">
-                <span className="text-grey-light ">Frame Body:</span>{" "}
+              <span className="text-grey-medium">
+                <span className="font-medium  text-grey-primary">
+                  Frame Body:
+                </span>{" "}
                 {product.frameBody}
               </span>
-              <span className="">
-                <span className="text-grey-light ">Frame Color:</span>{" "}
+              <span className="text-grey-medium">
+                <span className="font-medium  text-grey-primary">
+                  Frame Color:
+                </span>{" "}
                 {product.frameColor}
               </span>
             </div>
             <span className="h-[1px] w-full bg-[rgb(229,231,235)]"></span>
             <div>
-              <span className="">
-                <span className="text-grey-light ">Description:</span>{" "}
+              <span className="text-sm text-grey-medium">
+                <span className="font-medium  text-grey-primary">
+                  Description:
+                </span>{" "}
                 {product.description}
               </span>
             </div>
             <span className="h-[1px] w-full bg-[rgb(229,231,235)]"></span>
-            <div className="relative">
-              <button className="relative z-40 mx-auto w-full rounded-full bg-white bg-gradient-to-b from-primary to-secondary bg-clip-text py-[min(.8vh,.8vw)] text-lg font-medium text-transparent shadow-primary-sm">
+            <div className="relative flex w-full flex-col justify-start gap-3">
+              <button className="relative z-40 flex w-full items-center justify-center gap-2 rounded-full border border-grey-primary px-8 py-[min(.6vh,.6vw)] text-base font-normal shadow-primary-xsm">
                 Add To Cart
+                <IoMdCart className="text-lg text-grey-primary" />
               </button>
-              {/* <span className="absolute left-0 top-0 z-[0] block h-[calc(100%+2px)] w-[calc(100%+2px)] bg-gradient-to-b from-primary to-secondary"></span> */}
+              <button className="relative z-40 flex w-full items-center justify-center gap-2 rounded-full border bg-white px-8 py-[min(.6vh,.6vw)] text-base font-normal text-grey-light shadow-primary-xsm">
+                Add To Whishlist
+                <AiOutlineHeart className="text-lg text-red-500" />
+              </button>
             </div>
           </div>
         </div>
@@ -217,6 +235,7 @@ const ProductInfoPage = () => {
             heading="Related Products"
             filters={{
               categories: { equals: [...product?.categories] },
+              model: { not: product.model },
             }}
           />
         )}{" "}
@@ -226,7 +245,10 @@ const ProductInfoPage = () => {
         {product && (
           <ProductsSwiper
             heading={`More From ${product.brand}`}
-            filters={{ brand: { equals: product.brand } }}
+            filters={{
+              brand: { equals: product.brand },
+              model: { not: product.model },
+            }}
           />
         )}{" "}
       </ContainerPrimary>
@@ -238,7 +260,7 @@ const ProductInfoPage = () => {
           />
         )}{" "}
       </ContainerPrimary> */}
-    </div>
+    </ContainerMain>
   );
 };
 
