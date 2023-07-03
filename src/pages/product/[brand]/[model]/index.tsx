@@ -17,6 +17,11 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/effect-cube";
+import { useSession } from "next-auth/react";
+import {
+  addToCart,
+  useCartStore,
+} from "~/utils/zustand/cartStore/useCartStore";
 
 const ProductInfoPage = () => {
   const [product, setProduct] = useState<null | Product>(null);
@@ -24,6 +29,12 @@ const ProductInfoPage = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const apiContext = api.useContext();
+
+  const { data } = useSession();
+
+  const cartStore = useCartStore((c) => c);
+
+  const { id: cartId } = cartStore;
 
   const router = useRouter();
 
@@ -64,6 +75,19 @@ const ProductInfoPage = () => {
   };
 
   const productImages = [product?.coverImage, ...(product?.images || [])];
+
+  const handleAddToCart = () => {
+    console.log(data?.user.id, cartId, product);
+    if (data?.user.id && cartId && product) {
+      addToCart({
+        apiContext,
+        cartId,
+        cartStore,
+        productId: product?.id,
+        quantity: 1,
+      });
+    }
+  };
 
   return (
     <ContainerMain className="pt-0">
@@ -216,7 +240,10 @@ const ProductInfoPage = () => {
             </div>
             <span className="h-[1px] w-full bg-[rgb(229,231,235)]"></span>
             <div className="relative flex w-full flex-col justify-start gap-3">
-              <button className="relative z-40 flex w-full items-center justify-center gap-2 rounded-full border border-grey-medium px-8 py-[min(.8vh,.8vw)] text-base font-normal text-grey-medium shadow-primary-xsm">
+              <button
+                onClick={handleAddToCart}
+                className="relative z-40 flex w-full items-center justify-center gap-2 rounded-full border border-grey-medium px-8 py-[min(.8vh,.8vw)] text-base font-normal text-grey-medium shadow-primary-xsm"
+              >
                 Add To Cart
                 <BsCart2 className="text-xl text-secondary" />
               </button>

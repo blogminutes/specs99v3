@@ -5,9 +5,12 @@ import { useSession, signOut } from "next-auth/react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsCart2 } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
+import { useCartStore } from "~/utils/zustand/cartStore/useCartStore";
 
 const Navbar = () => {
   const { status, data } = useSession();
+
+  const { items } = useCartStore((c) => c);
 
   const handleLogout = () => {
     signOut();
@@ -56,10 +59,15 @@ const Navbar = () => {
               <AiOutlineHeart className="h-full w-full" />
             </Link>
             <Link
-              className="flex h-9 w-9 items-center justify-center rounded-full p-2 shadow-primary-md"
+              className="relative flex h-9 w-9 items-center justify-center rounded-full p-2 shadow-primary-md"
               href={"/login"}
             >
               <BsCart2 className="h-full w-full" />
+              {items && (
+                <span className="absolute -top-1 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-grey-primary text-center text-xs text-white">
+                  {items.length}
+                </span>
+              )}
             </Link>
             <Link
               className="flex h-9 w-9 items-center justify-center rounded-full p-2 shadow-primary-md"
