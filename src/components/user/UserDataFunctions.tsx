@@ -17,7 +17,7 @@ const UserDataFunctions = () => {
     if (!cartStore.id && data?.user.id) {
       getUserCart({ apiContext, cartStore, userId: data.user.id });
     }
-  }, [data, cartStore]);
+  }, [data?.user, cartStore]);
 
   return null;
 };
