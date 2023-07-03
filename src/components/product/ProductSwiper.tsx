@@ -17,6 +17,7 @@ import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import { api } from "~/utils/api";
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
+import { useCartStore } from "~/utils/zustand/cartStore/useCartStore";
 
 type WhereFilterStrings = {
   contains?: string;
@@ -47,6 +48,8 @@ const ProductsSwiper: React.FC<{
 
   const [products, setProducts] = useState<Product[] | null>(null);
 
+  const { items } = useCartStore((s) => s);
+
   useEffect(() => {
     const getProducts = async () => {
       const res = await apiContext.products.getProducts.fetch({
@@ -62,13 +65,13 @@ const ProductsSwiper: React.FC<{
     280: {
       slidesPerView: 1,
     },
-    380: {
+    320: {
       slidesPerView: 2,
     },
-    780: {
+    900: {
       slidesPerView: 3,
     },
-    1180: {
+    1280: {
       slidesPerView: 4,
     },
     1500: {

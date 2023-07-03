@@ -7,9 +7,11 @@ export interface LayoutProps {
 
 const AdminLayout: React.FC<LayoutProps> = (props) => {
   return (
-    <div className="mx-auto flex h-full min-h-[50rem] w-full">
-      <AdminSidebar />
-      <div className="w-[80%]">{props.children}</div>
+    <div className="mx-auto h-full  min-h-[50rem] w-full p-20">
+      <div className="flex rounded-xl shadow-primary-md">
+        <AdminSidebar />
+        <div className="grow rounded-xl">{props.children}</div>
+      </div>
     </div>
   );
 };

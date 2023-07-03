@@ -17,7 +17,7 @@ const Footer = () => {
   };
 
   return (
-    <nav className="z-50 flex w-full items-center justify-center rounded-t-xl border-t bg-bg-primary p-[min(4vh,4vw)] shadow-primary-sm">
+    <nav className="z-50 flex w-full items-center justify-center rounded-t-xl border-t  bg-bg-primary p-[min(4vh,4vw)] px-[min(8vh,8vw)] shadow-primary-sm max-[600px]:px-[min(3vh,3vw)]">
       <div className="flex flex-col justify-center gap-[min(4vh,4vh)]">
         <div className="flex w-fit  flex-col gap-[min(2vh,2vh)]">
           <Link href={"/"}>
@@ -37,7 +37,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="grid border-collapse grid-cols-4 items-start gap-[min(6vh,6vw)] max-[900px]:grid-cols-2 max-[600px]:grid-cols-2">
+        <div className="grid w-full border-collapse grid-cols-4 items-start gap-[min(6vh,6vw)] max-[900px]:grid-cols-2 max-[600px]:grid-cols-2">
           <div className="">
             <h2 className="text-lg font-medium"> Customer Care</h2>
             <ul className="text-sm">

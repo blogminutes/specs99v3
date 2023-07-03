@@ -30,13 +30,16 @@ const CreateProductPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const brandInput = useInput<string>(validators.wordLengthValidator(2), "");
+
   const modleInput = useInput<string>(validators.wordLengthValidator(5), "");
+
   const descriptionInput = useInput<string>(
     validators.wordLengthValidator(20),
     ""
   );
 
   const mrpInput = useInput<string>(validators.numberValidator(1), "");
+
   const priceInput = useInput<string>(
     validators.minMaxValidator(1, Number(mrpInput.value)),
     ""
@@ -45,6 +48,9 @@ const CreateProductPage = () => {
     validators.wordLengthValidator(2),
     sizes[0]?.name || "Size"
   );
+
+  const weightInput = useInput<string>(validators.numberValidator(1), "");
+
   const genderInput = useInput<string>(
     validators.wordLengthValidator(2),
     enumToArray(Genders)[0]?.name || "Gender"
@@ -122,18 +128,18 @@ const CreateProductPage = () => {
       descriptionInput.error ||
       mrpInput.error ||
       priceInput.error ||
-      !selectedCoverImage
+      !selectedCoverImage ||
+      weightInput.error
     ) {
       brandInput.showErrorHandler();
       modleInput.showErrorHandler();
       descriptionInput.showErrorHandler();
       mrpInput.showErrorHandler();
       priceInput.showErrorHandler();
+      weightInput.showErrorHandler();
       !selectedCoverImage && setShowCoverImageError(true);
       return;
     }
-
-    console.log(categoriesInput.value);
 
     try {
       setIsLoading(true);
@@ -146,18 +152,11 @@ const CreateProductPage = () => {
 
       if (selectedImages && selectedImages.length > 0) {
         for (const file of selectedImages) {
+          const fileName = file.name + "-" + uuidv4();
           const imagePromise = async () => {
-            const fileName = file.name + "-" + uuidv4();
             const { data, error } = await supabaseClient.storage
               .from("specs-99-bucket")
               .upload(fileName, file);
-
-            const imageURL =
-              process.env.NEXT_PUBLIC_SUPABASE_URL +
-              "storage/v1/object/public/specs-99-bucket/" +
-              fileName;
-
-            images.push(imageURL);
 
             if (error) {
               console.error("Error uploading file:", error);
@@ -166,6 +165,13 @@ const CreateProductPage = () => {
             }
           };
           imagesPromises.push(imagePromise);
+
+          const imageURL =
+            process.env.NEXT_PUBLIC_SUPABASE_URL +
+            "storage/v1/object/public/specs-99-bucket/" +
+            fileName;
+
+          images.push(imageURL);
         }
       }
 
@@ -196,6 +202,7 @@ const CreateProductPage = () => {
         size: sizeInput.value,
         gender: genderInput.value as Genders,
         shape: shapeInput.value,
+        weight: Number(weightInput.value),
         images,
       });
 
@@ -263,6 +270,12 @@ const CreateProductPage = () => {
             options={sizes}
             multiple={false}
             highlight={false}
+          />
+          <FormInput
+            lable="Weight (in gms)"
+            {...weightInput}
+            errorMessage="Weight must be greater than 0."
+            type="number"
           />
           <FormInputList
             {...shapeInput}

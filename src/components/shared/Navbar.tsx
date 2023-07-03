@@ -2,6 +2,9 @@ import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
+import { AiOutlineHeart } from "react-icons/ai";
+import { BsCart2 } from "react-icons/bs";
+import { AiOutlineUser } from "react-icons/ai";
 
 const Navbar = () => {
   const { status, data } = useSession();
@@ -11,7 +14,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 z-50 flex h-16 w-full items-center border-b bg-bg-primary  px-[min(3vh,3vw)] shadow-primary-sm">
+    <nav className="fixed top-0 z-50 flex h-16 w-full items-center justify-between border-b bg-bg-primary px-[min(8vh,8vw)] shadow-primary-sm  max-[600px]:px-[min(3vh,3vw)]">
       <div>
         <Link href={"/"}>
           <Image
@@ -24,25 +27,49 @@ const Navbar = () => {
           />
         </Link>
       </div>
-      <Link className="ml-auto" href={"/admin/products/create"}>
-        Add Product
-      </Link>
-      {status !== "authenticated" ? (
-        <>
-          <Link className="ml-auto" href={"/sign-up"}>
-            Sign-up
+      <div className="flex items-center gap-4">
+        {/* {data?.user?.role === "Admin" && (
+          <Link className="ml-auto" href={"/admin/products/create"}>
+            Add Product
           </Link>
-          <Link className="ml-4" href={"/login"}>
-            Login
-          </Link>
-        </>
-      ) : (
-        <button className="ml-4 cursor-pointer" onClick={handleLogout}>
-          {" "}
-          Logout
-        </button>
-      )}
-      <div className="flex items-center gap-3"></div>
+        )} */}
+
+        {status !== "authenticated" && (
+          <>
+            <Link className="" href={"/sign-up"}>
+              Sign-up
+            </Link>
+            <Link className="" href={"/login"}>
+              Login
+            </Link>
+          </>
+        )}
+
+        {/* Krishna */}
+
+        {status === "authenticated" && (
+          <>
+            <Link
+              className="flex h-9 w-9 items-center justify-center rounded-full p-2 shadow-primary-md"
+              href={"/sign-up"}
+            >
+              <AiOutlineHeart className="h-full w-full" />
+            </Link>
+            <Link
+              className="flex h-9 w-9 items-center justify-center rounded-full p-2 shadow-primary-md"
+              href={"/login"}
+            >
+              <BsCart2 className="h-full w-full" />
+            </Link>
+            <Link
+              className="flex h-9 w-9 items-center justify-center rounded-full p-2 shadow-primary-md"
+              href={"/login"}
+            >
+              <AiOutlineUser className="h-full w-full" />
+            </Link>
+          </>
+        )}
+      </div>
     </nav>
   );
 };

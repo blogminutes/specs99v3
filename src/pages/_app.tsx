@@ -5,10 +5,15 @@ import Navbar from "~/components/shared/Navbar";
 import { Roboto } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider, useSession } from "next-auth/react";
 import { type AppProps } from "next/app";
 import { useEffect, useRef } from "react";
 import Footer from "~/components/shared/Footer";
+import {
+  getUserCart,
+  useCartStore,
+} from "~/utils/zustand/cartStore/useCartStore";
+import UserDataFunctions from "~/components/user/UserDataFunctions";
 
 const roboto = Roboto({
   weight: ["400", "500", "300", "700"],
@@ -28,6 +33,7 @@ const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
 
   return (
     <SessionProvider session={pageProps.session}>
+      <UserDataFunctions />
       <main
         className={`h-fit min-h-[100vh] bg-bg-primary text-[#343a40] max-[1200px]:p-0 ${roboto.className}`}
       >

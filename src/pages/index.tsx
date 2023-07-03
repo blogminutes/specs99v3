@@ -152,11 +152,12 @@ const Home: NextPage = () => {
       </Head>
       <ContainerMain>
         {/* HERO SECTION */}
+
         <div className="mx-auto grid w-[100%] grid-cols-[min(12vh,12vw)_1fr_min(12vh,12vw)] overflow-hidden shadow-primary-sm max-[600px]:grid-cols-1">
-          <div className="h-[min(50vh,40vw)] px-[min(1vh,1vw)] py-0.5 max-[600px]:h-[min(13vh,13vw)] max-[600px]:p-1.5">
+          <div className="h-[min(60vh,70vw)] px-[min(1vh,1vw)] py-0.5 max-[600px]:h-[min(13vh,13vw)] max-[600px]:p-1.5">
             <Swiper
               direction={swiperDirection as "vertical"}
-              slidesPerView={5}
+              slidesPerView={6}
               spaceBetween={sliderGap}
               freeMode={true}
               pagination={false}
@@ -200,10 +201,10 @@ const Home: NextPage = () => {
               ))}
             </Swiper>
           </div>
-          <Carousel data={heroCarouselData} height="min(50vh,40vw)" />
-          <div className="h-[min(50vh,40vw)] px-[min(1vh,1vw)] py-0.5 max-[600px]:h-[min(13vh,13vw)] max-[600px]:p-1.5">
+          <Carousel data={heroCarouselData} height="min(60vh,70vw)" />
+          <div className="h-[min(60vh,70vw)] px-[min(1vh,1vw)] py-0.5 max-[600px]:h-[min(13vh,13vw)] max-[600px]:p-1.5">
             <Swiper
-              slidesPerView={5}
+              slidesPerView={6}
               spaceBetween={sliderGap}
               freeMode={true}
               pagination={false}
@@ -324,7 +325,6 @@ const TrendsSection = () => {
 
     swiperRef?.current.slideTo(targetSlideIndex, 500); // 500ms for transition duration
   };
-
   return (
     <div className="relative flex w-full flex-col gap-[min(3vh,3vw)]">
       <div className="flex justify-between">

@@ -4,20 +4,20 @@ import React, { useEffect, useRef, useState } from "react";
 import { api } from "~/utils/api";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { EffectCube, Pagination } from "swiper";
-import { IoMdCart } from "react-icons/io";
-
-import "swiper/css";
-import "swiper/css/effect-coverflow";
-import "swiper/css/pagination";
-import "swiper/css/effect-cube";
-
 import Image from "next/image";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import ReactStars from "react-stars";
 import ProductsSwiper from "~/components/product/ProductSwiper";
 import ContainerPrimary from "~/components/ui/container/ContainerPrimary";
 import ContainerMain from "~/components/ui/container/ContainerMain";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHeart } from "react-icons/ai";
+import { BsCart2 } from "react-icons/bs";
+
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
+import "swiper/css/effect-cube";
+
 const ProductInfoPage = () => {
   const [product, setProduct] = useState<null | Product>(null);
 
@@ -68,8 +68,8 @@ const ProductInfoPage = () => {
   return (
     <ContainerMain className="pt-0">
       {product && (
-        <div className="flex border-b px-[min(3vh,3vw)] pb-[min(6vh,6vw)] max-[900px]:flex-col">
-          <div className="relative w-[60%] pb-5 max-[900px]:w-[100%]">
+        <div className="flex border-b pb-[min(6vh,6vw)] max-[900px]:flex-col ">
+          <div className="relative w-[60%] pb-[min(6vh,6vw)] max-[900px]:w-[100%]">
             <Swiper
               onSwiper={(swiper) => (swiperRef.current = swiper)}
               effect={"cube"}
@@ -92,7 +92,7 @@ const ProductInfoPage = () => {
                       alt="Product Image"
                       width={1200}
                       height={1200}
-                      className="max-h-[max(35vh,30vw)] w-full object-cover"
+                      className="max-h-[max(35vh,30vw)] w-full object-cover max-[600px]:max-h-[max(45vh,40vw)]"
                     />
                   </SwiperSlide>
                 ))}
@@ -113,7 +113,7 @@ const ProductInfoPage = () => {
               </span>
             </div>
             <div
-              className={`z-50 grid w-full gap-2 rounded-md px-[min(3vh,3vw)] py-1`}
+              className={`z-50 grid w-full gap-2 rounded-md px-[min(3vh,3vw)] pt-6`}
               style={{
                 gridTemplateColumns: `repeat(${productImages.length},1fr)`,
               }}
@@ -140,8 +140,7 @@ const ProductInfoPage = () => {
               ))}
             </div>
           </div>
-
-          <div className="my-auto flex w-full grow flex-col gap-[min(3vh,3vw)] px-[min(3vh,3vw)]">
+          <div className="my-auto flex w-full grow flex-col gap-[min(3vh,3vw)] px-[min(3vh,3vw)] py-[min(3vh,3vw)]">
             <div className="flex flex-col  gap-[min(.8vh,.8vw)]">
               {/* <span className="h-[1px] w-full bg-[rgb(229,231,235)]"></span> */}
               <h1 className="flex flex-col text-base text-grey-light">
@@ -162,7 +161,7 @@ const ProductInfoPage = () => {
                   {product.mrp}
                   <span className="absolute left-[52%] top-1/2 h-[1.5px] w-full -translate-x-1/2 -translate-y-1/2 bg-red-500"></span>
                 </span>
-                <span className="text-sm font-medium text-green-600">
+                <span className="text-sm font-medium text-green-700">
                   ({Math.floor(100 - (product.price / product.mrp) * 100)}% off)
                 </span>
               </div>
@@ -217,11 +216,11 @@ const ProductInfoPage = () => {
             </div>
             <span className="h-[1px] w-full bg-[rgb(229,231,235)]"></span>
             <div className="relative flex w-full flex-col justify-start gap-3">
-              <button className="relative z-40 flex w-full items-center justify-center gap-2 rounded-full border border-grey-primary px-8 py-[min(.6vh,.6vw)] text-base font-normal shadow-primary-xsm">
+              <button className="relative z-40 flex w-full items-center justify-center gap-2 rounded-full border border-grey-medium px-8 py-[min(.8vh,.8vw)] text-base font-normal text-grey-medium shadow-primary-xsm">
                 Add To Cart
-                <IoMdCart className="text-lg text-grey-primary" />
+                <BsCart2 className="text-xl text-secondary" />
               </button>
-              <button className="relative z-40 flex w-full items-center justify-center gap-2 rounded-full border bg-white px-8 py-[min(.6vh,.6vw)] text-base font-normal text-grey-light shadow-primary-xsm">
+              <button className="relative z-40 flex w-full items-center justify-center gap-2 rounded-full border border-grey-light bg-white px-8 py-[min(.8vh,.8vw)] text-base font-normal text-grey-light shadow-primary-xsm">
                 Add To Whishlist
                 <AiOutlineHeart className="text-lg text-red-500" />
               </button>

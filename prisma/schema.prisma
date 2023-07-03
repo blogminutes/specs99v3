@@ -16,11 +16,10 @@ model User {
   name      String
   email     String   @unique
   password  String
-  role      Role     @default(dbgenerated("User"))
+  role      Role     @default(User)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   cart      Cart?
-  cartId    Int?     @unique
 }
 
 model Product {
@@ -39,6 +38,7 @@ model Product {
   coverImage  String
   images      String[]
   shape       String
+  weight      Int
   gender      Gender
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt

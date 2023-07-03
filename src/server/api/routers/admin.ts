@@ -20,6 +20,7 @@ export const createProductSchema = z.object({
   shape: z.string(),
   gender: z.enum(["Mens", "Womens", "Unisex"]),
   images: z.array(z.string()).optional(),
+  weight: z.number(),
 });
 export const adminRouter = createTRPCRouter({
   // PRODUCTS
@@ -42,6 +43,7 @@ export const adminRouter = createTRPCRouter({
         images,
         gender,
         shape,
+        weight,
       } = input;
 
       const product = await prisma.product.create({
@@ -61,6 +63,7 @@ export const adminRouter = createTRPCRouter({
           images,
           gender,
           shape,
+          weight,
         },
       });
 

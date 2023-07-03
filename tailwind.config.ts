@@ -17,6 +17,7 @@ export default {
         // "bg-primary": "#f1f3f5",
       },
       boxShadow: {
+        "primary-md": "2px 2px 6px #e0e2e4,-1px -1px 6px #f0f1f2",
         "primary-sm": "2px 2px 8px rgba(0,0,0,.08)",
         "primary-xsm": "2px 2px 8px rgba(0,0,0,.08)",
         "form-input-primary":
