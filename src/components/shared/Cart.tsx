@@ -55,7 +55,7 @@ const Cart: React.FC<{
           animate={open ? "open" : "closed"}
           variants={variants}
           transition={{ type: "tween" }}
-          className="absolute right-0 z-20 flex h-full w-[clamp(20vh,30rem,90vw)] flex-col bg-white p-[min(3.5vh,3.5vw)] shadow-md"
+          className="absolute right-0 z-20 flex h-full w-[clamp(20vh,30rem,100vw)] flex-col bg-white p-[min(3.5vh,3.5vw)] shadow-md"
         >
           <div className="flex items-center justify-between border-b pb-4">
             <h3 className="text-2xl">Cart</h3>

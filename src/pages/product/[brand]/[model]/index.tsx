@@ -123,7 +123,7 @@ const ProductInfoPage = () => {
                       alt="Product Image"
                       width={1200}
                       height={1200}
-                      className="max-h-[max(35vh,30vw)] w-full object-cover max-[600px]:max-h-[max(45vh,40vw)]"
+                      className="max-h-[max(35vh,35vw)] w-full object-cover max-[600px]:max-h-[max(45vh,40vw)]"
                     />
                   </SwiperSlide>
                 ))}
