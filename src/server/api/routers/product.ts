@@ -38,6 +38,7 @@ export const productsRouter = createTRPCRouter({
           model: input.filters?.model,
           shape: input.filters?.shape,
         },
+        orderBy: { createdAt: "desc" },
         take: input.filters?.limit || 12,
       });
       return { products };

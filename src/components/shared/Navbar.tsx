@@ -70,7 +70,7 @@ const Navbar = () => {
             </button>
             <Link
               className="flex h-9 w-9 items-center justify-center rounded-full p-2 shadow-primary-md"
-              href={"/login"}
+              href={"/account/profile"}
             >
               <AiOutlineUser className="h-full w-full" />
             </Link>

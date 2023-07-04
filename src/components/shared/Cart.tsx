@@ -34,7 +34,7 @@ const Cart: React.FC<{
 
   const cartStore = useCartStore((c) => c);
 
-  const { items: cartItems, subtotal } = useCartStore((c) => c);
+  const { items: cartItems, subtotal, cartIsLoading } = useCartStore((c) => c);
   return (
     <>
       <motion.div
@@ -120,7 +120,10 @@ const Cart: React.FC<{
                             });
                           }
                         }}
-                        className="flex h-4 w-4 items-center justify-center rounded-full border"
+                        disabled={cartIsLoading}
+                        className={`flex h-4 w-4 items-center justify-center rounded-full border ${
+                          cartIsLoading && "opacity-50"
+                        }`}
                       >
                         <MdAdd className="cursor-pointer text-lg" />
                       </button>
@@ -128,6 +131,7 @@ const Cart: React.FC<{
                         {item.quantity}
                       </span>
                       <button
+                        disabled={cartIsLoading}
                         onClick={() => {
                           if (item.quantity > 1) {
                             updateCartProductQuantity({
@@ -138,7 +142,9 @@ const Cart: React.FC<{
                             });
                           }
                         }}
-                        className="flex h-4 w-4 items-center justify-center rounded-full border"
+                        className={`flex h-4 w-4 items-center justify-center rounded-full border ${
+                          cartIsLoading && "opacity-50"
+                        }`}
                       >
                         <GrFormSubtract className="cursor-pointer text-lg text-grey-medium" />
                       </button>

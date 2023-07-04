@@ -87,7 +87,7 @@ export const addToCart = async (input: {
 
       toast.success("Item added to cart!");
     } else {
-      toast.info("Product already exist!");
+      toast.success("Product already exist!");
     }
     cartStore.setCartIsLoading(false);
   } catch (error) {

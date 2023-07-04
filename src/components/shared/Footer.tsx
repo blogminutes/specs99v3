@@ -26,14 +26,14 @@ const Footer = () => {
               alt="specs99 brand logo"
               width={288}
               height={64}
-              className="h-auto w-[max(20vw,20vh)]"
+              className="h-auto w-[20vh]"
             />
           </Link>{" "}
           <div className="flex justify-between gap-[min(2vh,2vw)]">
-            <AiFillTwitterCircle className=" h-6 w-6" />
-            <AiFillFacebook className=" h-6 w-6" />
-            <AiFillInstagram className=" h-6 w-6" />
-            <FaYoutube className=" h-6 w-6" />
+            <AiFillTwitterCircle className="h-[3vh] w-[3vh]" />
+            <AiFillFacebook className="h-[3vh] w-[3vh]" />
+            <AiFillInstagram className="h-[3vh] w-[3vh]" />
+            <FaYoutube className="h-[3vh] w-[3vh]" />
           </div>
         </div>
 
