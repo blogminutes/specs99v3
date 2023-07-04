@@ -95,6 +95,49 @@ export const addToCart = async (input: {
   }
 };
 
+export const updateCartProductQuantity = async (input: {
+  apiContext: ApiContextType;
+  cartStore: CartStore;
+  cartProduct: CartItem;
+  quantity: number;
+}) => {
+  try {
+    const { apiContext, cartStore, cartProduct, quantity } = input;
+
+    cartStore.setCartIsLoading(true);
+
+    await apiContext.user.updateCartProduct.fetch({
+      cartProductId: cartProduct.id,
+      quantity: quantity,
+    });
+
+    let subtotal = 0;
+
+    const updatedCart = cartStore.items?.map((it) => {
+      if (it.id === cartProduct.id) {
+        it.quantity = quantity;
+        subtotal += it.quantity * it.product.price;
+        return it;
+      }
+      subtotal += it.quantity * it.product.price;
+      return it;
+    });
+
+    cartStore.setCart({
+      id: cartStore.id,
+      items: updatedCart || [],
+      subtotal: subtotal,
+      userId: cartStore.userId,
+    });
+
+    // toast.success("Quantity Incresed!");
+
+    cartStore.setCartIsLoading(false);
+  } catch (error) {
+    input.cartStore.setCartIsLoading(false);
+  }
+};
+
 export const removeFromCart = async (input: {
   apiContext: ApiContextType;
   cartStore: CartStore;

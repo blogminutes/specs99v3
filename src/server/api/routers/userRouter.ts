@@ -51,4 +51,20 @@ export const userRouter = createTRPCRouter({
       });
       return res;
     }),
+  updateCartProduct: publicProcedure
+    .input(
+      z.object({
+        cartProductId: z.number(),
+        quantity: z.number(),
+      })
+    )
+    .query(async ({ input }) => {
+      const res = await prisma.cartProduct.update({
+        where: { id: input.cartProductId },
+        data: {
+          quantity: input.quantity,
+        },
+      });
+      return res;
+    }),
 });

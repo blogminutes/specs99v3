@@ -77,7 +77,9 @@ const Navbar = () => {
           </>
         )}
       </div>
-      <Cart open={cartIsOpen} setOpen={setCartIsOpen} />
+      {status === "authenticated" && (
+        <Cart open={cartIsOpen} setOpen={setCartIsOpen} />
+      )}
     </nav>
   );
 };

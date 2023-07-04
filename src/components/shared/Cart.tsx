@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import { motion } from "framer-motion";
 import {
   removeFromCart,
+  updateCartProductQuantity,
   useCartStore,
 } from "~/utils/zustand/cartStore/useCartStore";
 import Image from "next/image";
@@ -108,15 +109,39 @@ const Cart: React.FC<{
                   </div>
                   <div className="flex h-full flex-col justify-between gap-10 px-1 py-2">
                     <div className="flex flex-col items-center gap-1.5 text-grey-medium">
-                      <span className="flex h-4 w-4 items-center justify-center rounded-full border">
+                      <button
+                        onClick={() => {
+                          if (item.quantity < 20) {
+                            updateCartProductQuantity({
+                              apiContext,
+                              cartProduct: item,
+                              cartStore,
+                              quantity: item.quantity + 1,
+                            });
+                          }
+                        }}
+                        className="flex h-4 w-4 items-center justify-center rounded-full border"
+                      >
                         <MdAdd className="cursor-pointer text-lg" />
-                      </span>
+                      </button>
                       <span className="text-xs font-medium">
                         {item.quantity}
                       </span>
-                      <span className="flex h-4 w-4 items-center justify-center rounded-full border">
+                      <button
+                        onClick={() => {
+                          if (item.quantity > 1) {
+                            updateCartProductQuantity({
+                              apiContext,
+                              cartProduct: item,
+                              cartStore,
+                              quantity: item.quantity - 1,
+                            });
+                          }
+                        }}
+                        className="flex h-4 w-4 items-center justify-center rounded-full border"
+                      >
                         <GrFormSubtract className="cursor-pointer text-lg text-grey-medium" />
-                      </span>
+                      </button>
                     </div>
                     <MdDeleteOutline
                       onClick={() => {

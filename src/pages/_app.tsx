@@ -9,7 +9,6 @@ import { SessionProvider, useSession } from "next-auth/react";
 import { type AppProps } from "next/app";
 import { useEffect, useRef } from "react";
 import Footer from "~/components/shared/Footer";
-import { useCartStore } from "~/utils/zustand/cartStore/useCartStore";
 import UserDataFunctions from "~/components/user/UserDataFunctions";
 
 const roboto = Roboto({
