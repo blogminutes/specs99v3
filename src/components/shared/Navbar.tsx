@@ -45,6 +45,9 @@ const Navbar = () => {
         )}
 
         {/* Krishna */}
+        {status === "authenticated" && (
+          <button onClick={handleLogout}>logout</button>
+        )}
 
         {status === "authenticated" && (
           <>
