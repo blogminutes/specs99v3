@@ -35,7 +35,7 @@ const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
     <SessionProvider session={pageProps.session}>
       <UserDataFunctions />
       <main
-        className={`h-fit min-h-[100vh] bg-bg-primary text-[#343a40] max-[1200px]:p-0 ${roboto.className}`}
+        className={`h-fit min-h-[100vh] bg-bg-primary text-grey-medium max-[1200px]:p-0 ${roboto.className}`}
       >
         <div
           ref={ref}

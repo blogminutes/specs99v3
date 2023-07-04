@@ -17,7 +17,7 @@ const Footer = () => {
   };
 
   return (
-    <nav className="z-50 flex w-full items-center justify-center rounded-t-xl border-t  bg-bg-primary px-[min(8vh,8vw)] py-[min(8vh,8vw)] shadow-primary-sm max-[600px]:px-[min(3vh,3vw)]">
+    <nav className="z-40 flex w-full items-center justify-center rounded-t-xl border-t  bg-bg-primary px-[min(8vh,8vw)] py-[min(8vh,8vw)] shadow-primary-sm max-[600px]:px-[min(3vh,3vw)]">
       <div className="flex flex-col justify-center gap-[min(4vh,4vh)]">
         <div className="flex w-fit  flex-col gap-[min(2vh,2vh)]">
           <Link href={"/"}>
