@@ -12,10 +12,15 @@ const UserDataFunctions = () => {
 
   useEffect(() => {
     if (!cartStore.id && data?.user.id && data.user.cart) {
+      let subtotal = 0;
+      data.user.cart.items.forEach((item) => {
+        subtotal += item.quantity * item.product.price;
+      });
       cartStore.setCart({
         id: data.user.cart?.id,
         items: data.user.cart?.items,
         userId: data.user.id,
+        subtotal,
       });
     }
   }, [data?.user, cartStore]);

@@ -16,7 +16,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           className="flex h-[clamp(3vh,2rem,3vw)] w-[clamp(3vh,2rem,4.5vw)] items-center  justify-center rounded-full p-1 "
           href={"/sign-up"}
         >
-          <AiOutlineHeart className="h-full w-full text-red-400" />
+          <AiOutlineHeart className="h-full w-full text-gray-400" />
         </Link>{" "}
       </div>
       <div className="rounded-lg">
@@ -38,13 +38,6 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
         <span className="text-xs">
           <strong className="font-medium">Size:</strong> {product.size}
         </span>
-        {/* <span className="text-sm"> {product.model}</span> */}
-        {/* <span className="text-sm">
-          <strong className="font-medium">Lens:</strong> {product.lens}
-        </span>
-        <span className="text-sm">
-          <strong className="font-medium">For:</strong> {product.gender}
-        </span> */}
         <div className="-mt-0.5 mb-0.5 flex items-center gap-2">
           <span className=" bg-clip-text text-base font-medium text-grey-medium">
             {product.price}{" "}

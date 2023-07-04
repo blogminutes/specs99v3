@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { api } from "~/utils/api";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { EffectFade, Navigation, Pagination } from "swiper";
+import SwiperCore, { Navigation, Pagination } from "swiper";
 import Image from "next/image";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import ReactStars from "react-stars";
@@ -12,16 +12,18 @@ import ContainerPrimary from "~/components/ui/container/ContainerPrimary";
 import ContainerMain from "~/components/ui/container/ContainerMain";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsCart2 } from "react-icons/bs";
-
-import "swiper/css";
-import "swiper/css/effect-fade";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import { useSession } from "next-auth/react";
 import {
   addToCart,
   useCartStore,
 } from "~/utils/zustand/cartStore/useCartStore";
+import { MdAdd } from "react-icons/md";
+import { GrFormSubtract } from "react-icons/gr";
+
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const ProductInfoPage = () => {
   const [product, setProduct] = useState<null | Product>(null);
@@ -30,13 +32,15 @@ const ProductInfoPage = () => {
 
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const [quantity, setQuantity] = useState(1);
+
   const apiContext = api.useContext();
 
   const { data } = useSession();
 
   const cartStore = useCartStore((c) => c);
 
-  const { id: cartId } = cartStore;
+  const { id: cartId, cartIsLoading } = cartStore;
 
   const router = useRouter();
 
@@ -83,14 +87,13 @@ const ProductInfoPage = () => {
   };
 
   const handleAddToCart = () => {
-    console.log(data?.user.id, cartId, product);
     if (data?.user.id && cartId && product) {
       addToCart({
         apiContext,
         cartId,
         cartStore,
-        productId: product?.id,
-        quantity: 1,
+        product,
+        quantity: quantity,
       });
     }
   };
@@ -126,16 +129,16 @@ const ProductInfoPage = () => {
                 ))}
             </Swiper>
 
-            <div className="absolute left-1/2 top-[40%] z-50 flex w-[90%] -translate-x-1/2 -translate-y-1/2 justify-between gap-7">
+            <div className="absolute left-1/2 top-[40%] z-20 flex w-[90%] -translate-x-1/2 -translate-y-1/2 justify-between gap-7">
               <span
                 onClick={handlePrevSlides}
-                className="h-[clamp(3vh,1.5rem,3.5vw)] w-[clamp(3vh,1.5rem,3.5vw)] cursor-pointer rounded-full bg-bg-primary shadow-primary-sm "
+                className="h-[clamp(3vh,1.2rem,3vw)] w-[clamp(3vh,1.5rem,3vw)] cursor-pointer rounded-full bg-bg-primary shadow-primary-sm "
               >
                 <CaretLeftIcon className="h-full w-full" color="black" />
               </span>
               <span
                 onClick={handleSkipSlides}
-                className="h-[clamp(3vh,1.5rem,3.5vw)]  w-[clamp(3vh,1.5rem,3.5vw)] cursor-pointer rounded-full bg-bg-primary shadow-primary-sm "
+                className="h-[clamp(3vh,1.2rem,3vw)]  w-[clamp(3vh,1.5rem,3vw)] cursor-pointer rounded-full bg-bg-primary shadow-primary-sm "
               >
                 <CaretRightIcon className="h-full  w-full" color="black" />
               </span>
@@ -236,10 +239,32 @@ const ProductInfoPage = () => {
             </div>
             <span className="h-[1px] w-full bg-[rgb(229,231,235)]"></span>
 
-            <div className="relative flex w-full flex-col justify-start gap-3">
+            <div className="relative flex w-full flex-col justify-start gap-4">
+              <div className="flex items-center gap-3 text-grey-medium">
+                <span
+                  onClick={() => {
+                    if (quantity > 1) setQuantity(quantity - 1);
+                  }}
+                  className="flex h-5 w-5 items-center justify-center rounded-full border"
+                >
+                  <GrFormSubtract className="cursor-pointer text-lg text-grey-medium" />
+                </span>
+                <span className="text-sm font-medium">{quantity}</span>
+                <span
+                  onClick={() => {
+                    if (quantity < 20) setQuantity(quantity + 1);
+                  }}
+                  className="flex h-5 w-5 items-center justify-center rounded-full border"
+                >
+                  <MdAdd className="cursor-pointer text-lg" />
+                </span>
+              </div>
               <button
                 onClick={handleAddToCart}
-                className="relative z-40 flex w-full items-center justify-center gap-2 rounded-full border border-grey-medium px-8 py-[min(.8vh,.8vw)] text-base font-normal text-grey-medium shadow-primary-xsm"
+                disabled={cartIsLoading}
+                className={`relative z-40 flex w-full items-center justify-center gap-2 rounded-full border border-grey-medium px-8 py-[min(.8vh,.8vw)] text-base font-normal text-grey-medium shadow-primary-xsm ${
+                  cartIsLoading && "opacity-50"
+                }`}
               >
                 Add To Cart
                 <BsCart2 className="text-xl text-secondary" />

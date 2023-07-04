@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { PrismaClient } from "@prisma/client";
+import { number } from "square/dist/types/schema";
 
 const prisma = new PrismaClient();
 
@@ -37,5 +38,17 @@ export const userRouter = createTRPCRouter({
         },
       });
       return newCartProduct;
+    }),
+  removeFromCart: publicProcedure
+    .input(
+      z.object({
+        cartProductId: z.number(),
+      })
+    )
+    .query(async ({ input }) => {
+      const res = await prisma.cartProduct.delete({
+        where: { id: input.cartProductId },
+      });
+      return res;
     }),
 });

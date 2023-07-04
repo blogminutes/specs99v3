@@ -9,10 +9,7 @@ import { SessionProvider, useSession } from "next-auth/react";
 import { type AppProps } from "next/app";
 import { useEffect, useRef } from "react";
 import Footer from "~/components/shared/Footer";
-import {
-  getUserCart,
-  useCartStore,
-} from "~/utils/zustand/cartStore/useCartStore";
+import { useCartStore } from "~/utils/zustand/cartStore/useCartStore";
 import UserDataFunctions from "~/components/user/UserDataFunctions";
 
 const roboto = Roboto({
@@ -41,7 +38,7 @@ const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
           ref={ref}
           className="relative mx-auto mt-14 flex min-h-[100vh] flex-col overflow-auto max-[1200px]:h-fit max-[1200px]:min-h-screen"
         >
-          <ToastContainer position="bottom-left" />
+          <ToastContainer position="top-right" />
           <Navbar />
           <Component {...pageProps} />
           <Footer />
