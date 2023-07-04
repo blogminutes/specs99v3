@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { api } from "~/utils/api";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { EffectCube, Pagination } from "swiper";
+import SwiperCore, { EffectFade, Navigation, Pagination } from "swiper";
 import Image from "next/image";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import ReactStars from "react-stars";
@@ -14,9 +14,9 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { BsCart2 } from "react-icons/bs";
 
 import "swiper/css";
-import "swiper/css/effect-coverflow";
+import "swiper/css/effect-fade";
+import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/effect-cube";
 import { useSession } from "next-auth/react";
 import {
   addToCart,
@@ -25,6 +25,8 @@ import {
 
 const ProductInfoPage = () => {
   const [product, setProduct] = useState<null | Product>(null);
+
+  const [productImages, setProductImages] = useState<string[] | null>(null);
 
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -58,7 +60,10 @@ const ProductInfoPage = () => {
     if (!swiperRef.current) return;
     const numSlidesToSkip = 1; // Number of slides to skip
     const currentSlideIndex = swiperRef?.current?.activeIndex || 0;
-    const targetSlideIndex = currentSlideIndex + numSlidesToSkip;
+    const targetSlideIndex =
+      swiperRef?.current?.activeIndex === (productImages?.length || 0) - 1
+        ? 0
+        : currentSlideIndex + numSlidesToSkip;
     setActiveIndex(targetSlideIndex);
 
     swiperRef?.current.slideTo(targetSlideIndex, 500); // 500ms for transition duration
@@ -68,13 +73,14 @@ const ProductInfoPage = () => {
     if (!swiperRef.current) return;
     const numSlidesToSkip = -1; // Number of slides to skip
     const currentSlideIndex = swiperRef?.current?.activeIndex || 0;
-    const targetSlideIndex = currentSlideIndex + numSlidesToSkip;
+    const targetSlideIndex =
+      swiperRef?.current?.activeIndex === 0
+        ? productImages?.length || 0
+        : currentSlideIndex + numSlidesToSkip;
     setActiveIndex(targetSlideIndex);
 
     swiperRef?.current.slideTo(targetSlideIndex, 500); // 500ms for transition duration
   };
-
-  const productImages = [product?.coverImage, ...(product?.images || [])];
 
   const handleAddToCart = () => {
     console.log(data?.user.id, cartId, product);
@@ -89,6 +95,10 @@ const ProductInfoPage = () => {
     }
   };
 
+  useEffect(() => {
+    if (product) setProductImages([product?.coverImage, ...product?.images]);
+  }, [product]);
+
   return (
     <ContainerMain className="pt-0">
       {product && (
@@ -96,20 +106,14 @@ const ProductInfoPage = () => {
           <div className="relative w-[60%] pb-[min(6vh,6vw)] max-[900px]:w-[100%]">
             <Swiper
               onSwiper={(swiper) => (swiperRef.current = swiper)}
-              effect={"cube"}
-              grabCursor={true}
-              cubeEffect={{
-                shadow: false,
-                slideShadows: true,
-                shadowOffset: 20,
-                shadowScale: 0.3,
-              }}
+              // effect={"fade"}
               // pagination={true}
               loop={true}
-              modules={[EffectCube, Pagination]}
+              modules={[Pagination, Navigation]}
+              slidesPerView={1}
             >
-              {product &&
-                [product.coverImage, ...product.images].map((img, i) => (
+              {productImages &&
+                productImages.map((img, i) => (
                   <SwiperSlide className="!100%" key={i}>
                     <Image
                       src={img}
@@ -122,7 +126,7 @@ const ProductInfoPage = () => {
                 ))}
             </Swiper>
 
-            <div className="absolute left-1/2 top-1/2 z-50 flex w-[90%] -translate-x-1/2 -translate-y-1/2 justify-between gap-7">
+            <div className="absolute left-1/2 top-[40%] z-50 flex w-[90%] -translate-x-1/2 -translate-y-1/2 justify-between gap-7">
               <span
                 onClick={handlePrevSlides}
                 className="h-[clamp(3vh,1.5rem,3.5vw)] w-[clamp(3vh,1.5rem,3.5vw)] cursor-pointer rounded-full bg-bg-primary shadow-primary-sm "
@@ -139,29 +143,30 @@ const ProductInfoPage = () => {
             <div
               className={`z-50 grid w-full gap-2 rounded-md px-[min(3vh,3vw)] pt-6`}
               style={{
-                gridTemplateColumns: `repeat(${productImages.length},1fr)`,
+                gridTemplateColumns: `repeat(${productImages?.length},1fr)`,
               }}
             >
-              {[product.coverImage, ...product.images].map((img, i) => (
-                <Image
-                  alt="Product Image"
-                  src={img}
-                  key={i}
-                  width={150}
-                  height={150}
-                  className={`w-full cursor-pointer rounded-lg object-cover ${
-                    swiperRef.current && swiperRef.current.activeIndex === i
-                      ? "border-[2px] shadow-primary-sm"
-                      : "shadow-primary-xsm"
-                  }`}
-                  onClick={() => {
-                    if (!swiperRef.current) return;
-                    const targetSlideIndex = i;
-                    setActiveIndex(i);
-                    swiperRef?.current.slideTo(targetSlideIndex, 500);
-                  }}
-                />
-              ))}
+              {productImages &&
+                productImages.map((img, i) => (
+                  <Image
+                    alt="Product Image"
+                    src={img}
+                    key={i}
+                    width={150}
+                    height={150}
+                    className={`w-full cursor-pointer rounded-lg object-cover ${
+                      swiperRef.current && swiperRef.current.activeIndex === i
+                        ? "border-[2px] shadow-primary-sm"
+                        : "shadow-primary-xsm"
+                    }`}
+                    onClick={() => {
+                      if (!swiperRef.current) return;
+                      const targetSlideIndex = i;
+                      setActiveIndex(i);
+                      swiperRef?.current.slideTo(targetSlideIndex, 500);
+                    }}
+                  />
+                ))}
             </div>
           </div>
           <div className="my-auto flex w-full grow flex-col gap-[min(3vh,3vw)] px-[min(3vh,3vw)] py-[min(3vh,3vw)]">
@@ -230,15 +235,7 @@ const ProductInfoPage = () => {
               </span>
             </div>
             <span className="h-[1px] w-full bg-[rgb(229,231,235)]"></span>
-            <div>
-              <span className="text-sm text-grey-medium">
-                <span className="font-medium  text-grey-primary">
-                  Description:
-                </span>{" "}
-                {product.description}
-              </span>
-            </div>
-            <span className="h-[1px] w-full bg-[rgb(229,231,235)]"></span>
+
             <div className="relative flex w-full flex-col justify-start gap-3">
               <button
                 onClick={handleAddToCart}
@@ -251,6 +248,15 @@ const ProductInfoPage = () => {
                 Add To Whishlist
                 <AiOutlineHeart className="text-lg text-red-500" />
               </button>
+            </div>
+            <span className="h-[1px] w-full bg-[rgb(229,231,235)]"></span>
+            <div>
+              <span className="text-sm text-grey-medium">
+                <span className="font-medium  text-grey-primary">
+                  Description:
+                </span>{" "}
+                {product.description}
+              </span>
             </div>
           </div>
         </div>

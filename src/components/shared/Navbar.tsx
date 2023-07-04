@@ -25,18 +25,11 @@ const Navbar = () => {
             alt="specs99 brand logo"
             width={144}
             height={32}
-            // className=" max-[600px]:h-[min(6vh,6vw)] max-[600px]:w-[min(24vh,24vw)]"
             className="w-[15vh]"
           />
         </Link>
       </div>
       <div className="flex items-center gap-4">
-        {/* {data?.user?.role === "Admin" && (
-          <Link className="ml-auto" href={"/admin/products/create"}>
-            Add Product
-          </Link>
-        )} */}
-
         {status !== "authenticated" && (
           <>
             <Link className="" href={"/sign-up"}>

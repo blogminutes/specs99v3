@@ -1,4 +1,4 @@
-import { Profile, Role } from "@prisma/client";
+import { Cart, CartProduct, Product, Profile, Role } from "@prisma/client";
 import NextAuth from "next-auth";
 
 declare module "next-auth" {
@@ -12,6 +12,14 @@ declare module "next-auth" {
       id: number;
       name: string;
       role: Role;
+      cart:
+        | (Cart & {
+            items: (CartProduct & {
+              product: Product;
+            })[];
+          })
+        | null
+        | undefined;
     };
   }
 }

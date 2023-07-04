@@ -51,6 +51,9 @@ const options: NextAuthOptions = {
 
       const userData = await prisma.user.findUnique({
         where: { email: session?.user?.email },
+        include: {
+          cart: { include: { items: { include: { product: true } } } },
+        },
       });
 
       return {
@@ -60,6 +63,7 @@ const options: NextAuthOptions = {
           id: userData?.id,
           name: userData?.name,
           role: userData?.role,
+          cart: userData?.cart,
         },
       };
     },
