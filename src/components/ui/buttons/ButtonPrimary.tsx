@@ -23,7 +23,7 @@ const ButtonPrimary: React.FC<{
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
       disabled={props.isLoading}
-      onClick={props.link ? onLinkClick : () => {}}
+      onClick={props?.link ? onLinkClick : undefined}
     >
       {props.text}
       {props.isLoading && (
