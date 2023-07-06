@@ -1,7 +1,8 @@
-import React, { ReactNode } from "react";
+import React, { HTMLProps, ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
+  className?: HTMLProps<HTMLElement>["className"];
 };
 
 const ContainerPrimary: React.FC<Props> = ({ children }) => {

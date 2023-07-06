@@ -20,19 +20,20 @@ import { api } from "~/utils/api";
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { useCartStore } from "~/utils/zustand/cartStore/useCartStore";
+import ButtonPrimary from "../ui/buttons/ButtonPrimary";
 
-type WhereFilterStrings = {
+export type WhereFilterStrings = {
   contains?: string;
   equals?: string;
   not?: string;
   notIn?: string[];
 };
 
-type WhereFilterArrays = {
+export type WhereFilterArrays = {
   equals?: string[];
 };
 
-type ProductFilters = {
+export type ProductFilters = {
   categories?: WhereFilterArrays;
   limit?: 12;
   brand?: WhereFilterStrings;
@@ -137,6 +138,11 @@ const ProductsSwiper: React.FC<{
             ))}
         </Swiper>
       </div>
+      <ButtonPrimary
+        link="/products"
+        text="View Range"
+        className="mx-auto ml-auto"
+      />
     </div>
   );
 };
