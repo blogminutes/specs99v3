@@ -97,7 +97,7 @@ const FormInputList = <T,>(props: Props<T>) => {
               <Listbox.Option
                 key={optionIdx}
                 className={({ active }) =>
-                  `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                  `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
                     active ? "bg-grey-light/10" : "text-gray-900"
                   }`
                 }

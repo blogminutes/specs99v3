@@ -1,5 +1,7 @@
 import { Product } from "@prisma/client";
-import ProductCard from "~/components/product/ProductCard";
+import ProductCard, {
+  ProductCardSkeleton,
+} from "~/components/product/ProductCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, {
   Autoplay,
@@ -55,6 +57,7 @@ const ProductsSwiper: React.FC<{
       const res = await apiContext.products.getProducts.fetch({
         filters: filters,
       });
+
       setProducts(res.products);
     };
 

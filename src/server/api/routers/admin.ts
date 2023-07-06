@@ -13,14 +13,16 @@ export const createProductSchema = z.object({
   price: z.number(),
   size: z.string(),
   lens: z.string(),
-  lensColor: z.string(),
+  lensColor: z.array(z.string()),
   categories: z.array(z.string()),
-  frameBody: z.string(),
-  frameColor: z.string(),
-  shape: z.string(),
-  gender: z.enum(["Mens", "Womens", "Unisex"]),
+  frameMaterial: z.string(),
+  frameColor: z.array(z.string()),
+  frameType: z.string(),
+  shape: z.array(z.string()),
+  // gender: z.enum(["Mens", "Womens", "Unisex"]),
   images: z.array(z.string()).optional(),
   weight: z.number(),
+  idealFor: z.enum(["Mens", "Womens", "Unisex", "Kids", "Girls", "Boys"]),
 });
 export const adminRouter = createTRPCRouter({
   // PRODUCTS
@@ -32,7 +34,7 @@ export const adminRouter = createTRPCRouter({
         categories,
         coverImage,
         description,
-        frameBody,
+        frameMaterial,
         frameColor,
         lens,
         lensColor,
@@ -41,9 +43,10 @@ export const adminRouter = createTRPCRouter({
         price,
         size,
         images,
-        gender,
         shape,
         weight,
+        idealFor,
+        frameType,
       } = input;
 
       const product = await prisma.product.create({
@@ -57,13 +60,14 @@ export const adminRouter = createTRPCRouter({
           size,
           lens,
           coverImage,
-          frameBody,
+          frameMaterial,
           frameColor,
           lensColor,
           images,
-          gender,
           shape,
           weight,
+          idealFor,
+          frameType,
         },
       });
 

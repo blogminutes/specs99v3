@@ -2,27 +2,12 @@ import { CaretRightIcon, Pencil2Icon, PlusIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import autoAnimate from "@formkit/auto-animate";
+import { IoLogOutOutline } from "react-icons/io5";
 
 const sidebarLinks = [
   {
     category: "Products",
-    childrens: [
-      {
-        name: "Add Product",
-        href: "/admin/products/create",
-        icon: <PlusIcon width={14} height={14} />,
-      },
-      {
-        name: "Edit Products",
-        href: "/admin/products/category/create",
-        icon: <Pencil2Icon width={14} height={14} />,
-      },
-      {
-        name: "Add Category",
-        href: "/admin/products/category/create",
-        icon: <PlusIcon width={14} height={14} />,
-      },
-    ],
+    href: "",
   },
   {
     category: "Users",
@@ -73,7 +58,7 @@ const sidebarLinks = [
 
 interface ISidebarLink {
   category: string;
-  childrens: {
+  childrens?: {
     name: string;
     href: string;
     icon: JSX.Element;
@@ -86,6 +71,12 @@ const AccountSidebar = () => {
       {sidebarLinks.map((link) => (
         <LinkTree category={link} key={link.category} />
       ))}
+      <div className="mx-auto mt-auto w-full select-none rounded-lg px-6 py-1 shadow-primary-xsm	">
+        <span className="flex w-full cursor-pointer items-center gap-2 text-lg font-normal">
+          <IoLogOutOutline width={22} height={22} className="ml-1" />
+          Logout
+        </span>
+      </div>
     </div>
   );
 };
@@ -104,7 +95,7 @@ const LinkTree: React.FC<{ category: ISidebarLink }> = (props) => {
   return (
     <div
       ref={parent}
-      className="mx-auto w-full select-none rounded-lg px-6 py-1 shadow-primary-xsm	"
+      className="mx-auto w-full select-none rounded-lg px-6 py-1 shadow-primary-sm"
     >
       <span
         onClick={() => setOpen((prev) => !prev)}
@@ -120,7 +111,7 @@ const LinkTree: React.FC<{ category: ISidebarLink }> = (props) => {
         />
         {category.category}
       </span>
-      {open && (
+      {open && category.childrens && (
         <div className="flex flex-col gap-2.5 py-2 pl-7">
           {category.childrens.map((link) => (
             <Link

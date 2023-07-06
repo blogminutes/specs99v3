@@ -5,13 +5,18 @@ import useInput from "~/hooks/useInput";
 import FormInput from "~/components/ui/form/FormInput";
 import FormInputList from "~/components/ui/form/FormInputList";
 import { v4 as uuidv4 } from "uuid";
-
 import {
   categories,
   enumToArray,
+  FrameBodyTypes,
   frameBodyTypes,
+  FrameColors,
   frameColors,
+  FrameMaterial,
+  FrameShapes,
   Genders,
+  IdealFor,
+  LensColors,
   lensColors,
   lensTypes,
   shapes,
@@ -51,34 +56,35 @@ const CreateProductPage = () => {
 
   const weightInput = useInput<string>(validators.numberValidator(1), "");
 
-  const genderInput = useInput<string>(
+  const idealForInput = useInput<string>(
     validators.wordLengthValidator(2),
-    enumToArray(Genders)[0]?.name || "Gender"
+    enumToArray(IdealFor)[0]?.name || "Mens"
   );
 
-  const shapeInput = useInput<string>(
-    validators.wordLengthValidator(2),
-    shapes[0]?.name || "Shape"
-  );
+  const shapeInput = useInput(validators.multipleValueValidator, [
+    enumToArray(FrameShapes)[0]?.name || "Shape",
+  ]);
   const lensInput = useInput<string>(
     validators.wordLengthValidator(3),
     lensTypes[0]?.name || "Lens"
   );
-  const lensColorInput = useInput(
-    validators.wordLengthValidator(3),
-    lensColors[0]?.name || "Lens Color"
-  );
+  const lensColorInput = useInput(validators.multipleValueValidator, [
+    enumToArray(LensColors)[0]?.name || "Lens Color",
+  ]);
   const categoriesInput = useInput(validators.multipleValueValidator, [
     categories[0]?.name || "Category",
   ]);
-  const frameBodyInput = useInput(
+  const frameMaterialInput = useInput(
+    validators.wordLengthValidator(3),
+    enumToArray(FrameMaterial)[0]?.name || "Frame Material"
+  );
+  const frameTypeInput = useInput(
     validators.wordLengthValidator(3),
     frameBodyTypes[0]?.name || "Frame Body"
   );
-  const frameColorInput = useInput(
-    validators.wordLengthValidator(3),
-    frameColors[0]?.name || "Frame Color"
-  );
+  const frameColorInput = useInput(validators.multipleValueValidator, [
+    enumToArray(FrameColors)[0]?.name || "Frame Color",
+  ]);
 
   const [selectedCoverImage, setSelectedCoverImage] = useState<File | null>(
     null
@@ -192,7 +198,7 @@ const CreateProductPage = () => {
         categories: categoriesInput.value,
         coverImage: coverImageUrl,
         description: descriptionInput.value,
-        frameBody: frameBodyInput.value,
+        frameMaterial: frameMaterialInput.value,
         frameColor: frameColorInput.value,
         lens: lensInput.value,
         lensColor: lensColorInput.value,
@@ -200,10 +206,11 @@ const CreateProductPage = () => {
         mrp: Number(mrpInput.value),
         price: Number(priceInput.value),
         size: sizeInput.value,
-        gender: genderInput.value as Genders,
         shape: shapeInput.value,
         weight: Number(weightInput.value),
         images,
+        idealFor: idealForInput.value as IdealFor,
+        frameType: frameTypeInput.value,
       });
 
       toast.success("Product Created!");
@@ -281,15 +288,15 @@ const CreateProductPage = () => {
             {...shapeInput}
             lable="Shape"
             errorMessage="Please select shape."
-            options={shapes}
-            multiple={false}
+            options={enumToArray(FrameShapes)}
+            multiple={true}
             highlight={false}
           />
           <FormInputList
-            {...genderInput}
-            lable="Gender"
+            {...idealForInput}
+            lable="Ideal For"
             errorMessage="Please select gender."
-            options={enumToArray(Genders)}
+            options={enumToArray(IdealFor)}
             multiple={false}
             highlight={false}
           />
@@ -306,15 +313,15 @@ const CreateProductPage = () => {
             {...lensColorInput}
             lable="Lens Color"
             errorMessage="Please select lens color."
-            options={lensColors}
-            multiple={false}
+            options={enumToArray(LensColors)}
+            multiple={true}
             highlight={false}
           />
           <FormInputList
-            {...frameBodyInput}
-            lable="Frame Body"
-            errorMessage="Please select frame boduy."
-            options={frameBodyTypes}
+            {...frameTypeInput}
+            lable="Frame Type"
+            errorMessage="Please select frame material."
+            options={enumToArray(FrameBodyTypes)}
             highlight={false}
             multiple={false}
           />
@@ -322,8 +329,8 @@ const CreateProductPage = () => {
             {...frameColorInput}
             lable="Frame Color"
             errorMessage="Please select frame color."
-            options={frameColors}
-            multiple={false}
+            options={enumToArray(FrameColors)}
+            multiple={true}
             highlight={false}
           />
           <div className="flex flex-col gap-0 ">

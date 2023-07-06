@@ -23,26 +23,27 @@ model User {
 }
 
 model Product {
-  id          Int           @id @default(autoincrement())
-  brand       String
-  model       String
-  description String
-  mrp         Int
-  price       Int
-  categories  String[]
-  size        String
-  lens        String
-  lensColor   String
-  frameBody   String
-  frameColor  String
-  coverImage  String
-  images      String[]
-  shape       String
-  weight      Int
-  gender      Gender
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  cartItems   CartProduct[]
+  id            Int           @id @default(autoincrement())
+  brand         String
+  model         String
+  description   String
+  mrp           Int
+  price         Int
+  categories    String[]
+  size          String
+  lens          String
+  lensColor     String[]
+  frameMaterial String @default("Plastic")
+  frameType     String @default("Full Rim")
+  frameColor    String[]
+  coverImage    String
+  images        String[]
+  shape         String[]
+  weight        Int
+  idealFor      String @default("Mens")
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  cartItems     CartProduct[]
 }
 
 model Cart {
@@ -61,13 +62,11 @@ model CartProduct {
   quantity  Int
 }
 
-enum Gender {
-  Mens
-  Womens
-  Unisex
-}
 
 enum Role {
   Admin
   User
 }
+
+
+

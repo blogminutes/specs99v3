@@ -3,6 +3,11 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { prisma } from "~/server/db";
 import { TRPCError } from "@trpc/server";
 import bcrypt from "bcryptjs";
+import nodemailer from "nodemailer";
+// import sendgridTransport from "nodemailer-sendgrid-transport";
+import sgMail from "@sendgrid/mail";
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
 
 export const authenticationRouter = createTRPCRouter({
   "sign-up": publicProcedure
@@ -34,6 +39,30 @@ export const authenticationRouter = createTRPCRouter({
           cart: true,
         },
       });
+
+      console.log(process.env.SENDGRID_API_KEY);
+
+      const res = await sgMail.send({
+        to: "belivethatkg@gmail.com",
+        from: "aakarsh.specs99@gmail.com",
+        subject: "Signup succeeded!",
+        text: "and easy to do anywhere, even with Node.js",
+        html: ` <html>
+        <head>
+          <style>
+            /* Add custom styling here */
+          </style>
+        </head>
+        <body>
+          <h1>Welcome, ${input.name}!</h1>
+          <p>Thank you for signing up for our service. Please verify your email address by clicking the link below:</p>
+          <a href="${"verification link"}">Verify Email</a>
+          <p>If you did not sign up for this service, you can safely ignore this email.</p>
+        </body>
+      </html>`,
+      });
+
+      console.log(res, "SENDGRID");
 
       return user;
     }),

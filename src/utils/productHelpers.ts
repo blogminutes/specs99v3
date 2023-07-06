@@ -10,6 +10,81 @@ export enum Genders {
   Unisex = "Unisex",
 }
 
+export enum FrameMaterial {
+  Plastic = "Beige",
+  Steel = "Stainless Steel",
+}
+
+export enum FrameColors {
+  Beige = "Beige",
+  Black = "Black",
+  Blue = "Blue",
+  Brown = "Brown",
+  Copper = "Copper",
+  Golden = "Golden",
+  Green = "Green",
+  Grey = "Grey",
+  Multicolor = "Multicolor",
+  Orange = "Orange",
+  Pink = "Pink",
+  Red = "Red",
+  Silver = "Silver",
+  Violet = "Violet",
+  White = "White",
+  Yellow = "Yellow",
+  Transparent = "Transparent",
+}
+
+export enum FrameShapes {
+  Rectangle = "Rectangle",
+  Round = "Round",
+  RoundSquare = "Round Square",
+  Square = "Square",
+  CatEye = "CatEye",
+  Wayfarer = "Wayfarer",
+  Aviator = "Aviator",
+  Oval = "Oval",
+  Hexagonal = "Hexagonal",
+  Geometric = "Geometric",
+  Clubmaster = "Clubmaster",
+  Sports = "Sports",
+}
+
+export enum LensColors {
+  Beige = "Beige",
+  Black = "Black",
+  Blue = "Blue",
+  Brown = "Brown",
+  Copper = "Copper",
+  Golden = "Golden",
+  Green = "Green",
+  Grey = "Grey",
+  Multicolor = "Multicolor",
+  Transparent = "Transparent",
+  Orange = "Orange",
+  Pink = "Pink",
+  Red = "Red",
+  Silver = "Silver",
+  Violet = "Violet",
+  White = "White",
+  Yellow = "Yellow",
+}
+
+export enum FrameBodyTypes {
+  FullRim = "Full Rim",
+  Rimless = "Rimless",
+  SemiRimless = "Semi-Rimless",
+}
+
+export enum IdealFor {
+  Mens = "Mens",
+  Womens = "Womens",
+  Kids = "Kids",
+  Boys = "Boys",
+  Girls = "Girls",
+  Unisex = "Unisex",
+}
+
 export const shapes = [
   { name: "Round" },
   { name: "Rectangular" },
@@ -28,6 +103,7 @@ export const lensTypes = [
   { name: "Photochromic" },
   { name: "Toric" },
   { name: "Bifocals" },
+  { name: "Demo" },
 ];
 
 export const categories = [
