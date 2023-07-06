@@ -314,9 +314,17 @@ const CreateProductPage = () => {
             highlight={false}
           />
           <FormInputList
+            {...frameMaterialInput}
+            lable="Frame Material"
+            errorMessage="Please select frame material."
+            options={enumToArray(FrameMaterial)}
+            highlight={false}
+            multiple={false}
+          />
+          <FormInputList
             {...frameTypeInput}
             lable="Frame Type"
-            errorMessage="Please select frame material."
+            errorMessage="Please select frame type."
             options={enumToArray(FrameBodyTypes)}
             highlight={false}
             multiple={false}
