@@ -11,15 +11,11 @@ import {
   FrameBodyTypes,
   frameBodyTypes,
   FrameColors,
-  frameColors,
   FrameMaterial,
   FrameShapes,
-  Genders,
   IdealFor,
   LensColors,
-  lensColors,
   lensTypes,
-  shapes,
   sizes,
 } from "~/utils/productHelpers";
 import Image from "next/image";

@@ -92,7 +92,7 @@ const trends = [
 
 const genderCategory = [
   { image: "/homepage/gender/mens-sun.png", name: "Mens" },
-  { image: "/homepage/gender/women-3.jpeg", name: "Womens" },
+  { image: "/homepage/gender/womens-sun.jpeg", name: "Womens" },
   { image: "/homepage/gender/girl-kid.png", name: "Kids" },
   { image: "/homepage/gender/contact-lenses.png", name: "Contact Lenses" },
 ];
@@ -234,7 +234,7 @@ const Home: NextPage = () => {
         </div>
 
         <ContainerPrimary>
-          <div className="grid grid-cols-4 gap-[min(2vh,2vw)]">
+          <div className="grid grid-cols-4 gap-[min(2vh,2vw)]  max-[600px]:grid-cols-2">
             {genderCategory.map((category) => (
               <div
                 key={category.name}
@@ -247,7 +247,7 @@ const Home: NextPage = () => {
                   height={400}
                   className="h-[min(25vh,35vw)] w-full grow rounded-t-lg object-cover"
                 />
-                <span className="py-2 text-center text-lg font-medium">
+                <span className="py-2 text-center text-lg font-medium max-[900px]:text-sm">
                   {category.name}
                 </span>
               </div>
@@ -287,8 +287,24 @@ const Home: NextPage = () => {
             width={2400}
             height={1000}
             src="/homepage/BrandsSection/IDEE.jpeg"
-            alt={"Rayban Banner"}
+            alt={"IDEE Banner"}
             className="h-[min(35vh,45vw)] rounded-lg object-fill shadow-primary-md"
+          />
+          <ProductsSwiper
+            heading="IDEE Sunglasses"
+            filters={{
+              categories: { equals: ["Sunglasses"] },
+              brand: { equals: "IDEE" },
+              limit: 12,
+            }}
+          />
+          <ProductsSwiper
+            heading="IDEE Eyeglasses"
+            filters={{
+              categories: { equals: ["Eyeglasses"] },
+              brand: { equals: "IDEE" },
+              limit: 12,
+            }}
           />
         </ContainerPrimary>
       </ContainerMain>
