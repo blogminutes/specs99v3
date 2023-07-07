@@ -20,7 +20,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 z-50 flex h-16 w-full items-center justify-between border-b bg-bg-primary px-[min(8vh,8vw)] shadow-primary-sm  max-[600px]:px-[min(3vh,3vw)]">
+    <nav className="fixed top-0 z-50 flex h-16 w-full items-center justify-between overflow-hidden border-b bg-bg-primary px-[min(8vh,8vw)] shadow-primary-sm  max-[600px]:px-[min(3vh,3vw)]">
       <div>
         <Link href={"/"}>
           <Image

@@ -27,6 +27,7 @@ export type WhereFilterStrings = {
   equals?: string;
   not?: string;
   notIn?: string[];
+  in?: string[];
 };
 
 export type WhereFilterArrays = {
@@ -39,6 +40,7 @@ export type ProductFilters = {
   brand?: WhereFilterStrings;
   shape?: WhereFilterStrings;
   model?: WhereFilterStrings;
+  idealFor?: WhereFilterStrings;
 };
 
 const ProductsSwiper: React.FC<{

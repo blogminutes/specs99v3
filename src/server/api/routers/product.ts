@@ -9,6 +9,7 @@ const WhereFilterString = z.object({
   equals: z.string().optional(),
   not: z.string().optional(),
   notIn: z.array(z.string()).optional(),
+  in: z.array(z.string()).optional(),
 });
 
 const WhereFilterArray = z.object({
@@ -26,6 +27,7 @@ export const productsRouter = createTRPCRouter({
             model: WhereFilterString.optional(),
             brand: WhereFilterString.optional(),
             shape: WhereFilterString.optional(),
+            idealFor: WhereFilterString.optional(),
           })
           .optional(),
       })
@@ -37,6 +39,7 @@ export const productsRouter = createTRPCRouter({
           brand: input.filters?.brand,
           model: input.filters?.model,
           shape: input.filters?.shape,
+          idealFor: input.filters?.idealFor,
         },
         orderBy: { createdAt: "desc" },
         take: input.filters?.limit || 12,

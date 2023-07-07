@@ -35,11 +35,13 @@ const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
       >
         <div
           ref={ref}
-          className="relative mx-auto mt-14 flex min-h-[100vh] flex-col overflow-auto max-[1200px]:h-fit max-[1200px]:min-h-screen"
+          className="relative mx-auto flex min-h-[100vh] flex-col overflow-auto max-[1200px]:h-fit max-[1200px]:min-h-screen"
         >
           <ToastContainer position="top-right" />
           <Navbar />
-          <Component {...pageProps} />
+          <div className="mt-[64px]">
+            <Component {...pageProps} />
+          </div>
           <Footer />
         </div>
       </main>
