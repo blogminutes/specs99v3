@@ -127,10 +127,11 @@ const ProductsSwiper: React.FC<{
           breakpoints={breakpoints}
           spaceBetween={"0"}
           onSwiper={(swiper) => (swiperRef.current = swiper)}
-          modules={[Pagination, Navigation]}
+          modules={[FreeMode, Pagination, Navigation]}
           className="w-full"
           direction={"horizontal"}
-          speed={2000}
+          speed={200}
+          grabCursor={true}
         >
           {products &&
             products.map((product, i) => (

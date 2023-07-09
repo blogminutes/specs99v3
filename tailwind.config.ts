@@ -11,13 +11,18 @@ export default {
         "grey-primary": "#343a40",
         "grey-medium": "#495057",
         "grey-light": "#868e96",
+        gray: {
+          100: "#f1f1f1",
+          200: "#e1e1e1",
+          // Define other shades of gray as needed
+        },
       },
       backgroundColor: {
         "bg-primary": "#fff",
         // "bg-primary": "#f1f3f5",
       },
       boxShadow: {
-        "primary-md": "2px 2px 6px #e0e2e4,-1px -1px 6px #f0f1f2",
+        "primary-md": "0px 0px 5px #e0e2e4",
         "primary-sm": "2px 2px 8px rgba(0,0,0,.08)",
         "primary-xsm": "2px 2px 8px rgba(0,0,0,.08)",
         "form-input-primary":

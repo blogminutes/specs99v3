@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import autoAnimate from "@formkit/auto-animate";
 import { IoLogOutOutline } from "react-icons/io5";
+import { signOut } from "next-auth/react";
 
 const sidebarLinks = [
   {
@@ -66,6 +67,10 @@ interface ISidebarLink {
 }
 
 const AccountSidebar = () => {
+  const handleLogout = () => {
+    signOut();
+  };
+
   return (
     <div className="flex w-[20%] flex-col gap-4 border-r border-r-[#dee2e6] p-4 py-8">
       {sidebarLinks.map((link) => (
