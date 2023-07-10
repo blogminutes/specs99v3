@@ -11,7 +11,7 @@ export enum Genders {
 }
 
 export enum FrameMaterial {
-  Plastic = "Beige",
+  Plastic = "Plastic",
   Steel = "Stainless Steel",
 }
 

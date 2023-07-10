@@ -235,7 +235,7 @@ const ProductInfoPage = () => {
                   <span className="font-medium  text-grey-primary">
                     Lens Color:
                   </span>{" "}
-                  {product.lensColor}
+                  {product.lensColor.join("/")}
                 </span>
                 <span className="text-grey-medium">
                   <span className="font-medium  text-grey-primary">
@@ -253,7 +253,7 @@ const ProductInfoPage = () => {
                   <span className="font-medium  text-grey-primary">
                     Frame Color:
                   </span>{" "}
-                  {product.frameColor}
+                  {product.frameColor.join("/")}
                 </span>
               </div>
               <span className="h-[1px] w-full bg-[rgb(229,231,235)]"></span>
