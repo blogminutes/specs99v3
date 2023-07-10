@@ -5,26 +5,16 @@ import { Product } from "@prisma/client";
 import ProductCard, {
   ProductCardSkeleton,
 } from "~/components/product/ProductCard";
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, {
-  Autoplay,
-  FreeMode,
-  Pagination,
-  Grid,
-  Navigation,
-} from "swiper";
+import { SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/grid";
-import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import { api } from "~/utils/api";
-import { useEffect, useRef, useState } from "react";
-import { z } from "zod";
-import { useCartStore } from "~/utils/zustand/cartStore/useCartStore";
-import ContainerPrimary from "~/components/ui/container/ContainerPrimary";
+import { useEffect, useState } from "react";
 import { BsFilter } from "react-icons/bs";
+import { Popover } from "@headlessui/react";
 
 const ProductsPage = () => {
   const apiContext = api.useContext();
@@ -71,20 +61,21 @@ const ProductsPage = () => {
       </Head>{" "}
       <ContainerMain className="pb-0">
         <div className="relative flex flex-col">
-          <div
-            className={`fixed right-4 top-[calc(6rem)] z-30 cursor-pointer rounded-lg border-r bg-grey-primary px-4 py-2  ${
+          <button
+            className={`fixed right-[max(2vh,2vw)] top-[calc(6.5rem)] z-30 cursor-pointer rounded-md border border-grey-primary px-4 py-1  ${
               isScrolling ? "opacity-0" : "opacity-100"
             }`}
             style={{ transition: "all .3s" }}
           >
-            <span className="flex items-center gap-2 text-white">
-              Filters <BsFilter className="text-2xl" />
+            <span className="flex items-center gap-2 ">
+              Filter by <BsFilter className="text-xl" />
             </span>
-          </div>
+            <div className="absolute right-0 top-[calc(100%+8px)] h-40 w-[30rem] rounded-xl bg-white shadow-primary-md"></div>
+          </button>
           <div className="flex flex-col gap-[min(4vh,4vw)] px-[min(2vh,2vw)] py-10 max-[900px]:gap-[min(12vh,12vw)] max-[600px]:px-[min(3vh,3vw)]">
             <div className="max relative flex w-full flex-col gap-[min(2vh,2vw)]">
               <div className="flex items-center justify-between px-[min(1vh,1vw)]">
-                <h3 className="text-2xl font-medium max-[600px]:text-lg">
+                <h3 className="text-2xl font-normal max-[600px]:text-lg">
                   {"Products"}
                 </h3>
               </div>

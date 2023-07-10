@@ -46,6 +46,7 @@ export const productsRouter = createTRPCRouter({
       });
       return { products };
     }),
+
   getProduct: publicProcedure
     .input(
       z.object({

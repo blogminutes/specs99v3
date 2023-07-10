@@ -46,7 +46,8 @@ export type ProductFilters = {
 const ProductsSwiper: React.FC<{
   heading: string;
   filters?: ProductFilters;
-}> = ({ heading, filters }) => {
+  rows?: number;
+}> = ({ heading, filters, rows }) => {
   const apiContext = api.useContext();
 
   const swiperRef = useRef<SwiperCore | null>(null);
@@ -70,18 +71,22 @@ const ProductsSwiper: React.FC<{
   const breakpoints = {
     280: {
       slidesPerView: 1,
+      grid: { rows: 1 },
     },
     320: {
       slidesPerView: 2,
     },
     900: {
       slidesPerView: 3,
+      grid: { rows: 1 },
     },
     1280: {
       slidesPerView: 4,
+      grid: { rows: rows ? rows : 1 },
     },
     1500: {
       slidesPerView: 4,
+      grid: { rows: rows ? rows : 1 },
     },
   };
   const handleSkipSlides = () => {
@@ -104,9 +109,11 @@ const ProductsSwiper: React.FC<{
     swiperRef?.current.slideTo(targetSlideIndex, 500); // 500ms for transition duration
   };
   return (
-    <div className="max relative flex w-full flex-col gap-[min(3vh,3vw)]">
+    <div className="max relative flex w-full flex-col gap-[min(4vh,4vw)]">
       <div className="flex items-center justify-between px-[min(1vh,1vw)]">
-        <h3 className="text-2xl font-medium max-[600px]:text-lg">{heading}</h3>
+        <h3 className="w-full text-2xl font-medium max-[600px]:text-lg">
+          {heading}
+        </h3>
         <div className="flex gap-7">
           <span
             onClick={handlePrevSlides}
@@ -127,8 +134,8 @@ const ProductsSwiper: React.FC<{
           breakpoints={breakpoints}
           spaceBetween={"0"}
           onSwiper={(swiper) => (swiperRef.current = swiper)}
-          modules={[FreeMode, Pagination, Navigation]}
-          className="w-full"
+          modules={[Grid, FreeMode, Pagination, Navigation]}
+          className="!w-full"
           direction={"horizontal"}
           speed={200}
           grabCursor={true}
@@ -141,6 +148,7 @@ const ProductsSwiper: React.FC<{
             ))}
         </Swiper>
       </div>
+
       <ButtonPrimary
         link="/products"
         text="View Range"

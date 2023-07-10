@@ -259,14 +259,6 @@ const Home: NextPage = () => {
         </ContainerPrimary>
 
         <ContainerPrimary>
-          {/* <Image
-            width={2400}
-            height={800}
-            src="/homepage/BrandsSection/Rayban-2.jpeg"
-            alt={"Idee Banner"}
-            className="h-[min(40vh,45vw)] rounded-lg object-fill shadow-primary-md"
-          /> */}
-
           <ProductsSwiper
             heading="Sunglasses For Mens"
             filters={{
@@ -275,6 +267,9 @@ const Home: NextPage = () => {
               limit: 12,
             }}
           />
+        </ContainerPrimary>
+
+        <ContainerPrimary>
           <ProductsSwiper
             heading="Eyeglasses For Mens"
             filters={{
@@ -283,13 +278,8 @@ const Home: NextPage = () => {
               limit: 12,
             }}
           />
-          {/* <Image
-            width={2400}
-            height={1000}
-            src="/homepage/BrandsSection/IDEE.jpeg"
-            alt={"IDEE Banner"}
-            className="h-[min(35vh,45vw)] rounded-lg object-fill shadow-primary-md"
-          /> */}
+        </ContainerPrimary>
+        <ContainerPrimary>
           <ProductsSwiper
             heading="Sunglasses For Womens"
             filters={{
@@ -298,11 +288,33 @@ const Home: NextPage = () => {
               limit: 12,
             }}
           />
+        </ContainerPrimary>
+        <ContainerPrimary>
           <ProductsSwiper
             heading="Eyeglasses For Womens"
             filters={{
               categories: { equals: ["Eyeglasses"] },
               idealFor: { in: ["Womens"] },
+              limit: 12,
+            }}
+          />
+        </ContainerPrimary>
+        <ContainerPrimary>
+          <ProductsSwiper
+            heading="Unisex Sunglasses Selection"
+            filters={{
+              categories: { equals: ["Sunglasses"] },
+              idealFor: { in: ["Unisex"] },
+              limit: 12,
+            }}
+          />
+        </ContainerPrimary>
+        <ContainerPrimary>
+          <ProductsSwiper
+            heading="Unisex Eyeglasses Selection"
+            filters={{
+              categories: { equals: ["Eyeglasses"] },
+              idealFor: { in: ["Unisex"] },
               limit: 12,
             }}
           />
