@@ -3,8 +3,19 @@ import { create } from "zustand";
 import { ApiContextType } from "../authStore/useAuthStore";
 import { toast } from "react-toastify";
 
-interface CartItem extends CartProduct {
+export interface CartItem {
   product: Product;
+  id: number | null;
+  cartId: number | null;
+  productId: number;
+  quantity: number;
+}
+
+export interface Cart {
+  id: number | null;
+  userId: number | null;
+  items: CartItem[] | null;
+  subtotal: number | null;
 }
 
 type CartStore = {
@@ -55,7 +66,7 @@ export const useCartStore = create<CartStore>((set) => ({
 export const addToCart = async (input: {
   apiContext: ApiContextType;
   cartStore: CartStore;
-  cartId: number;
+  cartId: number | null;
   product: Product;
   quantity: number;
 }) => {
@@ -68,7 +79,7 @@ export const addToCart = async (input: {
       (item) => item.productId === product.id
     );
 
-    if (!productExist) {
+    if (!productExist && cartId) {
       const res = await apiContext.user.addToCart.fetch({
         cartId: cartId,
         productId: product.id,
@@ -86,6 +97,18 @@ export const addToCart = async (input: {
       });
 
       toast.success("Item added to cart!");
+    } else if (!productExist && !cartId) {
+      const updatedCart = {
+        id: cartId,
+        items: [
+          ...(cartStore.items || []),
+          { cartId, id: null, product, quantity, productId: product.id },
+        ],
+        subtotal: (cartStore.subtotal || 0) + quantity * product.price,
+        userId: cartStore.userId,
+      };
+      cartStore.setCart(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
     } else {
       toast.success("Product already exist!");
     }
@@ -106,31 +129,53 @@ export const updateCartProductQuantity = async (input: {
 
     cartStore.setCartIsLoading(true);
 
-    await apiContext.user.updateCartProduct.fetch({
-      cartProductId: cartProduct.id,
-      quantity: quantity,
-    });
+    if (cartProduct.id) {
+      await apiContext.user.updateCartProduct.fetch({
+        cartProductId: cartProduct.id,
+        quantity: quantity,
+      });
 
-    let subtotal = 0;
+      let subtotal = 0;
 
-    const updatedCart = cartStore.items?.map((it) => {
-      if (it.id === cartProduct.id) {
-        it.quantity = quantity;
+      const updatedCart = cartStore.items?.map((it) => {
+        if (it.id === cartProduct.id) {
+          it.quantity = quantity;
+          subtotal += it.quantity * it.product.price;
+          return it;
+        }
         subtotal += it.quantity * it.product.price;
         return it;
-      }
-      subtotal += it.quantity * it.product.price;
-      return it;
-    });
+      });
 
-    cartStore.setCart({
-      id: cartStore.id,
-      items: updatedCart || [],
-      subtotal: subtotal,
-      userId: cartStore.userId,
-    });
+      cartStore.setCart({
+        id: cartStore.id,
+        items: updatedCart || [],
+        subtotal: subtotal,
+        userId: cartStore.userId,
+      });
+    } else if (!cartProduct.id) {
+      let subtotal = 0;
 
-    // toast.success("Quantity Incresed!");
+      const updatedCartItems = cartStore.items?.map((it) => {
+        if (it.productId === cartProduct.productId) {
+          it.quantity = quantity;
+          subtotal += it.quantity * it.product.price;
+          return it;
+        }
+        subtotal += it.quantity * it.product.price;
+        return it;
+      });
+
+      const updatedCart = {
+        id: cartStore.id,
+        items: updatedCartItems || [],
+        subtotal: subtotal,
+        userId: cartStore.userId,
+      };
+
+      cartStore.setCart(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    }
 
     cartStore.setCartIsLoading(false);
   } catch (error) {
@@ -148,17 +193,18 @@ export const removeFromCart = async (input: {
 
     cartStore.setCartIsLoading(true);
 
-    await apiContext.user.removeFromCart.fetch({
-      cartProductId: cartProduct.id,
-    });
+    if (cartProduct.id)
+      await apiContext.user.removeFromCart.fetch({
+        cartProductId: cartProduct.id,
+      });
 
-    const updatedCart = cartStore.items?.filter(
+    const updatedCartItems = cartStore.items?.filter(
       (it) => it.productId !== cartProduct.productId
     );
 
     cartStore.setCart({
       id: cartStore.id,
-      items: updatedCart || [],
+      items: updatedCartItems || [],
       subtotal:
         (cartStore.subtotal || 0) -
         cartProduct.quantity * cartProduct.product.price,

@@ -89,7 +89,7 @@ const ProductInfoPage = () => {
   };
 
   const handleAddToCart = () => {
-    if (data?.user.id && cartId && product) {
+    if (product) {
       addToCart({
         apiContext,
         cartId,
@@ -133,7 +133,7 @@ const ProductInfoPage = () => {
                         alt="Product Image"
                         width={1200}
                         height={1200}
-                        className="max-h-[max(35vh,35vw)] w-full object-cover max-[600px]:max-h-[max(45vh,40vw)]"
+                        className="h-[max(32vh,32vw)] w-full object-scale-down max-[600px]:h-[max(30vh,30vw)]"
                       />
                     </SwiperSlide>
                   ))}

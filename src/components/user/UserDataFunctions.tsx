@@ -1,14 +1,18 @@
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { api } from "~/utils/api";
-import { useCartStore } from "~/utils/zustand/cartStore/useCartStore";
+import {
+  Cart,
+  CartItem,
+  useCartStore,
+} from "~/utils/zustand/cartStore/useCartStore";
 
 const UserDataFunctions = () => {
   const apiContext = api.useContext();
 
   const cartStore = useCartStore((c) => c);
 
-  const { data } = useSession();
+  const { data, status } = useSession();
 
   useEffect(() => {
     if (!cartStore.id && data?.user.id && data.user.cart) {
@@ -22,8 +26,16 @@ const UserDataFunctions = () => {
         userId: data.user.id,
         subtotal,
       });
+    } else if (!cartStore.items && !data?.user && status === "loading") {
+      const cart: Cart = JSON.parse(localStorage.getItem("cart") || "");
+      cartStore.setCart({
+        id: null,
+        items: cart.items,
+        subtotal: cart.subtotal,
+        userId: null,
+      });
     }
-  }, [data?.user, cartStore]);
+  }, [data?.user]);
 
   return null;
 };
