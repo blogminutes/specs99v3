@@ -149,11 +149,7 @@ const ProductsSwiper: React.FC<{
         </Swiper>
       </div>
 
-      <ButtonPrimary
-        link="/products"
-        text="View Range"
-        className="mx-auto ml-auto"
-      />
+      <ButtonPrimary link="/products" text="View Range" className="ml-auto" />
     </div>
   );
 };

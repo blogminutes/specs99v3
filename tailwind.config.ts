@@ -19,7 +19,6 @@ export default {
       },
       backgroundColor: {
         "bg-primary": "#fff",
-        // "bg-primary": "#f1f3f5",
       },
       boxShadow: {
         "primary-md": "1px 1px 8px rgba(0,0,0,.15)",
@@ -36,6 +35,7 @@ export default {
       backgroundImage: {
         glassWater:
           "linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%)",
+        // brand: "linear-gradient(to right, #a1ffce,rgba(0,0,0,0) 30%, #faffd1)",
       },
     },
   },

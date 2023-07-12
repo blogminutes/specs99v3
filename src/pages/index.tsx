@@ -238,7 +238,7 @@ const Home: NextPage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-6 place-content-center justify-items-center gap-5 py-4 max-[900px]:grid-cols-3">
+          {/* <div className="bggrid grid-cols-6 place-content-center justify-items-center gap-5 py-4 max-[900px]:grid-cols-3">
             {genderCategory.map((category) => (
               <div
                 key={category.name}
@@ -256,7 +256,7 @@ const Home: NextPage = () => {
                 </span>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
 
         {/* TRENDING SUNGLASSES SECTION*/}
