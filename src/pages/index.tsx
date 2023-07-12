@@ -95,6 +95,8 @@ const genderCategory = [
   { image: "/homepage/gender/womens-sun.jpeg", name: "Womens" },
   { image: "/homepage/gender/girl-kid.png", name: "Kids" },
   { image: "/homepage/gender/contact-lenses.png", name: "Contact Lenses" },
+  { image: "/homepage/gender/contact-lenses.png", name: "Computer Glasses" },
+  { image: "/homepage/gender/contact-lenses.png", name: "Sports Sunglasses" },
 ];
 const Home: NextPage = () => {
   const [swiperDirection, setSwiperDirection] = useState("vertical");
@@ -132,124 +134,128 @@ const Home: NextPage = () => {
       </Head>
       {/* HERO SECTION */}
       {/* <ContainerPrimary> */}
-      <div className="flex items-center justify-evenly gap-5 shadow-form-input-primary ">
-        {genderCategory.map((category) => (
-          <div
-            key={category.name}
-            className=" flex w-fit cursor-pointer flex-col items-center justify-center  overflow-hidden rounded-lg px-0  py-2"
-          >
-            <Image
-              alt={`${category.name} With Sunglasses`}
-              src={category.image}
-              width={600}
-              height={400}
-              className=" h-[min(8vh,8vw)] w-[min(8vh,8vw)] rounded-full object-cover max-[900px]:h-[min(12vh,12vw)] max-[900px]:w-[min(12vh,12vw)]"
-            />
-            <span className="py-1 text-center text-sm font-medium max-[900px]:text-sm max-[600px]:text-xs">
-              {category.name}
-            </span>
-          </div>
-        ))}
-      </div>
+
       {/* </ContainerPrimary> */}
       <ContainerMain>
-        <div className="mx-auto grid w-[100%] grid-cols-[min(12vh,12vw)_1fr_min(12vh,12vw)] overflow-hidden shadow-primary-sm max-[600px]:grid-cols-1">
-          <div className="h-[min(50vh,60vw)] px-[min(1vh,1vw)] py-0.5 max-[600px]:h-[min(13vh,13vw)] max-[600px]:p-1.5">
-            <Swiper
-              direction={swiperDirection as "vertical"}
-              slidesPerView={6}
-              spaceBetween={sliderGap}
-              freeMode={true}
-              pagination={false}
-              modules={[FreeMode, Pagination, Autoplay]}
-              className="h-full w-full"
-              speed={2000}
-              loop={true}
-              autoplay={{
-                delay: 0,
-                disableOnInteraction: false,
-                waitForTransition: true,
-              }}
-            >
-              {heroBrandsLeft.map((image, i) => (
-                <SwiperSlide
-                  key={i}
-                  className="overflow-hidden rounded-lg shadow-primary-xsm"
-                >
-                  <Image
-                    src={image}
-                    alt="Brand Image"
-                    className="h-full w-full object-cover"
-                    width={200}
-                    height={200}
-                  />
-                </SwiperSlide>
-              ))}
-              {heroBrandsLeft.map((image, i) => (
-                <SwiperSlide
-                  key={i}
-                  className="overflow-hidden rounded-lg shadow-primary-xsm"
-                >
-                  <Image
-                    src={image}
-                    alt="Brand Image"
-                    className="h-full w-full object-cover"
-                    width={200}
-                    height={200}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+        <div className="shadow-form-input-primary">
+          <div className=" mx-auto grid w-[100%] grid-cols-[min(12vh,12vw)_1fr_min(12vh,12vw)] overflow-hidden max-[600px]:grid-cols-1">
+            <div className="h-[min(50vh,60vw)] px-[min(1vh,1vw)] py-0.5 max-[600px]:h-[min(13vh,13vw)] max-[600px]:p-1.5">
+              <Swiper
+                direction={swiperDirection as "vertical"}
+                slidesPerView={6}
+                spaceBetween={sliderGap}
+                freeMode={true}
+                pagination={false}
+                modules={[FreeMode, Pagination, Autoplay]}
+                className="h-full w-full"
+                speed={2000}
+                loop={true}
+                autoplay={{
+                  delay: 0,
+                  disableOnInteraction: false,
+                  waitForTransition: true,
+                }}
+              >
+                {heroBrandsLeft.map((image, i) => (
+                  <SwiperSlide
+                    key={i}
+                    className="overflow-hidden rounded-lg shadow-primary-xsm"
+                  >
+                    <Image
+                      src={image}
+                      alt="Brand Image"
+                      className="h-full w-full object-cover"
+                      width={200}
+                      height={200}
+                    />
+                  </SwiperSlide>
+                ))}
+                {heroBrandsLeft.map((image, i) => (
+                  <SwiperSlide
+                    key={i}
+                    className="overflow-hidden rounded-lg shadow-primary-xsm"
+                  >
+                    <Image
+                      src={image}
+                      alt="Brand Image"
+                      className="h-full w-full object-cover"
+                      width={200}
+                      height={200}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+            <Carousel data={heroCarouselData} height="min(50vh,60vw)" />
+            <div className="h-[min(50vh,60vw)] px-[min(1vh,1vw)] py-0.5 max-[600px]:h-[min(13vh,13vw)] max-[600px]:p-1.5">
+              <Swiper
+                slidesPerView={6}
+                spaceBetween={sliderGap}
+                freeMode={true}
+                pagination={false}
+                modules={[FreeMode, Pagination, Autoplay]}
+                className="h-full w-full"
+                direction={swiperDirection as "vertical"}
+                speed={2000}
+                loop={true}
+                autoplay={{
+                  delay: 0,
+                  disableOnInteraction: false,
+                  waitForTransition: true,
+                  reverseDirection: true,
+                  pauseOnMouseEnter: true,
+                }}
+              >
+                {heroBrandsLeft.map((image, i) => (
+                  <SwiperSlide
+                    key={i}
+                    className="overflow-hidden rounded-lg shadow-primary-xsm"
+                  >
+                    <Image
+                      src={image}
+                      alt="Brand Image"
+                      className="h-fit object-cover"
+                      width={200}
+                      height={200}
+                    />
+                  </SwiperSlide>
+                ))}
+                {heroBrandsRight.map((image, i) => (
+                  <SwiperSlide
+                    key={i}
+                    className="overflow-hidden rounded-lg shadow-primary-xsm"
+                  >
+                    <Image
+                      src={image}
+                      alt="Brand Image"
+                      className="h-fit object-cover"
+                      width={200}
+                      height={200}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
           </div>
-          <Carousel data={heroCarouselData} height="min(50vh,60vw)" />
-          <div className="h-[min(50vh,60vw)] px-[min(1vh,1vw)] py-0.5 max-[600px]:h-[min(13vh,13vw)] max-[600px]:p-1.5">
-            <Swiper
-              slidesPerView={6}
-              spaceBetween={sliderGap}
-              freeMode={true}
-              pagination={false}
-              modules={[FreeMode, Pagination, Autoplay]}
-              className="h-full w-full"
-              direction={swiperDirection as "vertical"}
-              speed={2000}
-              loop={true}
-              autoplay={{
-                delay: 0,
-                disableOnInteraction: false,
-                waitForTransition: true,
-                reverseDirection: true,
-                pauseOnMouseEnter: true,
-              }}
-            >
-              {heroBrandsLeft.map((image, i) => (
-                <SwiperSlide
-                  key={i}
-                  className="overflow-hidden rounded-lg shadow-primary-xsm"
-                >
-                  <Image
-                    src={image}
-                    alt="Brand Image"
-                    className="h-fit object-cover"
-                    width={200}
-                    height={200}
-                  />
-                </SwiperSlide>
-              ))}
-              {heroBrandsRight.map((image, i) => (
-                <SwiperSlide
-                  key={i}
-                  className="overflow-hidden rounded-lg shadow-primary-xsm"
-                >
-                  <Image
-                    src={image}
-                    alt="Brand Image"
-                    className="h-fit object-cover"
-                    width={200}
-                    height={200}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+
+          <div className="grid grid-cols-6 place-content-center justify-items-center gap-5 py-4 max-[900px]:grid-cols-3">
+            {genderCategory.map((category) => (
+              <div
+                key={category.name}
+                className=" flex w-fit cursor-pointer flex-col items-center justify-center  overflow-hidden rounded-lg px-0"
+              >
+                <Image
+                  alt={`${category.name} With Sunglasses`}
+                  src={category.image}
+                  width={600}
+                  height={400}
+                  className=" h-[min(6vh,6vw)] w-[min(6vh,6vw)] rounded-full object-cover max-[900px]:h-[min(9.5vh,9.5vw)] max-[900px]:w-[min(9.5vh,9.5vw)]"
+                />
+                <span className="py-1 text-center text-sm font-medium max-[900px]:text-sm max-[600px]:text-xs">
+                  {category.name}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -408,12 +414,12 @@ const TrendsSection = () => {
             <SwiperSlide key={i} className="py-2">
               <Link
                 href={trend.link}
-                className="flex w-full flex-col overflow-hidden rounded-lg shadow-primary-xsm"
+                className="flex w-fit flex-col overflow-hidden rounded-lg shadow-primary-xsm"
               >
                 <Image
                   src={trend.image}
                   alt={trend.name}
-                  className="max-h-[max(13vh,7vw)] w-full object-cover"
+                  className="max-h-[max(15vh,5vw)] w-[max(17vh,7vw)] object-cover"
                   width={400}
                   height={400}
                 />
