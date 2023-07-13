@@ -281,14 +281,14 @@ const ProductInfoPage = () => {
                 <button
                   onClick={handleAddToCart}
                   disabled={cartIsLoading}
-                  className={`relative z-40 flex w-full items-center justify-center gap-2 rounded-full border border-grey-medium px-8 py-[min(.8vh,.8vw)] text-base font-normal text-grey-medium shadow-primary-xsm ${
+                  className={`relative z-40 flex w-full items-center justify-center gap-2 border border-grey-medium px-8 py-[min(.8vh,.8vw)] text-base font-normal text-grey-medium shadow-primary-xsm ${
                     cartIsLoading && "opacity-50"
                   }`}
                 >
                   Add To Cart
                   <BsCart2 className="text-xl text-secondary" />
                 </button>
-                <button className="relative z-40 flex w-full items-center justify-center gap-2 rounded-full border border-grey-light bg-white px-8 py-[min(.8vh,.8vw)] text-base font-normal text-grey-light shadow-primary-xsm">
+                <button className="relative z-40 flex w-full items-center justify-center gap-2 border border-grey-light bg-white px-8 py-[min(.8vh,.8vw)] text-base font-normal text-grey-light shadow-primary-xsm">
                   Add To Whishlist
                   <AiOutlineHeart className="text-lg text-red-500" />
                 </button>

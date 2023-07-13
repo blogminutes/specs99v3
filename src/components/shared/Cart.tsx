@@ -10,6 +10,11 @@ import ReactStars from "react-stars";
 import { MdOutlineClose, MdDeleteOutline, MdAdd } from "react-icons/md";
 import { GrFormSubtract, GrSubtract } from "react-icons/gr";
 import { api } from "~/utils/api";
+import {
+  BsCart2,
+  BsCreditCard2BackFill,
+  BsCurrencyRupee,
+} from "react-icons/bs";
 
 const variants = {
   open: { opacity: 1, x: 0 },
@@ -163,9 +168,25 @@ const Cart: React.FC<{
                 </div>
               ))}
           </div>
-          <div className="flex h-fit items-center justify-between border-t pt-4">
+          <div className="flex h-fit items-center justify-between border-y py-4">
             <h3 className="text-base">Subtotal</h3>
             <h3 className="text-base">Rs. {subtotal}</h3>
+          </div>
+          <div className="flex flex-col gap-2 py-4">
+            <button
+              // onClick={handleAddToCart}
+              disabled={cartIsLoading}
+              className={`relative z-40 flex w-full items-center justify-center gap-2 border border-grey-medium px-8 py-[min(.8vh,.8vw)] text-base font-normal text-grey-medium shadow-primary-xsm ${
+                cartIsLoading && "opacity-50"
+              }`}
+            >
+              Credit/Debit
+              <BsCreditCard2BackFill className="text-lg text-red-500" />
+            </button>
+            <button className="relative z-40 flex w-full items-center justify-center gap-2 border border-grey-light bg-white px-8 py-[min(.8vh,.8vw)] text-base font-normal text-grey-light shadow-primary-xsm">
+              Cash On Delivery
+              <BsCurrencyRupee className="text-lg text-red-500" />
+            </button>
           </div>
         </motion.div>
       </motion.div>

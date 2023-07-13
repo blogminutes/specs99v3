@@ -16,7 +16,7 @@ const ButtonPrimary: React.FC<{
   };
   return (
     <motion.button
-      className={`relative  ml-auto mt-6 flex w-fit items-center gap-1 overflow-hidden rounded-lg border border-primary bg-gradient-to-b from-primary to-secondary bg-clip-text px-[min(4vh,4vw)] py-1 text-lg font-medium text-grey-medium text-transparent shadow-primary-sm max-[600px]:text-sm ${
+      className={`relative  ml-auto mt-6 flex w-fit items-center gap-1 overflow-hidden border border-primary bg-gradient-to-b from-primary to-secondary bg-clip-text px-[clamp(4vh,.5rem,4vw)] py-1 text-lg font-medium text-grey-medium text-transparent shadow-primary-sm max-[600px]:text-sm ${
         props.className || ""
       }`}
       type="submit"

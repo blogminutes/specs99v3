@@ -10,7 +10,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   return (
     <Link
       href={`/products/${product.brand}/${product.model}`}
-      className="relative flex h-full w-full cursor-pointer  flex-col justify-between gap-2 overflow-hidden rounded-xl px-[min(.3vw,.3vh)] pb-[min(.8vh,.8vw)] pt-[min(.3vw,.3vh)] text-start shadow-primary-xsm"
+      className="relative flex h-full w-full cursor-pointer  flex-col justify-between gap-2 overflow-hidden px-[min(.3vw,.3vh)] pb-[min(.8vh,.8vw)] pt-[min(.3vw,.3vh)] text-start shadow-primary-xsm"
     >
       {/* <div className="absolute right-2 top-2">
         <Link

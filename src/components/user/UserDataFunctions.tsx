@@ -27,13 +27,14 @@ const UserDataFunctions = () => {
         subtotal,
       });
     } else if (!cartStore.items && !data?.user && status === "loading") {
-      const cart: Cart = JSON.parse(localStorage.getItem("cart") || "");
-      cartStore.setCart({
-        id: null,
-        items: cart.items,
-        subtotal: cart.subtotal,
-        userId: null,
-      });
+      const cart: Cart | null = JSON.parse(localStorage.getItem("cart") || "");
+      if (cart)
+        cartStore.setCart({
+          id: null,
+          items: cart.items,
+          subtotal: cart.subtotal,
+          userId: null,
+        });
     }
   }, [data?.user]);
 

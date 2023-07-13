@@ -26,7 +26,7 @@ const Footer = () => {
               alt="specs99 brand logo"
               width={288}
               height={64}
-              className="h-auto w-[20vh]"
+              className="h-auto w-[18vh]"
             />
           </Link>{" "}
           <div className="flex justify-between gap-[min(2vh,2vw)]">
