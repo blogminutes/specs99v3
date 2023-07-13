@@ -48,7 +48,7 @@ const Cart: React.FC<{
           open: { pointerEvents: "all" },
           closed: { pointerEvents: "none" },
         }}
-        className="fixed right-0 top-0 z-50 h-[100vh] w-[100%]"
+        className="fixed right-0  top-0 z-50 h-[100vh] w-[100%]"
       >
         <motion.div
           onClick={() => setOpen(false)}
@@ -181,11 +181,11 @@ const Cart: React.FC<{
               }`}
             >
               Credit/Debit
-              <BsCreditCard2BackFill className="text-lg text-red-500" />
+              <BsCreditCard2BackFill className="text-lg text-primary" />
             </button>
             <button className="relative z-40 flex w-full items-center justify-center gap-2 border border-grey-light bg-white px-8 py-[min(.8vh,.8vw)] text-base font-normal text-grey-light shadow-primary-xsm">
               Cash On Delivery
-              <BsCurrencyRupee className="text-lg text-red-500" />
+              <BsCurrencyRupee className="text-lg text-secondary" />
             </button>
           </div>
         </motion.div>

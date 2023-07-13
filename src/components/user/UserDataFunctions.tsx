@@ -27,8 +27,10 @@ const UserDataFunctions = () => {
         subtotal,
       });
     } else if (!cartStore.items && !data?.user && status === "loading") {
-      const cart: Cart | null = JSON.parse(localStorage.getItem("cart") || "");
-      if (cart)
+      const cart: Cart | null = JSON.parse(
+        localStorage.getItem("cart") || "{}"
+      );
+      if (cart?.items)
         cartStore.setCart({
           id: null,
           items: cart.items,

@@ -41,7 +41,7 @@ export const useCartStore = create<CartStore>((set) => ({
   setCart: ({ id, items, userId, subtotal }) => {
     set({ id, items, userId, subtotal });
   },
-  subtotal: null,
+  subtotal: 0,
   cartIsLoading: false,
   setCartIsLoading: (cartIsLoading) => {
     set({ cartIsLoading });
